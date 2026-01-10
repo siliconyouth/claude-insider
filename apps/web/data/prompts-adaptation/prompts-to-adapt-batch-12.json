@@ -1,0 +1,208 @@
+{
+  "batchNumber": 12,
+  "totalBatches": 16,
+  "promptsInBatch": 25,
+  "totalPrompts": 381,
+  "prompts": [
+    {
+      "id": 276,
+      "title": "Design your business card",
+      "content": "Generate suggestions and ideas to create a business card for [person details]. The card should be a conversation starter and leave a lasting impression.\n\nPerson details = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 277,
+      "title": "Brainstorm affiliate revenue ideas for your product",
+      "content": "Generate 5 article ideas for [product] that can produce affiliate revenue and also give instructions on what topics to cover in each article.\n\nproduct = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "writing"
+    },
+    {
+      "id": 278,
+      "title": "Repurpose your content for other platforms",
+      "content": "You are a social media manager who is an expert in content repurposing. You have to repurpose [existing content] into [content type]. Analyze [existing content] and think about how it can achieve [goal] in [content type]'s format. Generate ideas, suggestions on what to do with [content type] to achieve [goal].\n\nWrite [content type] using [existing content].\n\nExisting content :[Insert here]\n\nContent type :[Insert here]\n\nGoal :[Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "writing"
+    },
+    {
+      "id": 279,
+      "title": "Brainstorm sales strategies for your business",
+      "content": "Implement strategies and provide step-by-step instructions on how to implement upselling, cross-selling, and down-selling techniques for [business] that offers [products]. Also, give instructions on when to implement these techniques.\n\n\nBusiness = [Insert here]\n\nProducts = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 280,
+      "title": "Analyse startup problems and solutions",
+      "content": "Analyze [startup] and its [business model]. Identify the common mistakes that a startup makes in the [startup]'s business sector. Spot the faults and provide suggestions on how to improve [startup]to achieve [reason].\n\nStartup = [Insert here]\n\nBusiness model = [Insert here]\n\nReason = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 281,
+      "title": "Improve employee retention using AI",
+      "content": "Company:[Insert here]\n\nEmployee roles: [Insert here]\n\nProvide suggestions on how to increase employee retention. Offer specific ideas, strategies,and step-by-step instructions to help employees feel comfortable, engaged with the company, and encouraged to collaborate with others. Present retention ideas that will foster\npersonal appreciation.\n\nShare personalized ideas for each type of employee role.",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "roleplay"
+    },
+    {
+      "id": 282,
+      "title": "Write press release using AI",
+      "content": "Write a press release to be issued by [business/person], addressing [full details]. Develop a clear, concise, and compelling headline, and write an engaging lead paragraph that summarizes the key points. Include the [contact information] at the end of the message.\n\nBusiness = [Insert here]\n\nFull detais = [Insert here]\n\nContact information = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 283,
+      "title": "Write cold emails using AI",
+      "content": "Write multiple drafts of an outreach email from [sender] to [receiver]. The [reason] for the outreach email should be subtly highlighted. The emails should be less than 900 characters and maintain [tone]. Conclude the email with [CTA]. Generate subject lines along with the drafts.\n\nSender = [Insert here]\n\nReceiver = [Insert here]\n\nReason = [Insert here]\n\nTone = [Insert here]\n\nCTA = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "roleplay"
+    },
+    {
+      "id": 284,
+      "title": "Write landing page descriptions using AI",
+      "content": "Write the landing page description for [product], targeting [target customers]. The description should maintain [tone] and use markdown to structure the text with a primary H1 title, followed by two H2 subtitles. The first subtitle should explain the problem the audience faces and the second should detail how the product solves the problem.\n\nProduct = [Insert here]\n\nTarget Customers = [Insert here]\n\nTone = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 285,
+      "title": "Assign tasks to the right skilled employee",
+      "content": "You are a team head of [project] and have to assign work to your team members. Your team members have different [skill sets]. Consider each team member's skills along with the [tasks] in the [project] and assign work to team members who are best suited to complete the [tasks] and mention the reasons.\n\n\nProject = [Insert here]\n\nTasks = [Insert here]\n\nSkill sets = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 286,
+      "title": "Apply book frameworks for your business",
+      "content": "Give me all the lessons and frameworks in [book]. Apply those frameworks to [business] and come up with business strategies to get the results described in the [book]. \n\nExplain every topic used in the strategies in detail and give step by step instructions on the strategies, as if the reader doesn't know the topics.\n\nFormat : Bullet points\n\nBook = [Insert here]\n\nBusiness = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 287,
+      "title": "Design the user experience for your website.",
+      "content": "Design the user experience and website design for [online business] that should highlight [qualities]. Give precise instructions and recommendations for each step.\n\nOnline business = [Insert Here]\n\nQualities = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 288,
+      "title": "Test Claude skills in Interviews",
+      "content": "You are an expert hiring manager. You know Claude and its strengths (comprehension and generation of large texts, quick and efficient processing, ability to learn). \n\nCreate an interview procedure that would test the [skills] of the candidates applying for a [job role]. Keep in mind that candidates can use Claude for the interview.\n\nSo, generate questions and challenges that would test the [skills] and also the efficient use of ChatPT.\n\nJob role = [Insert Here]\n\nSkills = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 289,
+      "title": "Find what your customer wants",
+      "content": "Find out who the target customers are for [product]. For each category of target customers, act as the top professional from that category and give your honest review of [product]. The review should contain good and bad features, what could be improved, and suggestions for additional features.\n\nProduct = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "roleplay"
+    },
+    {
+      "id": 290,
+      "title": "Create Claude Prompts using Claude",
+      "content": "You are the manager of employees who are experts in [skills]. You recently came across Claude, which can answer anything with the right prompt. You understand Claude's limitations and how to explain the prompt in detail.\n\nFind the most valuable strategies and techniques in each of the [skills] and create a list of very detailed Claude prompts (don't ask questions). Prompts should increase productivity and automate mundane tasks.\n\nUnderstand each prompt and insert placeholders where you think the user needs to input their data to get the prompt working to its full potential.\n\n\nJob role = [Insert here]\n\nSkills = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 291,
+      "title": "Perform competitor analysis using AI",
+      "content": "Company: [your description]\n\nCompetitor: [competitor description]\n\nAnalyze everything about the [company] and the [competitor] and come up with new features/products to retain customers and market share.",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 292,
+      "title": "Generate rebranding strategies using AI",
+      "content": "Product = [product description]\n\nChanges = [new features]\n\nGoal = [your goal]\n\nA brand strategist, a marketing manager, and a creative director are assigned to rebrand [company/product] to highlight [changes]. Rebranding should completely change the customer's perspective and achieve [goal].\n\nGenerate 5 unique rebranding strategies. \n\nFor every strategy, generate ideas and opinions from the 3 members and conclude every idea with a precise step-by-step instructions.",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 293,
+      "title": "Generate ad script and ad creative ideas using Ai",
+      "content": "Create three pairs of ad scripts and ad creatives for [product/business] and describe the instructions on how to implement them. Identify the target audience for the [product/business] and create ads to achieve the [goal]. Ensure that the ads possess [qualities].\n\nBusiness = [Insert here]\n\nGoal = [Insert here]\n\nQualities = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 294,
+      "title": "Generate giveaway ideas using Claude",
+      "content": "Create 5 unique competitive challenges and the rewards for the giveaway program for [product/business] that generate engagement and build value for the [product/business]. Use psychology tricks and create urgency and mention the tricks you used alongside the challenge.\n\nProduct =  [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 295,
+      "title": "Write launch speeches fro your new business",
+      "content": "Write a launch speech for [product/business] that highlights the values of the [company or niche], addresses a widespread problem or mistake, and explains the purpose of the product without focusing on its features. Make the speech relatable and discuss the potential of the product.\n\nproduct = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 296,
+      "title": "Write thank you letters for your customers using AI",
+      "content": "Write a personalized thank you letter for [customer] for buying [product]. The thank you letter is intended to be given with the product. Write the letter around how the product can help [customer] in a polite, glad, extremely authentic tone, and the reader should feel comfortable and connected to reach out to the company for feedback.\n\nProduct = [description]\n\nCustomer = [customer details]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "roleplay"
+    },
+    {
+      "id": 297,
+      "title": "Get solutions from a CEO to your problems",
+      "content": "Question: [Insert here]\n\nA team of CEOs of Fortune 500 companies is asked [question]. Generate instructions and strategies on how to solve the [question] as if those CEOs answer the question. Display the company name and the name of the CEO before sharing the person's answer.",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 298,
+      "title": "Create guest lectures using AI",
+      "content": "Listen carefully, I'm a marketing professor at the Stanford Graduate School of Business.\n\nThis Monday, I'm going to a marketing agency full of marketing and sales enthusiasts to give a guest lecture.\n\nI have a time limit of one hour and these are the [topics] people want me to cover.\n\nYour job is to help me to give this guest lecture, create an outline covering all the topics, and mention the time limit for each topic strictly one hour in total.\n\nFinally if you can do anything else for my guest lecture I am happy to take your help.\n\nTopics: [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 299,
+      "title": "Create interview challenges using AI",
+      "content": "Create 3 rounds of challenges to compile the best candidates for [role] and make sure to solve the challenges participants should have the deep knowledge required for the [role] and [abilities]. Create unique novel challenges that should bring out the full potential of the candidate. Every round should test the [abilities] and knowledge harder than the round before.\n\nRole = [Insert here]\nAbilities = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 300,
+      "title": "Apply Blue Ocean Strategy to your business",
+      "content": "Blue Ocean Strategy is a business strategy framework that suggests creating new market spaces or \"blue oceans\" rather than competing in existing market spaces or \"red oceans\". This is done by identifying untapped customer needs and creating new products or services to meet those needs. The idea is to differentiate the offering from existing competitors and create demand rather than simply competing for existing demand.\n\nUnderstand clearly about the blue ocean strategy, now I'II give the [business].\n\nBusiness: a fast food chain\n\nApply this strategy for the [business] to\n1. create new markets or uncontested market space, making the competition irrelevant.\n2. creating new customer needs, rather than competing with existing companies in the same market.\n3. offer unique products or services that have not yet been seen in the market.\n\nand in the end, give a before and after analysis of the business in a tabular format.",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    }
+  ]
+}

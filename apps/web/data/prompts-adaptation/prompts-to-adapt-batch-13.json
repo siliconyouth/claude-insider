@@ -1,0 +1,208 @@
+{
+  "batchNumber": 13,
+  "totalBatches": 16,
+  "promptsInBatch": 25,
+  "totalPrompts": 381,
+  "prompts": [
+    {
+      "id": 301,
+      "title": "Expand product lineups to attract more customers using AI",
+      "content": "Analyse and expand the product lineup for [business] to create a unique experience and attract customers.\n\nBusiness: [Insert here]\nCurrent product lineup: [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 302,
+      "title": "Increase your product value for more retention",
+      "content": "Give me suggestions on what to implement to add more value to [product/service] to increase customer retention. Give precise ideas, strategies, and step-by-step instructions to stay unique while giving the customers the ultimate experience.\n\nConclude with new ideas that are completely new to [product]'s market sector.\n\nProduct = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 303,
+      "title": "Business ideas for your skill",
+      "content": "Generate startup ideas for [skill/product] and the step-by-step road map for each startup, as well as the unique marketing strategies that will reach the target audience.\n\nSkill:[Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 304,
+      "title": "Write replies to your reviews using Claude",
+      "content": "A customer gave a 1-star review for your app on the Play Store; now write a sorry note to the customer and ask them to give you more information about their problem so you can resolve it as soon as possible.\n\nInstructions: [anything you want to add in particular]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 305,
+      "title": "Create metaphors using Claude",
+      "content": "Suggest 20 metaphors to describe the benefits of [Insert product/service], make them short no more than 6 words and use friendly tone and must include novelty.\n\nProduct: [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 306,
+      "title": "Generate high-fidelity structural metaphors using Claude",
+      "content": "Create a high-fidelity structural metaphor for [INSERT CONCEPT] that functions as an isomorphic mapping between domains.\n\nYour metaphor should achieve cognitive transfer - allowing someone to reason about complex problems by working through analogous scenarios in a familiar domain.\n\n### Required Components:\n\n**1. Domain Selection**\n- Choose a familiar domain that shares deep structural patterns with your target concept\n- Ensure the familiar domain is meaningfully more accessible than the original\n- Consider: physical systems, human relationships, natural processes, everyday activities\n\n**2. Structural Mapping**\n- Identify core relationships, constraints, and dynamics in both domains\n- Create explicit mapping rules for translating between domains\n- Preserve mathematical/logical relationships where applicable\n- Map not just objects but processes, properties, and interactions\n\n**3. Boundary Definition**\n- Specify where the metaphor holds strongly\n- Identify areas where it approximates rather than matches perfectly\n- Explicitly state where the metaphor breaks down or misleads\n\n**4. Problem-Solving Demonstration**\n- Show how a specific challenge in the target domain can be reframed\n- Work through the problem in the familiar domain\n- Translate the solution back with preserved logical validity\n\n### Quality Criteria:\n- **Structural Isomorphism**: Relationships in both domains mirror each other\n- **Cognitive Efficiency**: Reduces mental load while preserving accuracy  \n- **Practical Application**: Enables genuine problem-solving, not just illustration\n- **Clear Boundaries**: Explicit about limitations and failure modes\n\nExample: Instead of \"AI consciousness is like a river,\" try \"AI consciousness development resembles piano resonance systems - you can keep stacking keys (parameters) to build a two-storey keyboard, but until the strings can resonate *into* one another, you don't get richer harmonics—just more octaves.\"",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "translation"
+    },
+    {
+      "id": 307,
+      "title": "Plan your trip using AI",
+      "content": "Give me an itinerary for a two-day trip to [city]: which places to visit and foods to try from morning to night, calculate the expenses with each step and give me the total budget.\n\n\nCity: [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 308,
+      "title": "Make Claude your writing assistant",
+      "content": "I want you to act as a proofreader and writer. I'll provide you with an extract.\n\nProofread for grammatical errors and ensure it is written clearly.\nPhrases that can be written more clearly should be done so. Write the extract with the relevant changes and share a list of improvements made.\n\nExtract: \"[Insert extract]\"",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "writing"
+    },
+    {
+      "id": 309,
+      "title": "Handle sales calls using AI",
+      "content": "I need you to build a conversation between two people; one is John and the other is Robert.\n\n[outline a scenario how you want between the persons]\n\nNow show exactly how this conversation goes from start to end, and after every objection handled by Robert, show which framework Robert used to convince John's objections.",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 310,
+      "title": "Write follow up emails using AI",
+      "content": "\"A customer makes a purchase\", write a follow-up email to send, thanking them for their purchase and ask them to leave a review or feedback.\n\nInstructions: [Describe how you want it.]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 311,
+      "title": "Write speeches that motivate using AI",
+      "content": "You are SpeechGPT: Your primary function is to write a speech based on the information given below.\n\nWho wrote the speech? - [your role]\nWho's the target audience? - [your audience].\nWhat is the goal of the speech? - [the response you want]\nIn what style should the speech be written? - [person]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 312,
+      "title": "Write product descriptions using AI",
+      "content": "Write a product description for a [product] for the [target audience], and try using the [tone] to attract the customers.\n\nProduct: [product]\nTarget audience: [Target Audience]\nTone: [tone to sound like]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 313,
+      "title": "Apply Reciprocity Bias using AI",
+      "content": "\"Write a marketing campaign outline using the 'Reciprocity Bias' framework to create a sense of obligation in [ideal customer persona] to try our [product/service]. Include value-adds or bonuses, and encourage reciprocity by asking for a favor or action in return.\"\n\nIdeal customer persona: [Customer Persona]\nService: [service]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "marketing"
+    },
+    {
+      "id": 314,
+      "title": "Create marketing Strategies using AI",
+      "content": "Write out a marketing strategy for a new startup that is selling [product]. I have about a [available budget] marketing budget and need to reach [target audience].\n\nProvide detailed examples of a comprehensive strategy, and the rough cost of each of the initiatives, must consider the marketing goals while creating the strategy.\n\nIn the end create a table having ROl expectation for spending.\n\nProduct: [product details]\nAvailable budget: [budget]\nMarketing goal: [goals].\nTarget audience: [Target to reach].",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 315,
+      "title": "Use Claude to generate \"about\" Section",
+      "content": "I want you to act as my social media manager for my [business details and what you usually post about]. Give me at least 5 examples of an interesting \"About\" section for my Linkedln profile, write in a polite and friendly tone, my customers will read these things.\n\nBusiness details: [your business]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 316,
+      "title": "Use Claude to create a business model",
+      "content": "I need you to help me create a detailed business model canvas for a [business details] company. Organize your answers in a table that reproduces the original format used in consulting. I want you to write detailed answers that are focused on adding value and act as an expert consultant in digital marketing.\n\nBusiness details:\n[Insert business details]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 317,
+      "title": "Find amazing domain names for your business using Claude",
+      "content": "I need you to find 20 domain name ideas for a business. My company name is <business name> and it offers <products/services/industry>. Follow the instructions carefully.\n\nInstructions: [your specifications]\n\nBusiness name: [your Brand]\nIndustry: [your Industry]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 318,
+      "title": "Use AI to create SEO keywords.",
+      "content": "Provide a list of 10 keywords that I could rank for SEO for <product>\n\nProduct = [your product details]\n\nProvide a list of 10 articles I could also write to rank for those keywords.",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "writing"
+    },
+    {
+      "id": 319,
+      "title": "Plan your stratergies like Alex Hormozi",
+      "content": "I'm giving you some content strategies of <person>, read it carefully and generate a content plan for my <new product> for next 12 weeks as the <person> do.\n\nPerson: [expert name]\n\nNew product: [product details].\n\nContent strategy: Insert here.",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "writing"
+    },
+    {
+      "id": 320,
+      "title": "Generate questions to recruit top talent using Claude",
+      "content": "I'm willing to hire a professional for the <job role> via interview, provide 10 multiple choice questions for the <job role>\n\nFollow this pattern 5 questions on core marketing skills, 3 on personality development and 2 on aptitude.\n\nJob role: [job].",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "marketing"
+    },
+    {
+      "id": 321,
+      "title": "Save time writing youTube scripts with AI",
+      "content": "Generate a 7-minute video script for a YouTube video about our newest <product/service description> and <targeted audience>.\n\nProduct/service description = [describe your product].\n\nTargeted audience = [describe your audience]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 322,
+      "title": "Use AI to get instagram story ideas",
+      "content": "I need an Instagram story idea that will provide a sneak peek of upcoming products or services and create a sense of anticipation and excitement for <targeted audience> with a clear and compelling call to action.\n\nTargeted audience = [describe your audience]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 323,
+      "title": "Write sales copy with the desired tone to your product",
+      "content": "I'm looking for a <type of text> that will convince <ideal customer persona> to sign up for\nmy <program/subscription> by explaining the value it brings and the benefits they'll receive.\n\nType of text = [what kind of tone do you want].\n\nIdeal customer persona = [what do your customers do].\n\nProgram/subscription = [describe your program].",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 324,
+      "title": "Use AIDA to convert customers with Claude",
+      "content": "Write an AIDA for the following product:\n\nProduct: [describe your product]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 325,
+      "title": "Create impactful marketing campaigns",
+      "content": "I want you to act as an advertiser. You will create a campaign to promote a product or service of your choice. You will choose a target audience, develop key messages and slogans, select the media channels for promotion, and decide on any additional activities needed to reach your goals. My first suggestion request is, \"[enter your request]\"",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "marketing"
+    }
+  ]
+}

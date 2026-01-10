@@ -1,12 +1,12 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **73 implemented features** with detailed capabilities.
+Complete list of all **74 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
 ---
 
-## Implemented Features (73 total)
+## Implemented Features (74 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -83,6 +83,7 @@ Complete list of all **73 implemented features** with detailed capabilities.
 | FR-71 | Sentry Admin Dashboard | Admin-only error management dashboard (`/dashboard/sentry`), stats cards (total/error/warning/fatal/users), status filters, issue detail modal with stack traces, resolve/ignore actions, hourly cron job with admin notifications, TanStack Query hooks (`useSentryIssues`, `useSentryStats`, `useUpdateSentryIssue`), `sentry_check_logs` table |
 | FR-72 | Automated Screenshot Generation | Multi-tier screenshot pipeline (Playwright → OpenGraph → Branded Placeholders), 100% coverage for 3,012 resources, browser pool pattern (15 concurrent), bot evasion (stealth mode), dark mode capture, `--retry-failed` mode (60s timeout), Supabase Storage bucket (`resource-screenshots`), progress tracking with resume, SVG placeholder generator using design system |
 | FR-73 | Prompt Library Enhancement | Bulk import pipeline (awesome-chatgpt-prompts, awesome-claude-prompts, TheBigPromptLibrary), Claude AI adaptation (XML tags, thinking sections, chain-of-thought), category expansion (8→18 categories), `prompt_versions` table for immutable history, `prompt_claude_hints` table for AI optimization metadata, `prompt_submissions` table for community contributions, `prompt_imports` table for job tracking, `UseWithAssistantButton` component, `VariableInputModal` component, `ClaudeHintsBadges` component, `VersionHistory` component, moderation dashboard (`/dashboard/prompts/submissions`), submission form (`/prompts/submit`) |
+| FR-74 | Interactive Prompt Builder | 4-mode prompt building system: **Quick Mode** (enhanced form with suggestions, live preview), **Guided Mode** (step-by-step wizard with progress bar, back/next navigation), **Chat Mode** (AI conversation to fill variables, quick reply options, undo), **Playground Mode** (Monaco editor, split-pane layout, variable sidebar, save/share). Smart mode recommendations based on variable count (0-2 → Quick, 3+ → Guided). 8 variable input types with auto-detection (text, textarea, code, number, url, email, select, file). `InteractivePromptBuilder` orchestrator, `ModeSelector` modal, `EnhancedVariableModal`, `GuidedWizard`, `ChatBuilder`, `Playground` components. User preferences saved to localStorage. Enhanced analytics tracking (builder mode, device info, category). |
 
 ---
 

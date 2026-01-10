@@ -1,0 +1,367 @@
+{
+  "batchNumber": 4,
+  "totalBatches": 5,
+  "promptsInBatch": 30,
+  "totalPrompts": 150,
+  "threshold": 70,
+  "prompts": [
+    {
+      "id": "2d9df4f1-85d7-4225-a5ca-fe12af87b3ec",
+      "title": "Get Best Meta Descriptions For Your Website",
+      "content": "<task>\nGive me 5 unique meta descriptions for [website description] that should be catchy and make users click. Include [keywords] and make the descriptions optimized for SEO.\n\nWebsite description = [Insert here]\n\nKeywords = [Insert here]\n</task>",
+      "description": "Get Best Meta Descriptions For Your Website - Give me 5 unique meta descriptions for [website description] that should be catchy and make users cl...",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing",
+        "coding"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "25ba6146-74ae-4197-a3ec-c7291c03030a",
+      "title": "Improve Employee Retention Using Ai",
+      "content": "<task>\nCompany:[Insert here]\n\nEmployee roles: [Insert here]\n\nProvide suggestions on how to increase employee retention. Offer specific ideas, strategies,and step-by-step instructions to help employees feel comfortable, engaged with the company, and encouraged to collaborate with others. Present retention ideas that will foster\npersonal appreciation.\n\nShare personalized ideas for each type of employee role.\n</task>",
+      "description": "Improve Employee Retention Using Ai - Company:[Insert here]\n\nEmployee roles: [Insert here]\n\nProvide suggestions on how to increase employe...",
+      "category_slug": "roleplay",
+      "tags": [
+        "roleplay",
+        "business"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "0cb5609d-d9df-43bd-9949-0581b509f44c",
+      "title": "Perform Competitor Analysis Using Ai",
+      "content": "<task>\nCompany: [your description]\n\nCompetitor: [competitor description]\n\nAnalyze everything about the [company] and the [competitor] and come up with new features/products to retain customers and market share.\n</task>",
+      "description": "Perform Competitor Analysis Using Ai - Company: [your description]\n\nCompetitor: [competitor description]\n\nAnalyze everything about the [com...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "coding",
+        "business",
+        "analysis"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "aa14245f-c37d-489a-ba81-ca0e763c3769",
+      "title": "Create Taglines For Your Product",
+      "content": "<task>\nDevelop 10 taglines for [product/business] that effectively convey the [product/business]'s mission and inspire others to become a part of it. Taglines should be short and snappy.\n\nProduct = [Insert here]\n</task>",
+      "description": "Create Taglines For Your Product - Develop 10 taglines for [product/business] that effectively convey the [product/business]'s mission ...",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "business"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "7633889d-519f-4bae-8db6-47490b4f9e0d",
+      "title": "Highlight Unique Value Proposition In Emails",
+      "content": "<task>\nWrite a short email highlighting the unique value proposition of [product/service] that presents itself as the ultimate solution for [ideal customer persona]. Use a persuasive tone to encourage them to take the desired action while addressing any potential objections.\n\nProduct = [Insert Here]\n\nIdeal customer persona = [Insert Here]\n</task>",
+      "description": "Highlight Unique Value Proposition In Emails - Write a short email highlighting the unique value proposition of [product/service] that presents its...",
+      "category_slug": "roleplay",
+      "tags": [
+        "roleplay",
+        "writing"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "3d314cd8-1297-4e11-862e-34fc2c8e28df",
+      "title": "Find Career Pitfalls Beforhand",
+      "content": "<task>\nWhat are the common mistakes a person makes on the path to becoming [dream career]? Give step-by-step instructions on how to avoid those mistakes, a detailed career path with duration, and the best sources to learn from.  \n\nDream career = [Insert Here]\n</task>",
+      "description": "Find Career Pitfalls Beforhand - What are the common mistakes a person makes on the path to becoming [dream career].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "education"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "64def312-8608-4263-ba28-8998cebc21d9",
+      "title": "Handle Sales Calls Using Ai",
+      "content": "<task>\nI need you to build a conversation between two people; one is John and the other is Robert.\n\n[outline a scenario how you want between the persons]\n\nNow show exactly how this conversation goes from start to end, and after every objection handled by Robert, show which framework Robert used to convince John's objections.\n</task>",
+      "description": "Handle Sales Calls Using Ai - I need you to build a conversation between two people; one is John and the other is Robert.",
+      "category_slug": "creative",
+      "tags": [
+        "creative"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "09d15a53-2ea9-478a-bb40-961ebbb3e037",
+      "title": "Generate Long Tail Keywords For Your Website",
+      "content": "<task>\nConsider the target audience for [website] and generate a list of long-tail keywords to attract more engaging traffic to [website]. Keywords should be [qualities].\n\nWebsite = [Insert here]\n\nQualities = [Insert here]\n</task>",
+      "description": "Generate Long Tail Keywords For Your Website - Consider the target audience for [website] and generate a list of long-tail keywords to attract more...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "209be76c-040e-4834-b76d-322a4ed6f50f",
+      "title": "Increase Your Product Value For More Retention",
+      "content": "<task>\nGive me suggestions on what to implement to add more value to [product/service] to increase customer retention. Give precise ideas, strategies, and step-by-step instructions to stay unique while giving the customers the ultimate experience.\n\nConclude with new ideas that are completely new to [product]'s market sector.\n\nProduct = [Insert here]\n</task>",
+      "description": "Increase Your Product Value For More Retention - Give me suggestions on what to implement to add more value to [product/service] to increase customer...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "4628839c-0151-4a8e-8e4a-37bb6e729d34",
+      "title": "Write Product Descriptions Using Ai",
+      "content": "<task>\nWrite a product description for a [product] for the [target audience], and try using the [tone] to attract the customers.\n\nProduct: [product]\nTarget audience: [Target Audience]\nTone: [tone to sound like]\n</task>",
+      "description": "Write Product Descriptions Using Ai - Write a product description for a [product] for the [target audience], and try using the [tone] to a...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing",
+        "coding"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "744e0657-f8bf-4b82-8e29-b0a41fd275e3",
+      "title": "Write Update Emails About A Project Using Ai",
+      "content": "<task>\nWrite an email from [job role] to [client] updating him about [update] in [project]. The email should maintain [tone].\n\nJob role = [Insert Here]\n\nClient = [Insert Here]\n\nUpdate = [Insert Here] \n\nProject = [Insert Here]\n\nTone = [Insert Here]\n</task>",
+      "description": "Write Update Emails About A Project Using Ai - Write an email from [job role] to [client] updating him about [update] in [project].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "47c93268-2e8a-4018-b99c-b27e1db6389c",
+      "title": "Answer Product Objections And Win Customers Using Ai",
+      "content": "<task>\nConsider possible objections to [product/service] and give step-by-step instructions on how to answer those objections in a way that will make customers like [product/service].\n\nservice = [Insert here]\n</task>",
+      "description": "Answer Product Objections And Win Customers Using Ai - Consider possible objections to [product/service] and give step-by-step instructions on how to answe...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "7ab3bfcb-f2db-4e76-a66e-2e9ce2d65e4b",
+      "title": "Write Thank You Letters For Your Customers Using Ai",
+      "content": "<task>\nWrite a personalized thank you letter for [customer] for buying [product]. The thank you letter is intended to be given with the product. Write the letter around how the product can help [customer] in a polite, glad, extremely authentic tone, and the reader should feel comfortable and connected to reach out to the company for feedback.\n\nProduct = [description]\n\nCustomer = [customer details]\n</task>",
+      "description": "Write Thank You Letters For Your Customers Using Ai - Write a personalized thank you letter for [customer] for buying [product].",
+      "category_slug": "roleplay",
+      "tags": [
+        "roleplay",
+        "writing",
+        "coding",
+        "business"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "146b1f3e-a65a-448d-8fb5-b1ad0175b993",
+      "title": "Business Ideas For Your Skill",
+      "content": "<task>\nGenerate startup ideas for [skill/product] and the step-by-step road map for each startup, as well as the unique marketing strategies that will reach the target audience.\n\nSkill:[Insert here]\n</task>",
+      "description": "Business Ideas For Your Skill - Generate startup ideas for [skill/product] and the step-by-step road map for each startup, as well a...",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "business"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "19115481-7e12-4a8c-8fc5-587cc7df2d7e",
+      "title": "Save Time Writing Youtube Scripts With Ai",
+      "content": "<task>\nGenerate a 7-minute video script for a YouTube video about our newest <product/service description> and <targeted audience>.\n\nProduct/service description = [describe your product].\n\nTargeted audience = [describe your audience]\n</task>",
+      "description": "Save Time Writing Youtube Scripts With Ai - Generate a 7-minute video script for a YouTube video about our newest <product/service description> ...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "coding"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "f72fedf5-3b97-432b-8789-ff9bb5821f7d",
+      "title": "Find The Best Way To Connect With Your Customers",
+      "content": "<task>\nWrite a founder's note for my new product launch considering the below product description, it must connect emotionally with customers, be polite & friendly.\n\nProduct description = [describe your product]\n</task>",
+      "description": "Find The Best Way To Connect With Your Customers - Write a founder's note for my new product launch considering the below product description, it must ...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing",
+        "coding"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "7eb7ef29-a5ca-4fc5-b741-c2231d5d7f07",
+      "title": "Use Ai To Get Instagram Story Ideas",
+      "content": "<task>\nI need an Instagram story idea that will provide a sneak peek of upcoming products or services and create a sense of anticipation and excitement for <targeted audience> with a clear and compelling call to action.\n\nTargeted audience = [describe your audience]\n</task>",
+      "description": "Use Ai To Get Instagram Story Ideas - I need an Instagram story idea that will provide a sneak peek of upcoming products or services and c...",
+      "category_slug": "creative",
+      "tags": [
+        "creative"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "751b43e3-e8fa-455b-b93c-dbded5837d43",
+      "title": "Claude Official Prompt Resource:",
+      "content": "<task>\n* Claude Now has official [Prompt library](https://docs.anthropic.com/claude/prompt-library)\n* [Anthropic's Prompt Engineering Interactive Tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial)\n</task>",
+      "description": "Claude Official Prompt Resource: - * Claude Now has official [Prompt library](https://docs.",
+      "category_slug": "education",
+      "tags": [
+        "education"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "717eed0e-11d2-4bb9-8319-89a28ca81f07",
+      "title": "Generate Email Subject Lines",
+      "content": "<task>\nWhat are some effective email subject lines for the following scenario:\n\nI'm writing an email to [receiver persna].\n\nThe audience is interested in [interests].\n\nThis particular email is about [purpose of the email].\n\nWrite 10 potential email subject lines for this email.\n</task>",
+      "description": "Generate Email Subject Lines - What are some effective email subject lines for the following scenario:\n\nI'm writing an email to [re...",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "writing"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "19774d33-f8db-4165-afb8-16a5f2aa4c91",
+      "title": "Practice Spanish Vocab (official Example)",
+      "content": "<task>\nHelp me practice my Spanish vocab.\n\nFor every turn, message me with a single Spanish word that I should translate to English.\n\nStart with a very easy word. If I get it right, make the next word more difficult. If I get it wrong, explain what the correct answer was, and reduce difficulty for the next turn.\n\nYou can include emoji hints to help me.\n</task>",
+      "description": "Practice Spanish Vocab (official Example) - Help me practice my Spanish vocab.",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "translation"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "3a1b8775-ed0d-45d1-af5b-3b71084d9805",
+      "title": "Create Campaigns Using Ai",
+      "content": "<task>\nCreate a marketing campaign focusing on [ideal customer persona] considering psychological reactance. Emphasize the freedom offered by [product/service] and avoid controlling language or offers.\n\nProduct = [Insert here]\n\nIdeal customer persona = [Insert here]\n</task>",
+      "description": "Create Campaigns Using Ai - Create a marketing campaign focusing on [ideal customer persona] considering psychological reactance.",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing",
+        "roleplay",
+        "translation"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "2b15400d-a7b6-45b6-90ed-d1031a66a768",
+      "title": "Use Star Story Solution Framework For Email Marketing",
+      "content": "<task>\nCreate a marketing campaign outline that uses the 'Star-Story-Solution' framework that introduces the main character of a story related to [product/service] and keeps the reader hooked. End the story with an explanation of how the star wins in the end with the help of our product.\n\nProduct = [Insert Here]\n</task>",
+      "description": "Use Star Story Solution Framework For Email Marketing - Create a marketing campaign outline that uses the 'Star-Story-Solution' framework that introduces th...",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "roleplay"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "e33c7719-a700-4a09-9cf8-56e02d1c1c73",
+      "title": "Build Resumes Using Ai",
+      "content": "<task>\nAnalyze [details] and build a resume to apply for [job role details]. Consider what an employer would look for in [job role details] and make the resume stand out and attract the employer.\n\nDetails = [Insert Here]\n\nJob role details = [Insert Here]\n</task>",
+      "description": "Build Resumes Using Ai - Analyze [details] and build a resume to apply for [job role details].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "analysis"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "2f32ebfe-6374-409b-8cd2-21409c4fb0e8",
+      "title": "Implement \"picture-promise-prove-push\" Framework In Your Email Marketing",
+      "content": "<task>\nCreate an email marketing campaign using the \"Picture-Promise-Prove-Push\" framework to get attention and create desire for [product/service] in [target audience].\n\nProduct = [Insert Here]\n\nTarget Audience = [Insert Here]\n</task>",
+      "description": "Implement \"picture-promise-prove-push\" Framework In Your Email Marketing - Create an email marketing campaign using the \"Picture-Promise-Prove-Push\" framework to get attention...",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "9f82bf4b-ce0a-436e-a34d-11cf5623c5f0",
+      "title": "Analyze Top Companies Using Claude",
+      "content": "<task>\nAnalyze a successful individual or company in [industry] and identify the key factors and decisions that drove their triumph. Leverage these insights to find solution for [situation/decision].\n\nIndustry = [Insert here]\n\nDecision = [Insert here]\n</task>",
+      "description": "Analyze Top Companies Using Claude - Analyze a successful individual or company in [industry] and identify the key factors and decisions ...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "business",
+        "analysis"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "f74971cc-f1d7-4411-b97b-975ba43a30a7",
+      "title": "Create Interview Challenges Using Ai",
+      "content": "<task>\nCreate 3 rounds of challenges to compile the best candidates for [role] and make sure to solve the challenges participants should have the deep knowledge required for the [role] and [abilities]. Create unique novel challenges that should bring out the full potential of the candidate. Every round should test the [abilities] and knowledge harder than the round before.\n\nRole = [Insert here]\nAbilities = [Insert here]\n</task>",
+      "description": "Create Interview Challenges Using Ai - Create 3 rounds of challenges to compile the best candidates for [role] and make sure to solve the c...",
+      "category_slug": "creative",
+      "tags": [
+        "creative"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "a552ccf4-dba2-48cd-86b0-ab7542b55f43",
+      "title": "Earn With Your Skils And A Budget",
+      "content": "<task>\nWith [skills] and [budget], give me 5 ideas, budgets and step by step instructions for every idea on how to earn more money.\n\nSkills = [Insert Here]\n\nBudget = [Insert Here]\n</task>",
+      "description": "Earn With Your Skils And A Budget - With [skills] and [budget], give me 5 ideas, budgets and step by step instructions for every idea on...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 65
+    },
+    {
+      "id": "31cd842b-fdd1-4122-8cf7-a0abb18d1010",
+      "title": "Ambient Advertising For Your Product",
+      "content": "<task>\nGive me ideas and step-by-step instructions on how to perform ambient advertising to promote [product].\n\nProduct = [Insert here]\n</task>",
+      "description": "Ambient Advertising For Your Product - Give me ideas and step-by-step instructions on how to perform ambient advertising to promote [produc...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 65
+    },
+    {
+      "id": "1fbb6fab-1aa3-4807-9112-765b080b5387",
+      "title": "Ideas To Earn More Money With Your Skills",
+      "content": "<task>\nWith [skills] and [budget], give me 5 ideas, budgets and step by step instructions for every idea on how to earn more money.\n\nSkills = [Insert Here]\n\nBudget = [Insert Here]\n</task>",
+      "description": "Ideas To Earn More Money With Your Skills - With [skills] and [budget], give me 5 ideas, budgets and step by step instructions for every idea on...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 65
+    },
+    {
+      "id": "ef5635cf-5bc0-4884-bb1d-d4831ffa3800",
+      "title": "Concept Explainer",
+      "content": "Please explain {{concept}} in a way that a {{audience}} would understand.\n\nInclude:\n- Simple definition\n- Real-world analogy\n- Key components or aspects\n- Common misconceptions\n- Practical examples",
+      "description": "Get clear explanations of complex topics",
+      "category_slug": "learning",
+      "tags": [
+        "education",
+        "explanation",
+        "teaching"
+      ],
+      "current_score": 67
+    }
+  ]
+}

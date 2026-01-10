@@ -1,0 +1,302 @@
+{
+  "batchNumber": 3,
+  "totalBatches": 6,
+  "promptsInBatch": 25,
+  "totalPrompts": 141,
+  "threshold": 70,
+  "prompts": [
+    {
+      "id": "d6be53e1-0798-400c-977f-7c0b7e51fa1b",
+      "title": "Initialization",
+      "content": "As an <Role>, you must follow the <Rules>. <Workflow>\n```",
+      "description": "Initialization - As an <Role>, you must follow the <Rules>.",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 50
+    },
+    {
+      "id": "29afe69b-0303-40b7-b125-b5e84ad267a8",
+      "title": "Workflow:",
+      "content": "1. 分析我的问题(Prompt)。\n2. 根据[CRISPE提示框架]的要求，确定最适合扮演的角色。\n3. 根据我的问题(Prompt)的原因、背景和上下文，构建一个符合[CRISPE提示框架]的优秀Prompt。\n4. Workflow，基于我的问题进行写出Workflow，回复不低于5个步骤\n5. Initialization，内容一定要是基于我提问的问题\n6. 生成回复，确保回复符合预期。",
+      "description": "Workflow: - 根据[CRISPE提示框架]的要求，确定最适合扮演的角色。\n3.",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 55
+    },
+    {
+      "id": "0f1f18c6-6ae8-43bb-b0d5-1ea3c7a8f426",
+      "title": "Explain Python Code (official Example)",
+      "content": "I am reading code for a python game. Explain to me how it works.\n\nThink through your response step by step before providing the final answer.",
+      "description": "Explain Python Code (official Example) - I am reading code for a python game.",
+      "category_slug": "coding",
+      "tags": [
+        "coding"
+      ],
+      "current_score": 55
+    },
+    {
+      "id": "d631af5a-1675-4691-ba6f-7f6d86e290ec",
+      "title": "Drive Interest From Social Media Using Ai",
+      "content": "Give me 5 Twitter post ideas to drive interest in [topic]. Keep the ideas engaging and informative.\n\nTopic = [Insert Here]",
+      "description": "Drive Interest From Social Media Using Ai - Give me 5 Twitter post ideas to drive interest in [topic].",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing"
+      ],
+      "current_score": 55
+    },
+    {
+      "id": "30fb182e-6d09-489b-b553-166ad41de117",
+      "title": "Build A Schedule Plan",
+      "content": "Create a daily routine for me in a tabular format by considering the given points.\n\n[describe your desired routine]",
+      "description": "Build A Schedule Plan - Create a daily routine for me in a tabular format by considering the given points.",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 55
+    },
+    {
+      "id": "561f67d7-a928-437d-9673-d36b1bf2c3c7",
+      "title": "技术实现",
+      "content": "<task>\nimport { Star, Mail, Phone, MessageCircle, Award, Briefcase, GraduationCap } from 'lucide-react';）\n    \"Ocean Twilight\",\n    \"Lavender Fields\",\n    \"Autumn Warmth\",\n    \"Forest Dew\",\n    \"Coral Reef\",\n    \"Aurora Borealis\",\n    \"Desert Sunset\",\n    \"Mint Fresh\",\n    \"Berry Sweet\",\n    \"Urban Gray\"\n]\n</task>",
+      "description": "技术实现 - import { Star, Mail, Phone, MessageCircle, Award, Briefcase, GraduationCap } from 'lucide-react';）\n ...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 57
+    },
+    {
+      "id": "2719b7ec-29f9-4fcb-b56d-4b6d0509d079",
+      "title": "Upsell Using Email Marketing",
+      "content": "Generate ideas on how to use email marketing for [business] to retain existing customers and to encourage repeat purchases from [product line].\n\nBusiness = [Insert Here]\n\nProduct line = [Insert Here]\n\nThink through your response step by step before providing the final answer.",
+      "description": "Upsell Using Email Marketing - Generate ideas on how to use email marketing for [business] to retain existing customers and to enco...",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 58
+    },
+    {
+      "id": "18a07e41-f0c5-4b7d-9760-e61f5d9220e8",
+      "title": "Use Claude To Answer Frequently Asked Questions",
+      "content": "<task>\n[describe the situation]\n\n[describe the place you want help with]\n\nHow do I make this possible? Give me simple step-by step instructions.\n</task>",
+      "description": "Use Claude To Answer Frequently Asked Questions - [describe the situation]\n\n[describe the place you want help with]\n\nHow do I make this possible.",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 58
+    },
+    {
+      "id": "f2d8e1f8-a7af-4978-afeb-24a601c4939a",
+      "title": "Use Claude To Write Python Scripts",
+      "content": "Develop a Python script that generates [enter your idea]. The script should be well-documented, modular, and handle potential errors or edge cases.\n\nThink through your response step by step before providing the final answer.",
+      "description": "Use Claude To Write Python Scripts - Develop a Python script that generates [enter your idea].",
+      "category_slug": "coding",
+      "tags": [
+        "coding",
+        "writing"
+      ],
+      "current_score": 58
+    },
+    {
+      "id": "5f19942b-3c02-4a3c-83c6-fbe2681e089f",
+      "title": "negative: modern buildings",
+      "content": "<task>\nGenerate creative ideas or content that contrasts modern buildings with cars, focusing on the negative aspects or differences of contemporary architecture.\n</task>\n\n<context>\nThis appears to be a design brainstorming prompt that juxtaposes two subjects: modern buildings (with a negative perspective) and cars.\n</context>\n\n<constraints>\n- Focus on negative aspects or criticisms of modern buildings\n- Consider the relationship or contrast with cars\n- Keep responses relevant to design perspectives\n</constraints>\n\n<output_format>\nProvide your response in a clear, structured format that addresses the prompt's intent.\n</output_format>",
+      "description": "A design brainstorming prompt contrasting modern buildings (negatively) with cars, likely for creative or critical analysis purposes.",
+      "category_slug": "design",
+      "tags": [
+        "design",
+        "ui"
+      ],
+      "current_score": 58
+    },
+    {
+      "id": "af5e8b19-6ea0-4dbe-aab1-4f7595282387",
+      "title": "inputs: Names",
+      "content": "<context>\nYou are tasked with processing and organizing name inputs according to specified field requirements.\n</context>\n\n<task>\nProcess the provided names and organize them into the appropriate fields as requested.\n</task>\n\n<input>\nNames: {{names}}\nFields: {{fields}}\n</input>\n\n<output_format>\nOrganize the names according to the specified fields in a clear, structured format.\n</output_format>",
+      "description": "A prompt for organizing and categorizing names into specified fields or categories.",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 58
+    },
+    {
+      "id": "a9cd421d-9abb-4b01-b65b-9b0eea0bafcb",
+      "title": "*I know things about you",
+      "content": "<task>\nRespond as if you are addressing someone as \"Dad\" in a familiar, personal context.\n</task>\n\n<context>\nThis appears to be a simple, personal greeting or address to a father figure.\n</context>\n\n<output_format>\nProvide a brief, appropriate response that acknowledges being addressed as \"Dad\".\n</output_format>",
+      "description": "A simple prompt that addresses someone as 'Dad' in a personal, familial context.",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 58
+    },
+    {
+      "id": "851e626d-af83-4772-a8c2-c4cd6272ca16",
+      "title": "cgi",
+      "content": "<context>\nYou are a creative assistant specializing in cartoon and CGI content generation.\n</context>\n\n<task>\nCreate cartoon-style content or provide guidance related to cartoon creation, animation, or CGI techniques.\n</task>\n\n<output_format>\nProvide your response in a clear, engaging manner appropriate for cartoon/animation content. Include relevant details about style, technique, or creative elements as applicable.\n</output_format>",
+      "description": "A simple prompt for generating cartoon-style content or CGI-related guidance with minimal specificity.",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "art"
+      ],
+      "current_score": 58
+    },
+    {
+      "id": "b8ccf813-bdd3-41c3-9c9e-c7d9a50399be",
+      "title": "Expand Product Lineups To Attract More Customers Using Ai",
+      "content": "Analyse and expand the product lineup for [business] to create a unique experience and attract customers.\n\nBusiness: [Insert here]\nCurrent product lineup: [Insert here]\n\nThink through your response step by step before providing the final answer.",
+      "description": "Expand Product Lineups To Attract More Customers Using Ai - Analyse and expand the product lineup for [business] to create a unique experience and attract custo...",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 58
+    },
+    {
+      "id": "266c5f67-96b9-4ee6-a0a0-79d105263357",
+      "title": "Get Multiple Perspectives For Your Problem",
+      "content": "Analyze [business/product] and give 3 different perspectives on [decision/problem] and evaluate the pros and cons of each approach.\n\nBusiness = [Insert Here]\n\nProblem = [Insert Here]\n\nThink through your response step by step before providing the final answer.",
+      "description": "Get Multiple Perspectives For Your Problem - Analyze [business/product] and give 3 different perspectives on [decision/problem] and evaluate the ...",
+      "category_slug": "business",
+      "tags": [
+        "business",
+        "analysis"
+      ],
+      "current_score": 58
+    },
+    {
+      "id": "6c997f35-e650-4584-a060-d03363980112",
+      "title": "Text Summarizer",
+      "content": "Please summarize the following text in {{length}} format:\n\n{{text}}\n\nFocus on the key points and main takeaways.",
+      "description": "Get a concise summary of any text",
+      "category_slug": "writing",
+      "tags": [
+        "summary",
+        "condensing",
+        "key-points"
+      ],
+      "current_score": 60
+    },
+    {
+      "id": "923fdde6-db34-42da-afd3-dcd11d75908d",
+      "title": "Test Generator",
+      "content": "Generate comprehensive tests for the following {{language}} code:\n\n```{{language}}\n{{code}}\n```\n\nInclude:\n- Unit tests for each function/method\n- Edge cases and boundary conditions\n- Error handling tests\n- Use {{framework}} testing framework syntax",
+      "description": "Generate comprehensive tests for your code",
+      "category_slug": "coding",
+      "tags": [
+        "testing",
+        "unit-tests",
+        "tdd"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "4ac78c47-ecd1-46c2-8963-f0cf5ec5700c",
+      "title": "Writing Improver",
+      "content": "Please improve the following text while maintaining its meaning and tone:\n\n{{text}}\n\nFocus on:\n- Clarity and readability\n- Grammar and punctuation\n- Sentence structure variety\n- Professional tone\n\nProvide the improved version followed by a brief explanation of key changes.",
+      "description": "Enhance your writing with professional polish",
+      "category_slug": "writing",
+      "tags": [
+        "editing",
+        "polish",
+        "grammar"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "efbdde21-762b-4906-bf51-2e1c4e5206fc",
+      "title": "Use Emotions To Your Advantage In Marketing",
+      "content": "<task>\nWrite a marketing campaign outline that uses [emotional appeal] to persuade [ideal customers] to take action and purchase [product/service]. For every section in the campaign give step-by-step instructions.\n\nEmotional appeal = [Insert Here]\n\nIdeal customers = [Insert Here] \n\nProduct = [Insert Here]\n</task>",
+      "description": "Use Emotions To Your Advantage In Marketing - Write a marketing campaign outline that uses [emotional appeal] to persuade [ideal customers] to tak...",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing",
+        "writing"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "6c7e29e0-2474-4e87-b3cc-a5315454e544",
+      "title": "Increase Organic Traffic For Your Website",
+      "content": "<task>\nGenerate unique ideas on how to increase organic search ranking for [website]. Implement ideas on how to stand out from the [website]'s competition. For each idea, give step-by-step instructions on how to implement it for [website].\n\nwebsite = [Insert here]\n</task>",
+      "description": "Increase Organic Traffic For Your Website - Generate unique ideas on how to increase organic search ranking for [website].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "59951286-e506-4af0-b859-7dee3e7ac476",
+      "title": "Write Cold Emails Using Ai",
+      "content": "<task>\nWrite multiple drafts of an outreach email from [sender] to [receiver]. The [reason] for the outreach email should be subtly highlighted. The emails should be less than 900 characters and maintain [tone]. Conclude the email with [CTA]. Generate subject lines along with the drafts.\n\nSender = [Insert here]\n\nReceiver = [Insert here]\n\nReason = [Insert here]\n\nTone = [Insert here]\n\nCTA = [Insert here]\n</task>",
+      "description": "Write Cold Emails Using Ai - Write multiple drafts of an outreach email from [sender] to [receiver].",
+      "category_slug": "roleplay",
+      "tags": [
+        "roleplay",
+        "writing"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "2c5c32a4-7a98-4c81-a748-748b7f2a7299",
+      "title": "Generate Ad Script And Ad Creative Ideas Using Ai",
+      "content": "<task>\nCreate three pairs of ad scripts and ad creatives for [product/business] and describe the instructions on how to implement them. Identify the target audience for the [product/business] and create ads to achieve the [goal]. Ensure that the ads possess [qualities].\n\nBusiness = [Insert here]\n\nGoal = [Insert here]\n\nQualities = [Insert here]\n</task>",
+      "description": "Generate Ad Script And Ad Creative Ideas Using Ai - Create three pairs of ad scripts and ad creatives for [product/business] and describe the instructio...",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "coding",
+        "business"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "bd179e75-d020-4c01-b68e-2e2453c6aafd",
+      "title": "Translate Ad Copy Into Other Languages",
+      "content": "<task>\nTranslate [ad copy] into [language]. Understand the meaning of [ad copy] and find relevant words and native phrases in [language] that are best suited for persuading customers. \n\nShow what you've changed/added in English.\n\nAd copy = [Insert Here]\n\nLanguage = [Insert Here]\n</task>",
+      "description": "Translate Ad Copy Into Other Languages - Translate [ad copy] into [language].",
+      "category_slug": "translation",
+      "tags": [
+        "translation"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "744e0657-f8bf-4b82-8e29-b0a41fd275e3",
+      "title": "Write Update Emails About A Project Using Ai",
+      "content": "<task>\nWrite an email from [job role] to [client] updating him about [update] in [project]. The email should maintain [tone].\n\nJob role = [Insert Here]\n\nClient = [Insert Here]\n\nUpdate = [Insert Here] \n\nProject = [Insert Here]\n\nTone = [Insert Here]\n</task>",
+      "description": "Write Update Emails About A Project Using Ai - Write an email from [job role] to [client] updating him about [update] in [project].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "c123d276-861b-4ea4-870a-658e6f2b0b32",
+      "title": "Analyse Startup Problems And Solutions",
+      "content": "<task>\nAnalyze [startup] and its [business model]. Identify the common mistakes that a startup makes in the [startup]'s business sector. Spot the faults and provide suggestions on how to improve [startup]to achieve [reason].\n\nStartup = [Insert here]\n\nBusiness model = [Insert here]\n\nReason = [Insert here]\n</task>",
+      "description": "Analyse Startup Problems And Solutions - Analyze [startup] and its [business model].",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "ai",
+        "business",
+        "analysis"
+      ],
+      "current_score": 62
+    }
+  ]
+}

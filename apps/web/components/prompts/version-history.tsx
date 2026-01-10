@@ -50,7 +50,7 @@ interface VersionHistoryProps {
 
 export function VersionHistory({
   promptId,
-  promptSlug,
+  promptSlug: _promptSlug,
   currentContent,
   canEdit,
   onRestore,

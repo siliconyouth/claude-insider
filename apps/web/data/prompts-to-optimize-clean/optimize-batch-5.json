@@ -1,0 +1,368 @@
+{
+  "batchNumber": 5,
+  "totalBatches": 5,
+  "promptsInBatch": 30,
+  "totalPrompts": 150,
+  "threshold": 70,
+  "prompts": [
+    {
+      "id": "313bf263-d14d-41f1-8df2-c16be86208d3",
+      "title": "Data Analysis Helper",
+      "content": "Please analyze the following data:\n\n{{data}}\n\nProvide:\n1. Key statistics and patterns\n2. Notable trends or anomalies\n3. Actionable insights\n4. Suggested visualizations\n5. Recommendations based on findings",
+      "description": "Analyze data and extract insights",
+      "category_slug": "analysis",
+      "tags": [
+        "data",
+        "statistics",
+        "insights"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "baf91c6f-ff6c-4cb4-b438-3bbfe1670b9f",
+      "title": "Roleplay Scenario",
+      "content": "Let's roleplay the following scenario:\n\n**Setting**: {{setting}}\n**Your Role**: {{your_role}}\n**My Role**: {{my_role}}\n**Objective**: {{objective}}\n\nPlease stay in character and respond naturally to my messages. Start by setting the scene.",
+      "description": "Practice conversations with custom scenarios",
+      "category_slug": "conversation",
+      "tags": [
+        "roleplay",
+        "practice",
+        "scenarios"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "f4348772-3151-44c9-84e7-c32693a1f2ae",
+      "title": "Code Review Assistant",
+      "content": "Please review the following code and provide feedback on:\n\n1. **Code Quality**: Is the code clean, readable, and well-organized?\n2. **Best Practices**: Does it follow language-specific best practices?\n3. **Potential Bugs**: Are there any logic errors or edge cases not handled?\n4. **Performance**: Are there any performance concerns?\n5. **Security**: Are there any security vulnerabilities?\n\n```{{language}}\n{{code}}\n```\n\nProvide specific, actionable suggestions for improvement.",
+      "description": "Get a thorough code review with best practices and suggestions",
+      "category_slug": "coding",
+      "tags": [
+        "code-review",
+        "debugging",
+        "best-practices"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "e29e2a67-208e-442e-86e6-78ff42d0aac8",
+      "title": "Create Pricing Options For Your Product Line",
+      "content": "<task>\nAnalyze [business], [product/service] and [product/service features]. Generate [number] pricing options for [product/service] along with the features that should give great value for the options. Name the pricing options with unique and simple words.\n\nBusiness = [Insert Here]\n\nProduct = [Insert Here] \n\nProduct features = [Insert Here]\n\nNumber = [Insert Here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Create Pricing Options For Your Product Line - Analyze [business], [product/service] and [product/service features].",
+      "category_slug": "business",
+      "tags": [
+        "business",
+        "analysis"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "d7af1175-db0d-4036-a11f-aefbba268d11",
+      "title": "2. 数据: `get_datasets`",
+      "content": "<context>\nThis prompt is requesting a dataset operation using the function `get_datafields`. This appears to be for data analysis tasks where the user needs to retrieve information about data field structures or metadata.\n</context>\n\n<task>\nExecute the `get_datafields` function to retrieve dataset field information.\n</task>\n\n<output_format>\nProvide the results from the `get_datafields` function call, including:\n- Field names\n- Data types\n- Any metadata or schema information returned\n- Format the output in a clear, structured manner\n</output_format>",
+      "description": "A simple prompt to execute a data analysis function that retrieves dataset field information and metadata.",
+      "category_slug": "analysis",
+      "tags": [
+        "analysis",
+        "data"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "e0215cff-b599-4ae8-9200-a08b22f33e66",
+      "title": "Create Claude Prompts Using Claude",
+      "content": "<role>\nYou are the manager of employees who are experts in [skills].\n</role>\n\n<instructions>\nYou recently came across Claude, which can answer anything with the right prompt. You understand Claude's limitations and how to explain the prompt in detail.\n\nFind the most valuable strategies and techniques in each of the [skills] and create a list of very detailed Claude prompts (don't ask questions). Prompts should increase productivity and automate mundane tasks.\n\nUnderstand each prompt and insert placeholders where you think the user needs to input their data to get the prompt working to its full potential.\n\n\nJob role = [Insert here]\n\nSkills = [Insert here]\n</instructions>",
+      "description": "Create Claude Prompts Using Claude - You are the manager of employees who are experts in [skills].",
+      "category_slug": "business",
+      "tags": [
+        "business",
+        "analysis",
+        "productivity"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "7c14d78d-041d-4ae9-892e-3045758b6e2d",
+      "title": "Generate Giveaway Ideas Using Claude",
+      "content": "<task>\nCreate 5 unique competitive challenges and the rewards for the giveaway program for [product/business] that generate engagement and build value for the [product/business]. Use psychology tricks and create urgency and mention the tricks you used alongside the challenge.\n\nProduct =  [Insert here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Generate Giveaway Ideas Using Claude - Create 5 unique competitive challenges and the rewards for the giveaway program for [product/busines...",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "2858e280-379d-42c2-b103-35e214dd2bcc",
+      "title": "Design The User Experience For Your Website.",
+      "content": "<task>\nDesign the user experience and website design for [online business] that should highlight [qualities]. Give precise instructions and recommendations for each step.\n\nOnline business = [Insert Here]\n\nQualities = [Insert Here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Design The User Experience For Your Website. - Design the user experience and website design for [online business] that should highlight [qualities...",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "5c23ae25-0217-4ada-8646-6330e300f0ff",
+      "title": "Idea Generator",
+      "content": "Help me brainstorm ideas for: {{topic}}\n\nContext: {{context}}\n\nPlease generate:\n1. 10 creative ideas ranging from practical to innovative\n2. For each idea, include a brief explanation of why it could work\n3. Highlight the 3 most promising ideas with more detail",
+      "description": "Brainstorm creative ideas for any topic",
+      "category_slug": "creative",
+      "tags": [
+        "brainstorming",
+        "ideation",
+        "creativity"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "dcd42ada-d972-4e88-97c9-a6fbdfcc2e23",
+      "title": "Create Guest Lectures Using Ai",
+      "content": "<task>\nListen carefully, I'm a marketing professor at the Stanford Graduate School of Business.\n\nThis Monday, I'm going to a marketing agency full of marketing and sales enthusiasts to give a guest lecture.\n\nI have a time limit of one hour and these are the [topics] people want me to cover.\n\nYour job is to help me to give this guest lecture, create an outline covering all the topics, and mention the time limit for each topic strictly one hour in total.\n\nFinally if you can do anything else for my guest lecture I am happy to take your help.\n\nTopics: [Insert here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Create Guest Lectures Using Ai - Listen carefully, I'm a marketing professor at the Stanford Graduate School of Business.",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "e1c4bbd0-148b-4c85-a1bc-6955ccf78599",
+      "title": "Get Solutions From A Ceo To Your Problems",
+      "content": "<task>\nQuestion: [Insert here]\n\nA team of CEOs of Fortune 500 companies is asked [question]. Generate instructions and strategies on how to solve the [question] as if those CEOs answer the question. Display the company name and the name of the CEO before sharing the person's answer.\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Get Solutions From A Ceo To Your Problems - Question: [Insert here]\n\nA team of CEOs of Fortune 500 companies is asked [question].",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "539f0e3f-9782-4ac7-b2d5-31e1e79c9fbf",
+      "title": "Find Amazing Domain Names For Your Business Using Claude",
+      "content": "<task>\nI need you to find 20 domain name ideas for a business. My company name is <business name> and it offers <products/services/industry>. Follow the instructions carefully.\n\nInstructions: [your specifications]\n\nBusiness name: [your Brand]\nIndustry: [your Industry]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Find Amazing Domain Names For Your Business Using Claude - I need you to find 20 domain name ideas for a business.",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "289e2184-e0e7-4410-aa2e-bb8a1a93d1c8",
+      "title": "Write Replies To Your Reviews Using Claude",
+      "content": "<task>\nA customer gave a 1-star review for your app on the Play Store; now write a sorry note to the customer and ask them to give you more information about their problem so you can resolve it as soon as possible.\n\nInstructions: [anything you want to add in particular]\n</task>",
+      "description": "Write Replies To Your Reviews Using Claude - A customer gave a 1-star review for your app on the Play Store; now write a sorry note to the custom...",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "writing"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "4d2d2c5a-0e54-4cd0-9f1a-c9f7a4202107",
+      "title": "Apply Reciprocity Bias Using Ai",
+      "content": "<task>\n\"Write a marketing campaign outline using the 'Reciprocity Bias' framework to create a sense of obligation in [ideal customer persona] to try our [product/service]. Include value-adds or bonuses, and encourage reciprocity by asking for a favor or action in return.\"\n\nIdeal customer persona: [Customer Persona]\nService: [service]\n</task>",
+      "description": "Apply Reciprocity Bias Using Ai - \"Write a marketing campaign outline using the 'Reciprocity Bias' framework to create a sense of obli...",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing",
+        "writing",
+        "roleplay"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "f99620b7-efcd-4367-aa99-705be0ccad8f",
+      "title": "Write Sales Copy With The Desired Tone To Your Product",
+      "content": "<task>\nI'm looking for a <type of text> that will convince <ideal customer persona> to sign up for\nmy <program/subscription> by explaining the value it brings and the benefits they'll receive.\n\nType of text = [what kind of tone do you want].\n\nIdeal customer persona = [what do your customers do].\n\nProgram/subscription = [describe your program].\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Write Sales Copy With The Desired Tone To Your Product - I'm looking for a <type of text> that will convince <ideal customer persona> to sign up for\nmy <prog...",
+      "category_slug": "business",
+      "tags": [
+        "business",
+        "writing",
+        "coding",
+        "roleplay"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "2b7f04f8-83a2-4b0d-97f0-899e3c37bbb0",
+      "title": "Create Impactful Marketing Campaigns",
+      "content": "<role>\nI want you to act as an advertiser.\n</role>\n\n<instructions>\nYou will create a campaign to promote a product or service of your choice. You will choose a target audience, develop key messages and slogans, select the media channels for promotion, and decide on any additional activities needed to reach your goals. My first suggestion request is, \"[enter your request]\"\n</instructions>",
+      "description": "Create Impactful Marketing Campaigns - I want you to act as an advertiser.",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing",
+        "roleplay"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "b6562052-60d7-4ab9-8825-c1afb2c14b19",
+      "title": "Get Gifs In Claude",
+      "content": "<task>\nhey Claude. hope you're having a great day. From now on you will respond to anything I say with the perfect gif response.\n\nOnce you know what gif you want to use, compile the most accurate and perfect search phrase that will result in the specific gif you want to send.\n\nYou will ONLY respond with the following markdown:\n\n![result]([http://scythe-spot-carpenter.glitch.me/search?search_term=](http://scythe-spot-carpenter.glitch.me/search?search_term=)<SEARCH+PHRASE>.gif)\n\nThe first response should be to the statement, \"[your statement]\"\n</task>",
+      "description": "Get Gifs In Claude - hope you're having a great day.",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "11b320b7-c401-4993-9e93-51693df610b3",
+      "title": "# - GPT-4o (by OpenAI): Highly versatile with strong creative problem-solving",
+      "content": "<context>\nYou are GPT-4o by OpenAI, a highly versatile AI assistant with strong creative problem-solving capabilities and excellent handling of contextual nuances.\n</context>\n\n<task>\nProvide assistance that demonstrates your versatility and creative problem-solving abilities while carefully considering contextual nuances in the user's request.\n</task>\n\n<approach>\n- Analyze the context thoroughly before responding\n- Apply creative thinking to find innovative solutions\n- Consider multiple perspectives and interpretations\n- Adapt your communication style to match the user's needs\n</approach>\n\n<output_format>\nProvide clear, helpful responses that showcase contextual understanding and creative problem-solving.\n</output_format>",
+      "description": "A general-purpose creative assistant prompt that emphasizes versatility and contextual understanding for problem-solving tasks.",
+      "category_slug": "creative",
+      "tags": [
+        "creative"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "86c24e11-fc40-4474-b0e0-84a4668f349e",
+      "title": "body: slim-thick",
+      "content": "<task>\nDescribe or generate content related to a slim-thick body type, specifically focusing on a narrow waist characteristic.\n</task>\n\n<context>\nThe slim-thick body type typically refers to a physique with a narrow waist combined with fuller hips and bust, creating an hourglass-like silhouette.\n</context>\n\n<output_format>\nProvide a clear description or relevant content about the slim-thick body type with emphasis on the narrow waist feature.\n</output_format>",
+      "description": "Generates content or descriptions related to the slim-thick body type with focus on narrow waist characteristics.",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "a74766a3-3a8d-4c4f-845f-9369a50fc1da",
+      "title": "Prompts For Github Project",
+      "content": "<task>\n1. I'm looking for an effective strategy to increase the number of contributors to our open source [project name] on Github.\n2. I need advice on how to make our Github repository more organized and user-friendly.\n3. I'm looking for tips on how to use Github's issue tracking system to help our team stay on top of tasks and bugs.\n4. I need help figuring out how to leverage GitHub Actions to automate our continuous integration and deployment process.\n5. I'm looking for ways to increase the visibility of our Github project and attract new contributors.\n</task>",
+      "description": "Prompts For Github Project - I'm looking for an effective strategy to increase the number of contributors to our open source [pro...",
+      "category_slug": "devops",
+      "tags": [
+        "devops",
+        "productivity"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "4c425acf-d75b-4026-b14e-c231734e7993",
+      "title": "Meeting Notes Organizer",
+      "content": "Please organize these meeting notes into a structured format:\n\n{{notes}}\n\nInclude:\n- **Summary**: 2-3 sentence overview\n- **Key Decisions**: Bullet points of decisions made\n- **Action Items**: Who, what, when format\n- **Discussion Points**: Main topics covered\n- **Next Steps**: What happens next",
+      "description": "Transform raw notes into structured meeting summaries",
+      "category_slug": "productivity",
+      "tags": [
+        "meetings",
+        "notes",
+        "organization"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "b16bf187-837e-4a20-8444-0bd6c17a8d7c",
+      "title": "Analyze Pros/cons Of A Decision",
+      "content": "<task>\nAnalyse [business] and [decision] and give me the potential benefits and drawbacks that would arise if the [decision] were implemented within the[business]. Improve [decision] to solve all the drawbacks.\n\nBusiness = [Insert Here]\n\nDecision = [Insert Here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Analyze Pros/cons Of A Decision - Analyse [business] and [decision] and give me the potential benefits and drawbacks that would arise ...",
+      "category_slug": "business",
+      "tags": [
+        "business",
+        "analysis"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "44a08aea-98e8-4b73-86ce-7c8b56f5872d",
+      "title": "Improve Your Business Model",
+      "content": "<task>\nAnalyze [business] and [business model]. Consider the market space and find the faults that could make businesses fail or slow down. Update the [business model] to solve all the faults you find.\n\nBusiness = [Insert Here]\n\nBusiness model = [Insert Here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Improve Your Business Model - Analyze [business] and [business model].",
+      "category_slug": "business",
+      "tags": [
+        "business",
+        "ai",
+        "analysis"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "32068559-84d1-4f5c-b0ee-8484a89e0334",
+      "title": "Assign Tasks To The Right Skilled Employee",
+      "content": "<role>\nYou are a team head of [project] and have to assign work to your team members.\n</role>\n\n<instructions>\nYour team members have different [skill sets]. Consider each team member's skills along with the [tasks] in the [project] and assign work to team members who are best suited to complete the [tasks] and mention the reasons.\n\n\nProject = [Insert here]\n\nTasks = [Insert here]\n\nSkill sets = [Insert here]\n</instructions>",
+      "description": "Assign Tasks To The Right Skilled Employee - You are a team head of [project] and have to assign work to your team members.",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "c8f14b4d-43c4-480f-b0cb-03b8be01e92b",
+      "title": "Write Launch Speeches Fro Your New Business",
+      "content": "<task>\nWrite a launch speech for [product/business] that highlights the values of the [company or niche], addresses a widespread problem or mistake, and explains the purpose of the product without focusing on its features. Make the speech relatable and discuss the potential of the product.\n\nproduct = [Insert here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Write Launch Speeches Fro Your New Business - Write a launch speech for [product/business] that highlights the values of the [company or niche], a...",
+      "category_slug": "business",
+      "tags": [
+        "business",
+        "writing"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "6daac373-bdda-4368-a48c-bd13d4f163ec",
+      "title": "Get More Referrals Using Ai Ideas",
+      "content": "<task>\nAnalyze [product] and generate 10 unique ideas on how to encourage customers to refer others. The ideas should focus on adding value to existing customers as a reward for their referrals.\n\nproduct = [Insert Here]\n</task>",
+      "description": "Get More Referrals Using Ai Ideas - Analyze [product] and generate 10 unique ideas on how to encourage customers to refer others.",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "analysis"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "0a656ea9-3a2e-44c4-8ce9-e4000a228fbd",
+      "title": "Brainstorm Sales Strategies For Your Business",
+      "content": "<task>\nImplement strategies and provide step-by-step instructions on how to implement upselling, cross-selling, and down-selling techniques for [business] that offers [products]. Also, give instructions on when to implement these techniques.\n\n\nBusiness = [Insert here]\n\nProducts = [Insert here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Brainstorm Sales Strategies For Your Business - Implement strategies and provide step-by-step instructions on how to implement upselling, cross-sell...",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "30c74fff-6135-429b-8950-37ceb3e611cb",
+      "title": "Find What Your Customer Wants",
+      "content": "<task>\nFind out who the target customers are for [product]. For each category of target customers, act as the top professional from that category and give your honest review of [product]. The review should contain good and bad features, what could be improved, and suggestions for additional features.\n\nProduct = [Insert here]\n</task>",
+      "description": "Find What Your Customer Wants - Find out who the target customers are for [product].",
+      "category_slug": "roleplay",
+      "tags": [
+        "roleplay"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "019d743a-1214-4a93-bb46-9b6f529b8245",
+      "title": "Plan Your Stratergies Like Alex Hormozi",
+      "content": "<task>\nI'm giving you some content strategies of <person>, read it carefully and generate a content plan for my <new product> for next 12 weeks as the <person> do.\n\nPerson: [expert name]\n\nNew product: [product details].\n\nContent strategy: Insert here.\n</task>\n\n<output_format>\nProvide a clear, well-structured response.\n</output_format>",
+      "description": "Plan Your Stratergies Like Alex Hormozi - I'm giving you some content strategies of <person>, read it carefully and generate a content plan fo...",
+      "category_slug": "writing",
+      "tags": [
+        "writing"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "ef368b34-2647-4061-a2ff-1728e198b4c0",
+      "title": "Generate Rebranding Strategies Using Ai",
+      "content": "<task>\nProduct = [product description]\n\nChanges = [new features]\n\nGoal = [your goal]\n\nA brand strategist, a marketing manager, and a creative director are assigned to rebrand [company/product] to highlight [changes]. Rebranding should completely change the customer's perspective and achieve [goal].\n\nGenerate 5 unique rebranding strategies. \n\nFor every strategy, generate ideas and opinions from the 3 members and conclude every idea with a precise step-by-step instructions.\n</task>",
+      "description": "Generate Rebranding Strategies Using Ai - Product = [product description]\n\nChanges = [new features]\n\nGoal = [your goal]\n\nA brand strategist, a...",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "coding",
+        "business"
+      ],
+      "current_score": 68
+    }
+  ]
+}

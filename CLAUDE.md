@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.19.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.20.0**.
 
 | Link | URL |
 |------|-----|
@@ -107,7 +107,7 @@ Root Directory: `apps/web` | Domain redirects: `claudeinsider.com`, `claude-insi
 
 ## Feature Requirements Summary
 
-**73 implemented features** across 7 categories. **Full details:** [FEATURES.md](FEATURES.md)
+**74 implemented features** across 7 categories. **Full details:** [FEATURES.md](FEATURES.md)
 
 | Category | Highlights |
 |----------|------------|
@@ -736,11 +736,11 @@ Interactive sandbox for building, validating, and sharing MCP server configurati
 
 ---
 
-## Prompt Library System (MANDATORY) - v1.19.0
+## Prompt Library System (MANDATORY) - v1.20.0
 
-**Location:** `/prompts` | **Components:** `components/prompts/`
+**Location:** `/prompts` | **Components:** `components/prompts/`, `components/prompts/builder/`
 
-Curated library of **800+ Claude-optimized prompts** with Claude hints, community contributions, and versioning.
+Curated library of **800+ Claude-optimized prompts** with Interactive Prompt Builder, Claude hints, community contributions, and versioning.
 
 ### Architecture
 
@@ -752,6 +752,51 @@ Curated library of **800+ Claude-optimized prompts** with Claude hints, communit
 | `prompt_submissions` | Community contribution queue |
 | `prompt_imports` | Bulk import job tracking |
 | `prompt_categories` | 18 categories (8 original + 10 new) |
+
+### Interactive Prompt Builder (v1.20.0)
+
+**Location:** `components/prompts/builder/`
+
+4-mode prompt building experience with smart recommendations based on prompt complexity.
+
+| Mode | Best For | Features |
+|------|----------|----------|
+| **Quick** | Simple prompts (0-2 vars) | Enhanced form, suggestions, live preview |
+| **Guided** | Complex prompts (3+ vars) | Step-by-step wizard, progress bar, back/next navigation |
+| **Chat** | Exploration | AI conversation, quick reply options, undo capability |
+| **Playground** | Power users | Monaco editor, split-pane, variable sidebar, save/share |
+
+#### Builder Components
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| `InteractivePromptBuilder` | `interactive-prompt-builder.tsx` | Main orchestrator, mode router |
+| `ModeSelector` | `mode-selector.tsx` | Mode selection with smart recommendations |
+| `EnhancedVariableModal` | `enhanced-variable-modal.tsx` | Quick mode form |
+| `GuidedWizard` | `guided-wizard.tsx` | Step-by-step wizard |
+| `ChatBuilder` | `chat-builder.tsx` | AI conversation mode |
+| `Playground` | `playground.tsx` | Full Monaco editor environment |
+
+#### Variable Input Types
+
+| Type | Auto-Detection |
+|------|----------------|
+| `text` | Default |
+| `textarea` | Names containing "content", "description", "body", "message" |
+| `code` | Names containing "code", "script", "snippet" |
+| `number` | Names containing "count", "amount", "quantity" |
+| `url` | Names containing "url", "link" |
+| `email` | Names containing "email" |
+| `select` | When suggestions configured |
+
+#### Type System (`types.ts`)
+
+| Type | Purpose |
+|------|---------|
+| `BuilderMode` | `"quick" \| "guided" \| "chat" \| "playground"` |
+| `VariableConfig` | 20+ config options (validation, suggestions, AI, display) |
+| `BuilderValues` | `Record<string, string>` variable values |
+| `BuilderPreferences` | localStorage user preferences |
 
 ### Categories (18 Total)
 
@@ -773,18 +818,19 @@ Curated library of **800+ Claude-optimized prompts** with Claude hints, communit
 
 | Feature | Description |
 |---------|-------------|
+| **Interactive Builder** | 4-mode building: Quick/Guided/Chat/Playground |
 | **Use with AI Assistant** | One-click to send prompt to AI chat with variable substitution |
 | **Version History** | Immutable audit trail with diff viewing |
 | **Community Submissions** | User-submitted prompts with AI analysis and moderation |
 | **Claude Hints Badges** | Visual indicators for XML tags, thinking sections, etc. |
-| **Variable System** | `{{placeholder}}` syntax with input modal |
+| **Variable System** | `{{placeholder}}` syntax with smart input detection |
 
 ### Key Components
 
 | Component | Purpose |
 |-----------|---------|
 | `UseWithAssistantButton` | One-click AI integration with variable filling |
-| `VariableInputModal` | Modal for filling `{{variable}}` placeholders |
+| `InteractivePromptBuilder` | 4-mode builder orchestrator |
 | `ClaudeHintsBadges` | Optimization score and feature badges |
 | `VersionHistory` | Version list with restore capability |
 
@@ -795,6 +841,8 @@ Curated library of **800+ Claude-optimized prompts** with Claude hints, communit
 | `/api/prompts` | GET | List prompts with filters |
 | `/api/prompts/[id]` | GET/PATCH | Get/update single prompt |
 | `/api/prompts/[id]/versions` | GET/POST | Version history, create version |
+| `/api/prompts/[id]/use` | POST | Track usage with builder mode analytics |
+| `/api/prompts/analytics` | GET | Aggregated usage analytics (editor+ role) |
 | `/api/prompts/submit` | POST | Submit community prompt |
 | `/api/admin/prompts/submissions` | GET/PATCH | Moderation queue |
 

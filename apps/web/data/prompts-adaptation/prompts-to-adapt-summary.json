@@ -1,0 +1,69 @@
+{
+  "exportedAt": "2026-01-10T21:34:46.028Z",
+  "sources": [
+    "awesome-chatgpt",
+    "awesome-claude",
+    "bigprompt"
+  ],
+  "totalPrompts": 381,
+  "totalBatches": 16,
+  "batchSize": 25,
+  "categories": [
+    [
+      "roleplay",
+      91
+    ],
+    [
+      "conversation",
+      66
+    ],
+    [
+      "coding",
+      62
+    ],
+    [
+      "creative",
+      44
+    ],
+    [
+      "writing",
+      33
+    ],
+    [
+      "business",
+      27
+    ],
+    [
+      "translation",
+      15
+    ],
+    [
+      "marketing",
+      12
+    ],
+    [
+      "analysis",
+      12
+    ],
+    [
+      "education",
+      8
+    ],
+    [
+      "healthcare",
+      5
+    ],
+    [
+      "productivity",
+      3
+    ],
+    [
+      "devops",
+      2
+    ],
+    [
+      "legal",
+      1
+    ]
+  ]
+}

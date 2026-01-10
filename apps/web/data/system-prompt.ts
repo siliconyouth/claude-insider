@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2026-01-09 for v1.19.0 (Prompt Library Enhancement)
+ * Updated: 2026-01-11 for v1.20.0 (Interactive Prompt Builder)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.19.0",
+  version: "1.20.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.19.0 - updated 2026-01-09)
+// TECH STACK KNOWLEDGE (v1.20.0 - updated 2026-01-11)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -121,7 +121,7 @@ export const TECH_STACK = {
     engine: "PostgreSQL 15+",
     tables: 152,
     categories: 25,
-    features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library (800+ prompts, 18 categories)", "LRU caching"],
+    features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library (800+ prompts, 18 categories, Interactive Builder)", "LRU caching"],
   },
   cms: {
     provider: "Payload CMS",
@@ -1268,6 +1268,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.19.0", "prompt library", "800+ prompts", "18 categories", "claude hints", "optimization scores", "version history", "community submissions", "one-click ai", "fr-73"],
+  },
+  {
+    id: "v1200-features",
+    title: "Version 1.20.0 Features",
+    section: "New in v1.20.0",
+    content: `Claude Insider v1.20.0 introduces the Interactive Prompt Builder (FR-74), a 4-mode prompt building system for enhanced prompt creation. 4 Builder Modes: Quick Mode (enhanced form with suggestions, live preview, best for 0-2 variables), Guided Mode (step-by-step wizard with progress bar, best for 3+ variables), Chat Mode (AI conversation to fill variables, quick reply options, undo capability), Playground Mode (Monaco editor, split-pane layout, variable sidebar, save/share). Smart Mode Recommendations: Based on variable count complexity - 0-2 vars → Quick, 3+ vars → Guided. Users can override recommendations. 8 Variable Input Types: Auto-detection from name patterns - text (default), textarea (description/content/body), code (snippet/function/class), number (count/amount/age), url (link/endpoint), email, select (dropdown), file (path/directory). Type System: BuilderMode, VariableConfig, BuilderValues, BuilderSession, BuilderPreferences, ValidationRule interfaces. All variable configs support required flag, validation rules, placeholder text, and suggestions. Key Components: InteractivePromptBuilder (orchestrator), ModeSelector (modal), EnhancedVariableModal, GuidedWizard, ChatBuilder, Playground. User Preferences: Saved to localStorage - default mode, preview visibility, editor theme (vs-dark/vs-light), font size. Enhanced Analytics: /api/prompts/analytics tracks builder mode, variable count, completion time, device type, category. Lazy Loading: Heavy modes (Chat, Playground with Monaco) loaded via next/dynamic with ssr: false.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.20.0", "interactive prompt builder", "4 modes", "quick mode", "guided mode", "chat mode", "playground", "monaco editor", "variable detection", "builder preferences", "fr-74"],
   },
 ];
 

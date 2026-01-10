@@ -9,6 +9,87 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.20.0] - 2026-01-11
+### 🛠️ Interactive Prompt Builder
+Revolutionary 4-mode prompt building experience with AI-powered conversation, step-by-step wizard, and full Monaco editor playground.
+
+#### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **4 Builder Modes** | Quick (form), Guided (wizard), Chat (AI conversation), Playground (editor) |
+| **Mode Selector** | Smart recommendations based on prompt complexity, remember preference |
+| **Variable System** | Auto-detection from `{{placeholder}}` syntax, 8 input types |
+| **Monaco Integration** | Full syntax highlighting, IntelliSense, live preview |
+| **AI Chat Builder** | Natural language conversation to fill variables |
+| **Preferences** | Saved to localStorage, cross-session persistence |
+
+#### Builder Modes
+
+| Mode | Best For | Features |
+|------|----------|----------|
+| **Quick** | Simple prompts (0-2 vars) | Enhanced form, suggestions, live preview |
+| **Guided** | Complex prompts (3+ vars) | Step-by-step wizard, progress bar, back/next navigation |
+| **Chat** | Exploration, customization | AI conversation, quick reply options, undo capability |
+| **Playground** | Power users | Monaco editor, split-pane, variable sidebar, save/share |
+
+#### Variable Input Types
+
+| Type | Auto-Detection | Features |
+|------|----------------|----------|
+| `text` | Default | Single-line input |
+| `textarea` | Names containing "content", "description", "body" | Multi-line, resizable |
+| `code` | Names containing "code", "script", "snippet" | Monaco editor, language detection |
+| `select` | When suggestions available | Radio-style selection |
+| `number` | Names containing "count", "amount", "quantity" | Min/max validation |
+| `url` | Names containing "url", "link" | URL format validation |
+| `email` | Names containing "email" | Email format validation |
+| `file` | Explicit config | File upload support |
+
+#### New Components
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| `InteractivePromptBuilder` | `/components/prompts/builder/` | Main orchestrator |
+| `ModeSelector` | `/components/prompts/builder/mode-selector.tsx` | Mode selection modal |
+| `EnhancedVariableModal` | `/components/prompts/builder/enhanced-variable-modal.tsx` | Quick mode form |
+| `GuidedWizard` | `/components/prompts/builder/guided-wizard.tsx` | Step-by-step wizard |
+| `ChatBuilder` | `/components/prompts/builder/chat-builder.tsx` | AI conversation mode |
+| `Playground` | `/components/prompts/builder/playground.tsx` | Full editor environment |
+
+#### Type System (`types.ts`)
+
+| Type | Purpose |
+|------|---------|
+| `BuilderMode` | `"quick" \| "guided" \| "chat" \| "playground"` |
+| `VariableConfig` | 20+ config options (validation, suggestions, AI, display) |
+| `BuilderValues` | `Record<string, string>` variable values |
+| `BuilderSession` | Session state tracking |
+| `PromptFill` | Saved/shared filled prompts |
+| `BuilderPreferences` | User preference storage |
+
+#### Utility Functions
+
+| Function | Purpose |
+|----------|---------|
+| `variableToConfig()` | Convert PromptVariable to full VariableConfig |
+| `substituteVariables()` | Replace `{{var}}` with values |
+| `extractVariableNames()` | Parse variables from content |
+| `validateVariable()` | Validate against VariableConfig rules |
+| `shouldShowVariable()` | Conditional display logic |
+| `formatVariableName()` | Convert `snake_case` to "Title Case" |
+
+#### Enhanced Analytics
+
+| Tracking | Data |
+|----------|------|
+| **Builder Mode** | Which mode was used (direct, quick, guided, chat, playground) |
+| **Device Info** | Viewport size, mobile detection, touch support |
+| **Category** | Prompt category for segment analysis |
+| **API Route** | `/api/prompts/analytics` for aggregated dashboard stats |
+
+---
+
 ## [1.19.0] - 2026-01-09
 ### 📚 Prompt Library Enhancement
 Major expansion of the Prompt Library with 800+ Claude-optimized prompts, community contributions, versioning, and AI Assistant integration.

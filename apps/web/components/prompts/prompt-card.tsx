@@ -29,10 +29,22 @@ import {
   BookOpenIcon,
   MessageSquareIcon,
   BriefcaseIcon,
+  // New category icons
+  PaletteIcon,
+  ServerIcon,
+  GraduationCapIcon,
+  HeartIcon,
+  ScaleIcon,
+  MegaphoneIcon,
+  SearchIcon,
+  TheaterIcon,
+  ShieldIcon,
+  LanguagesIcon,
 } from "lucide-react";
 
-// Category icon mapping
+// Category icon mapping - all 18 categories
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
+  // Original 8 categories
   coding: <CodeIcon className="w-4 h-4" />,
   writing: <PencilIcon className="w-4 h-4" />,
   analysis: <BarChartIcon className="w-4 h-4" />,
@@ -41,9 +53,22 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   learning: <BookOpenIcon className="w-4 h-4" />,
   conversation: <MessageSquareIcon className="w-4 h-4" />,
   business: <BriefcaseIcon className="w-4 h-4" />,
+  // New 10 categories
+  design: <PaletteIcon className="w-4 h-4" />,
+  devops: <ServerIcon className="w-4 h-4" />,
+  education: <GraduationCapIcon className="w-4 h-4" />,
+  healthcare: <HeartIcon className="w-4 h-4" />,
+  legal: <ScaleIcon className="w-4 h-4" />,
+  marketing: <MegaphoneIcon className="w-4 h-4" />,
+  research: <SearchIcon className="w-4 h-4" />,
+  roleplay: <TheaterIcon className="w-4 h-4" />,
+  security: <ShieldIcon className="w-4 h-4" />,
+  translation: <LanguagesIcon className="w-4 h-4" />,
 };
 
+// Category color schemes - all 18 categories
 const CATEGORY_COLORS: Record<string, string> = {
+  // Original 8 categories
   coding: "bg-blue-500/10 text-blue-400 border-blue-500/30",
   writing: "bg-violet-500/10 text-violet-400 border-violet-500/30",
   analysis: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30",
@@ -52,6 +77,17 @@ const CATEGORY_COLORS: Record<string, string> = {
   learning: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
   conversation: "bg-pink-500/10 text-pink-400 border-pink-500/30",
   business: "bg-slate-500/10 text-slate-400 border-slate-500/30",
+  // New 10 categories - using gradient-compatible colors
+  design: "bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/30",
+  devops: "bg-orange-500/10 text-orange-400 border-orange-500/30",
+  education: "bg-teal-500/10 text-teal-400 border-teal-500/30",
+  healthcare: "bg-rose-500/10 text-rose-400 border-rose-500/30",
+  legal: "bg-stone-500/10 text-stone-400 border-stone-500/30",
+  marketing: "bg-red-500/10 text-red-400 border-red-500/30",
+  research: "bg-sky-500/10 text-sky-400 border-sky-500/30",
+  roleplay: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+  security: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+  translation: "bg-lime-500/10 text-lime-400 border-lime-500/30",
 };
 
 interface PromptCategory {

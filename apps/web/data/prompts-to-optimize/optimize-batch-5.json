@@ -1,0 +1,308 @@
+{
+  "batchNumber": 5,
+  "totalBatches": 6,
+  "promptsInBatch": 25,
+  "totalPrompts": 141,
+  "threshold": 70,
+  "prompts": [
+    {
+      "id": "47c93268-2e8a-4018-b99c-b27e1db6389c",
+      "title": "Answer Product Objections And Win Customers Using Ai",
+      "content": "<task>\nConsider possible objections to [product/service] and give step-by-step instructions on how to answer those objections in a way that will make customers like [product/service].\n\nservice = [Insert here]\n</task>",
+      "description": "Answer Product Objections And Win Customers Using Ai - Consider possible objections to [product/service] and give step-by-step instructions on how to answe...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "7ab3bfcb-f2db-4e76-a66e-2e9ce2d65e4b",
+      "title": "Write Thank You Letters For Your Customers Using Ai",
+      "content": "<task>\nWrite a personalized thank you letter for [customer] for buying [product]. The thank you letter is intended to be given with the product. Write the letter around how the product can help [customer] in a polite, glad, extremely authentic tone, and the reader should feel comfortable and connected to reach out to the company for feedback.\n\nProduct = [description]\n\nCustomer = [customer details]\n</task>",
+      "description": "Write Thank You Letters For Your Customers Using Ai - Write a personalized thank you letter for [customer] for buying [product].",
+      "category_slug": "roleplay",
+      "tags": [
+        "roleplay",
+        "writing",
+        "coding",
+        "business"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "7eb7ef29-a5ca-4fc5-b741-c2231d5d7f07",
+      "title": "Use Ai To Get Instagram Story Ideas",
+      "content": "<task>\nI need an Instagram story idea that will provide a sneak peek of upcoming products or services and create a sense of anticipation and excitement for <targeted audience> with a clear and compelling call to action.\n\nTargeted audience = [describe your audience]\n</task>",
+      "description": "Use Ai To Get Instagram Story Ideas - I need an Instagram story idea that will provide a sneak peek of upcoming products or services and c...",
+      "category_slug": "creative",
+      "tags": [
+        "creative"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "717eed0e-11d2-4bb9-8319-89a28ca81f07",
+      "title": "Generate Email Subject Lines",
+      "content": "<task>\nWhat are some effective email subject lines for the following scenario:\n\nI'm writing an email to [receiver persna].\n\nThe audience is interested in [interests].\n\nThis particular email is about [purpose of the email].\n\nWrite 10 potential email subject lines for this email.\n</task>",
+      "description": "Generate Email Subject Lines - What are some effective email subject lines for the following scenario:\n\nI'm writing an email to [re...",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "writing"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "3a1b8775-ed0d-45d1-af5b-3b71084d9805",
+      "title": "Create Campaigns Using Ai",
+      "content": "<task>\nCreate a marketing campaign focusing on [ideal customer persona] considering psychological reactance. Emphasize the freedom offered by [product/service] and avoid controlling language or offers.\n\nProduct = [Insert here]\n\nIdeal customer persona = [Insert here]\n</task>",
+      "description": "Create Campaigns Using Ai - Create a marketing campaign focusing on [ideal customer persona] considering psychological reactance.",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing",
+        "roleplay",
+        "translation"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "2b15400d-a7b6-45b6-90ed-d1031a66a768",
+      "title": "Use Star Story Solution Framework For Email Marketing",
+      "content": "<task>\nCreate a marketing campaign outline that uses the 'Star-Story-Solution' framework that introduces the main character of a story related to [product/service] and keeps the reader hooked. End the story with an explanation of how the star wins in the end with the help of our product.\n\nProduct = [Insert Here]\n</task>",
+      "description": "Use Star Story Solution Framework For Email Marketing - Create a marketing campaign outline that uses the 'Star-Story-Solution' framework that introduces th...",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "roleplay"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "2f32ebfe-6374-409b-8cd2-21409c4fb0e8",
+      "title": "Implement \"picture-promise-prove-push\" Framework In Your Email Marketing",
+      "content": "<task>\nCreate an email marketing campaign using the \"Picture-Promise-Prove-Push\" framework to get attention and create desire for [product/service] in [target audience].\n\nProduct = [Insert Here]\n\nTarget Audience = [Insert Here]\n</task>",
+      "description": "Implement \"picture-promise-prove-push\" Framework In Your Email Marketing - Create an email marketing campaign using the \"Picture-Promise-Prove-Push\" framework to get attention...",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing"
+      ],
+      "current_score": 62
+    },
+    {
+      "id": "a552ccf4-dba2-48cd-86b0-ab7542b55f43",
+      "title": "Earn With Your Skils And A Budget",
+      "content": "<task>\nWith [skills] and [budget], give me 5 ideas, budgets and step by step instructions for every idea on how to earn more money.\n\nSkills = [Insert Here]\n\nBudget = [Insert Here]\n</task>",
+      "description": "Earn With Your Skils And A Budget - With [skills] and [budget], give me 5 ideas, budgets and step by step instructions for every idea on...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 65
+    },
+    {
+      "id": "31cd842b-fdd1-4122-8cf7-a0abb18d1010",
+      "title": "Ambient Advertising For Your Product",
+      "content": "<task>\nGive me ideas and step-by-step instructions on how to perform ambient advertising to promote [product].\n\nProduct = [Insert here]\n</task>",
+      "description": "Ambient Advertising For Your Product - Give me ideas and step-by-step instructions on how to perform ambient advertising to promote [produc...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 65
+    },
+    {
+      "id": "1fbb6fab-1aa3-4807-9112-765b080b5387",
+      "title": "Ideas To Earn More Money With Your Skills",
+      "content": "<task>\nWith [skills] and [budget], give me 5 ideas, budgets and step by step instructions for every idea on how to earn more money.\n\nSkills = [Insert Here]\n\nBudget = [Insert Here]\n</task>",
+      "description": "Ideas To Earn More Money With Your Skills - With [skills] and [budget], give me 5 ideas, budgets and step by step instructions for every idea on...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 65
+    },
+    {
+      "id": "ef5635cf-5bc0-4884-bb1d-d4831ffa3800",
+      "title": "Concept Explainer",
+      "content": "Please explain {{concept}} in a way that a {{audience}} would understand.\n\nInclude:\n- Simple definition\n- Real-world analogy\n- Key components or aspects\n- Common misconceptions\n- Practical examples",
+      "description": "Get clear explanations of complex topics",
+      "category_slug": "learning",
+      "tags": [
+        "education",
+        "explanation",
+        "teaching"
+      ],
+      "current_score": 67
+    },
+    {
+      "id": "313bf263-d14d-41f1-8df2-c16be86208d3",
+      "title": "Data Analysis Helper",
+      "content": "Please analyze the following data:\n\n{{data}}\n\nProvide:\n1. Key statistics and patterns\n2. Notable trends or anomalies\n3. Actionable insights\n4. Suggested visualizations\n5. Recommendations based on findings",
+      "description": "Analyze data and extract insights",
+      "category_slug": "analysis",
+      "tags": [
+        "data",
+        "statistics",
+        "insights"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "baf91c6f-ff6c-4cb4-b438-3bbfe1670b9f",
+      "title": "Roleplay Scenario",
+      "content": "Let's roleplay the following scenario:\n\n**Setting**: {{setting}}\n**Your Role**: {{your_role}}\n**My Role**: {{my_role}}\n**Objective**: {{objective}}\n\nPlease stay in character and respond naturally to my messages. Start by setting the scene.",
+      "description": "Practice conversations with custom scenarios",
+      "category_slug": "conversation",
+      "tags": [
+        "roleplay",
+        "practice",
+        "scenarios"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "f4348772-3151-44c9-84e7-c32693a1f2ae",
+      "title": "Code Review Assistant",
+      "content": "Please review the following code and provide feedback on:\n\n1. **Code Quality**: Is the code clean, readable, and well-organized?\n2. **Best Practices**: Does it follow language-specific best practices?\n3. **Potential Bugs**: Are there any logic errors or edge cases not handled?\n4. **Performance**: Are there any performance concerns?\n5. **Security**: Are there any security vulnerabilities?\n\n```{{language}}\n{{code}}\n```\n\nProvide specific, actionable suggestions for improvement.",
+      "description": "Get a thorough code review with best practices and suggestions",
+      "category_slug": "coding",
+      "tags": [
+        "code-review",
+        "debugging",
+        "best-practices"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "e29e2a67-208e-442e-86e6-78ff42d0aac8",
+      "title": "Create Pricing Options For Your Product Line",
+      "content": "<task>\nAnalyze [business], [product/service] and [product/service features]. Generate [number] pricing options for [product/service] along with the features that should give great value for the options. Name the pricing options with unique and simple words.\n\nBusiness = [Insert Here]\n\nProduct = [Insert Here] \n\nProduct features = [Insert Here]\n\nNumber = [Insert Here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Create Pricing Options For Your Product Line - Analyze [business], [product/service] and [product/service features].",
+      "category_slug": "business",
+      "tags": [
+        "business",
+        "analysis"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "d7af1175-db0d-4036-a11f-aefbba268d11",
+      "title": "2. 数据: `get_datasets`",
+      "content": "<context>\nThis prompt is requesting a dataset operation using the function `get_datafields`. This appears to be for data analysis tasks where the user needs to retrieve information about data field structures or metadata.\n</context>\n\n<task>\nExecute the `get_datafields` function to retrieve dataset field information.\n</task>\n\n<output_format>\nProvide the results from the `get_datafields` function call, including:\n- Field names\n- Data types\n- Any metadata or schema information returned\n- Format the output in a clear, structured manner\n</output_format>",
+      "description": "A simple prompt to execute a data analysis function that retrieves dataset field information and metadata.",
+      "category_slug": "analysis",
+      "tags": [
+        "analysis",
+        "data"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "e0215cff-b599-4ae8-9200-a08b22f33e66",
+      "title": "Create Claude Prompts Using Claude",
+      "content": "<role>\nYou are the manager of employees who are experts in [skills].\n</role>\n\n<instructions>\nYou recently came across Claude, which can answer anything with the right prompt. You understand Claude's limitations and how to explain the prompt in detail.\n\nFind the most valuable strategies and techniques in each of the [skills] and create a list of very detailed Claude prompts (don't ask questions). Prompts should increase productivity and automate mundane tasks.\n\nUnderstand each prompt and insert placeholders where you think the user needs to input their data to get the prompt working to its full potential.\n\n\nJob role = [Insert here]\n\nSkills = [Insert here]\n</instructions>",
+      "description": "Create Claude Prompts Using Claude - You are the manager of employees who are experts in [skills].",
+      "category_slug": "business",
+      "tags": [
+        "business",
+        "analysis",
+        "productivity"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "7c14d78d-041d-4ae9-892e-3045758b6e2d",
+      "title": "Generate Giveaway Ideas Using Claude",
+      "content": "<task>\nCreate 5 unique competitive challenges and the rewards for the giveaway program for [product/business] that generate engagement and build value for the [product/business]. Use psychology tricks and create urgency and mention the tricks you used alongside the challenge.\n\nProduct =  [Insert here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Generate Giveaway Ideas Using Claude - Create 5 unique competitive challenges and the rewards for the giveaway program for [product/busines...",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "2858e280-379d-42c2-b103-35e214dd2bcc",
+      "title": "Design The User Experience For Your Website.",
+      "content": "<task>\nDesign the user experience and website design for [online business] that should highlight [qualities]. Give precise instructions and recommendations for each step.\n\nOnline business = [Insert Here]\n\nQualities = [Insert Here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Design The User Experience For Your Website. - Design the user experience and website design for [online business] that should highlight [qualities...",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "5c23ae25-0217-4ada-8646-6330e300f0ff",
+      "title": "Idea Generator",
+      "content": "Help me brainstorm ideas for: {{topic}}\n\nContext: {{context}}\n\nPlease generate:\n1. 10 creative ideas ranging from practical to innovative\n2. For each idea, include a brief explanation of why it could work\n3. Highlight the 3 most promising ideas with more detail",
+      "description": "Brainstorm creative ideas for any topic",
+      "category_slug": "creative",
+      "tags": [
+        "brainstorming",
+        "ideation",
+        "creativity"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "dcd42ada-d972-4e88-97c9-a6fbdfcc2e23",
+      "title": "Create Guest Lectures Using Ai",
+      "content": "<task>\nListen carefully, I'm a marketing professor at the Stanford Graduate School of Business.\n\nThis Monday, I'm going to a marketing agency full of marketing and sales enthusiasts to give a guest lecture.\n\nI have a time limit of one hour and these are the [topics] people want me to cover.\n\nYour job is to help me to give this guest lecture, create an outline covering all the topics, and mention the time limit for each topic strictly one hour in total.\n\nFinally if you can do anything else for my guest lecture I am happy to take your help.\n\nTopics: [Insert here]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Create Guest Lectures Using Ai - Listen carefully, I'm a marketing professor at the Stanford Graduate School of Business.",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "e1c4bbd0-148b-4c85-a1bc-6955ccf78599",
+      "title": "Get Solutions From A Ceo To Your Problems",
+      "content": "<task>\nQuestion: [Insert here]\n\nA team of CEOs of Fortune 500 companies is asked [question]. Generate instructions and strategies on how to solve the [question] as if those CEOs answer the question. Display the company name and the name of the CEO before sharing the person's answer.\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Get Solutions From A Ceo To Your Problems - Question: [Insert here]\n\nA team of CEOs of Fortune 500 companies is asked [question].",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "539f0e3f-9782-4ac7-b2d5-31e1e79c9fbf",
+      "title": "Find Amazing Domain Names For Your Business Using Claude",
+      "content": "<task>\nI need you to find 20 domain name ideas for a business. My company name is <business name> and it offers <products/services/industry>. Follow the instructions carefully.\n\nInstructions: [your specifications]\n\nBusiness name: [your Brand]\nIndustry: [your Industry]\n</task>\n\nThink through your response step by step before providing the final answer.",
+      "description": "Find Amazing Domain Names For Your Business Using Claude - I need you to find 20 domain name ideas for a business.",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "289e2184-e0e7-4410-aa2e-bb8a1a93d1c8",
+      "title": "Write Replies To Your Reviews Using Claude",
+      "content": "<task>\nA customer gave a 1-star review for your app on the Play Store; now write a sorry note to the customer and ask them to give you more information about their problem so you can resolve it as soon as possible.\n\nInstructions: [anything you want to add in particular]\n</task>",
+      "description": "Write Replies To Your Reviews Using Claude - A customer gave a 1-star review for your app on the Play Store; now write a sorry note to the custom...",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "writing"
+      ],
+      "current_score": 68
+    },
+    {
+      "id": "4d2d2c5a-0e54-4cd0-9f1a-c9f7a4202107",
+      "title": "Apply Reciprocity Bias Using Ai",
+      "content": "<task>\n\"Write a marketing campaign outline using the 'Reciprocity Bias' framework to create a sense of obligation in [ideal customer persona] to try our [product/service]. Include value-adds or bonuses, and encourage reciprocity by asking for a favor or action in return.\"\n\nIdeal customer persona: [Customer Persona]\nService: [service]\n</task>",
+      "description": "Apply Reciprocity Bias Using Ai - \"Write a marketing campaign outline using the 'Reciprocity Bias' framework to create a sense of obli...",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing",
+        "writing",
+        "roleplay"
+      ],
+      "current_score": 68
+    }
+  ]
+}

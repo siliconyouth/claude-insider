@@ -1,0 +1,12 @@
+{
+  "exportedAt": "2026-01-10T22:05:32.960Z",
+  "threshold": 70,
+  "totalPrompts": 141,
+  "totalBatches": 6,
+  "batchSize": 25,
+  "scoreDistribution": {
+    "below_50": 45,
+    "50_to_59": 20,
+    "60_to_69": 76
+  }
+}

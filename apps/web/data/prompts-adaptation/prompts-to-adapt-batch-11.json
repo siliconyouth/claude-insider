@@ -1,0 +1,208 @@
+{
+  "batchNumber": 11,
+  "totalBatches": 16,
+  "promptsInBatch": 25,
+  "totalPrompts": 381,
+  "prompts": [
+    {
+      "id": 251,
+      "title": "Implement \"Picture-Promise-Prove-Push\" framework in your email marketing",
+      "content": "Create an email marketing campaign using the \"Picture-Promise-Prove-Push\" framework to get attention and create desire for [product/service] in [target audience].\n\nProduct = [Insert Here]\n\nTarget Audience = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "marketing"
+    },
+    {
+      "id": 252,
+      "title": "Get multiple perspectives for your problem",
+      "content": "Analyze [business/product] and give 3 different perspectives on [decision/problem] and evaluate the pros and cons of each approach.\n\nBusiness = [Insert Here]\n\nProblem = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 253,
+      "title": "Create pricing options for your product line",
+      "content": "Analyze [business], [product/service] and [product/service features]. Generate [number] pricing options for [product/service] along with the features that should give great value for the options. Name the pricing options with unique and simple words.\n\nBusiness = [Insert Here]\n\nProduct = [Insert Here] \n\nProduct features = [Insert Here]\n\nNumber = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 254,
+      "title": "Cite your sources",
+      "content": "You are an expert research assistant. Here is a document you will answer questions about:\n[Full text of Matterport SEC filing 10-K 2023, not pasted here for brevity]\n\nFirst, find the quotes from the document that are most relevant to answering the question, and then print them in numbered order. Quotes should be relatively short.\n\nIf there are no relevant quotes, write “No relevant quotes” instead.\n\nThen, answer the question, starting with “Answer:“. Do not include or reference quoted content verbatim in the answer. Don’t say “According to Quote [1]” when answering. Instead make references to quotes relevant to each section of the answer solely by adding their bracketed numbers at the end of relevant sentences.\n\nThus, the format of your overall response should look like what’s shown between the tags. Make sure to follow the formatting and spacing exactly.\nQuotes:\n[1] “Company X reported revenue of $12 million in 2021.”\n[2] “Almost 90% of revenue came from widget sales, with gadget sales making up the remaining 10%.”\n\nAnswer:\nCompany X earned $12 million. [1] Almost 90% of it was from widget sales. [2]\n\n\nIf the question cannot be answered by the document, say so.",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "writing"
+    },
+    {
+      "id": 255,
+      "title": "Learn complex topics simply",
+      "content": "Understand the concepts in [text], explain the topics individually, and also explain the whole concept in [text] at the end, like I am an 11-year-old.\n \nText = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 256,
+      "title": "Create a detailed social media content strategy using AI",
+      "content": "Create a social media content strategy for [social media handles] for [time period] to attract [target audience].\nAnalyze and create 15 engaging and valuable topics in [content type] along with an optimal posting schedule that will help achieve [goals]. \n\nSteps you need to follow :\n1. Find 15 engaging and unique topics in [content type] that will achieve [goal].\n2. optimal posting schedule format : h1. week of the day, h2. 1st social media handle, h3. multiple content types with time to post. h2. 2nd social media handle, h3. multiple content types with time to post.\n\nSocial media handles = [Insert Here] \n\nTime period = [Insert Here] \n\nTarget Audience = [Insert Here] \n\nContent type = [Insert Here] \n\nGoal = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "writing"
+    },
+    {
+      "id": 257,
+      "title": "Replicate any writing style",
+      "content": "Act as a tone analyzer. Analyze the writing style and tone of [extract]. Create a description of that text's style and tone that can be used to recreate more text in that style. You are not to take any context or information from the \"extract\" below. The extract shared in this prompt is PURELY for tone analysis purposes.\n\nExample: The author's writing style in this text is concise, informative and uses a journalistic tone. They maintain a smooth flow throughout the text. They use precise and clear language.\n\nFormat: Bullet pointed list\n \nExtract = [Insert Here] \n\nUsing the analyzed tone, rewrite [text].\n\nText = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "translation"
+    },
+    {
+      "id": 258,
+      "title": "Use emotions to your advantage in marketing",
+      "content": "Write a marketing campaign outline that uses [emotional appeal] to persuade [ideal customers] to take action and purchase [product/service]. For every section in the campaign give step-by-step instructions.\n\nEmotional appeal = [Insert Here]\n\nIdeal customers = [Insert Here] \n\nProduct = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "marketing"
+    },
+    {
+      "id": 259,
+      "title": "Find career pitfalls beforhand",
+      "content": "What are the common mistakes a person makes on the path to becoming [dream career]? Give step-by-step instructions on how to avoid those mistakes, a detailed career path with duration, and the best sources to learn from.  \n\nDream career = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 260,
+      "title": "Build resumes using AI",
+      "content": "Analyze [details] and build a resume to apply for [job role details]. Consider what an employer would look for in [job role details] and make the resume stand out and attract the employer.\n\nDetails = [Insert Here]\n\nJob role details = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 261,
+      "title": "Turn any piece of text into any writing style",
+      "content": "There are 4 types of primary writing styles: 1.Essay Writing, 2. Descriptive Writing, 3.Narrative Writing, 4. Persuasive Writing.\n\nUnderstand the context in [text] and convert [text] into [writing style]. Use the techniques, concepts that are used in [writing style] and apply them to the topics to get most out of [text]. Make sure the converted text is unique and interesting.\n\nText = [Insert Here]\n\nWriting style = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "writing"
+    },
+    {
+      "id": 262,
+      "title": "Ideas to earn more money with your skills",
+      "content": "With [skills] and [budget], give me 5 ideas, budgets and step by step instructions for every idea on how to earn more money.\n\nSkills = [Insert Here]\n\nBudget = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 263,
+      "title": "Earn with your skils and a budget",
+      "content": "With [skills] and [budget], give me 5 ideas, budgets and step by step instructions for every idea on how to earn more money.\n\nSkills = [Insert Here]\n\nBudget = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 264,
+      "title": "Analyze pros/cons of a decision",
+      "content": "Analyse [business] and [decision] and give me the potential benefits and drawbacks that would arise if the [decision] were implemented within the[business]. Improve [decision] to solve all the drawbacks.\n\nBusiness = [Insert Here]\n\nDecision = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 265,
+      "title": "Improve your business model",
+      "content": "Analyze [business] and [business model]. Consider the market space and find the faults that could make businesses fail or slow down. Update the [business model] to solve all the faults you find.\n\nBusiness = [Insert Here]\n\nBusiness model = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 266,
+      "title": "Translate ad copy into other languages",
+      "content": "Translate [ad copy] into [language]. Understand the meaning of [ad copy] and find relevant words and native phrases in [language] that are best suited for persuading customers. \n\nShow what you've changed/added in English.\n\nAd copy = [Insert Here]\n\nLanguage = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "translation"
+    },
+    {
+      "id": 267,
+      "title": "Write update emails about a project using AI",
+      "content": "Write an email from [job role] to [client] updating him about [update] in [project]. The email should maintain [tone].\n\nJob role = [Insert Here]\n\nClient = [Insert Here]\n\nUpdate = [Insert Here] \n\nProject = [Insert Here]\n\nTone = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 268,
+      "title": "Upsell using email marketing",
+      "content": "Generate ideas on how to use email marketing for [business] to retain existing customers and to encourage repeat purchases from [product line].\n\nBusiness = [Insert Here]\n\nProduct line = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "business"
+    },
+    {
+      "id": 269,
+      "title": "Get more referrals using AI ideas",
+      "content": "Analyze [product] and generate 10 unique ideas on how to encourage customers to refer others. The ideas should focus on adding value to existing customers as a reward for their referrals.\n\nproduct = [Insert Here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 270,
+      "title": "Answer product objections and win customers using AI",
+      "content": "Consider possible objections to [product/service] and give step-by-step instructions on how to answer those objections in a way that will make customers like [product/service].\n\nservice = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 271,
+      "title": "Get best meta descriptions for your website",
+      "content": "Give me 5 unique meta descriptions for [website description] that should be catchy and make users click. Include [keywords] and make the descriptions optimized for SEO.\n\nWebsite description = [Insert here]\n\nKeywords = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "marketing"
+    },
+    {
+      "id": 272,
+      "title": "Generate long tail keywords for your website",
+      "content": "Consider the target audience for [website] and generate a list of long-tail keywords to attract more engaging traffic to [website]. Keywords should be [qualities].\n\nWebsite = [Insert here]\n\nQualities = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 273,
+      "title": "Increase organic traffic for your website",
+      "content": "Generate unique ideas on how to increase organic search ranking for [website]. Implement ideas on how to stand out from the [website]'s competition. For each idea, give step-by-step instructions on how to implement it for [website].\n\nwebsite = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    },
+    {
+      "id": 274,
+      "title": "Create taglines for your product",
+      "content": "Develop 10 taglines for [product/business] that effectively convey the [product/business]'s mission and inspire others to become a part of it. Taglines should be short and snappy.\n\nProduct = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "creative"
+    },
+    {
+      "id": 275,
+      "title": "Ambient Advertising for your product",
+      "content": "Give me ideas and step-by-step instructions on how to perform ambient advertising to promote [product].\n\nProduct = [Insert here]",
+      "source": "awesome-claude-prompts",
+      "sourceUrl": "https://github.com/langgptai/awesome-claude-prompts",
+      "suggestedCategory": "conversation"
+    }
+  ]
+}

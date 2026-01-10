@@ -1,7 +1,10 @@
 /**
  * Prompt Usage Tracking API
  *
- * POST: Track when a prompt is used
+ * POST: Track when a prompt is used with enhanced analytics
+ * - Builder mode (direct, quick, guided, chat, playground)
+ * - Device info (viewport, mobile, touch)
+ * - Category tracking
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -14,9 +17,25 @@ interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
+interface DeviceInfo {
+  viewport?: string;
+  isMobile?: boolean;
+  isTouch?: boolean;
+  referrer?: string | null;
+}
+
+interface UsageBody {
+  context?: string;
+  builderMode?: string;
+  variablesUsed?: Record<string, string>;
+  fingerprintHash?: string;
+  deviceInfo?: DeviceInfo;
+  promptCategory?: string;
+}
+
 /**
  * POST /api/prompts/[id]/use
- * Track prompt usage
+ * Track prompt usage with enhanced analytics
  */
 export async function POST(request: NextRequest, context: RouteContext) {
   try {
@@ -24,8 +43,15 @@ export async function POST(request: NextRequest, context: RouteContext) {
     const session = await getSession();
     const userId = session?.user?.id || null;
 
-    const body = await request.json().catch(() => ({}));
-    const { context: usageContext, variablesUsed, fingerprintHash } = body;
+    const body: UsageBody = await request.json().catch(() => ({}));
+    const {
+      context: usageContext,
+      builderMode,
+      variablesUsed,
+      fingerprintHash,
+      deviceInfo,
+      promptCategory,
+    } = body;
 
     // Check if prompt exists
     const promptCheck = await pool.query(
@@ -37,7 +63,19 @@ export async function POST(request: NextRequest, context: RouteContext) {
       return NextResponse.json({ error: 'Prompt not found' }, { status: 404 });
     }
 
-    // Insert usage record
+    // Build metadata object for enhanced analytics
+    const metadata = {
+      builderMode: builderMode || 'direct',
+      category: promptCategory || null,
+      device: deviceInfo ? {
+        viewport: deviceInfo.viewport,
+        isMobile: deviceInfo.isMobile,
+        isTouch: deviceInfo.isTouch,
+        referrer: deviceInfo.referrer,
+      } : null,
+    };
+
+    // Insert usage record with enhanced data
     await pool.query(`
       INSERT INTO prompt_usage (
         user_id, prompt_id, context, variables_used, fingerprint_hash
@@ -45,8 +83,12 @@ export async function POST(request: NextRequest, context: RouteContext) {
     `, [
       userId,
       id,
-      usageContext || 'unknown',
-      variablesUsed ? JSON.stringify(variablesUsed) : null,
+      usageContext || 'assistant',
+      // Store both variables and metadata in the JSONB field
+      JSON.stringify({
+        variables: variablesUsed || {},
+        ...metadata,
+      }),
       userId ? null : fingerprintHash || null,
     ]);
 

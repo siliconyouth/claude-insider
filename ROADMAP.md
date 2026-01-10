@@ -1,15 +1,15 @@
 # Claude Insider Roadmap 2026
 
-> **Generated:** January 9, 2026
-> **Current Version:** 1.19.0
-> **Total Features:** 73 implemented (FR-63 Voice Messages removed in v1.17.1)
+> **Generated:** January 11, 2026
+> **Current Version:** 1.20.0
+> **Total Features:** 74 implemented (FR-63 Voice Messages removed in v1.17.1)
 > **Analysis Basis:** Full codebase scan (960+ TypeScript files), CHANGELOG.md (140+ versions), FEATURES.md
 
 ---
 
 ## Executive Summary
 
-Claude Insider has achieved exceptional maturity with **73 production features**, **3,012 curated resources**, **800+ prompts**, **152 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
+Claude Insider has achieved exceptional maturity with **74 production features**, **3,012 curated resources**, **800+ prompts**, **152 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
 
 1. **Developer Experience**: MCP Playground, VS Code Extension, API Sandbox
 2. **Enterprise Readiness**: SSO/SAML, Teams, Analytics
@@ -24,8 +24,8 @@ Claude Insider has achieved exceptional maturity with **73 production features**
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| **Version** | 1.19.0 | Released January 9, 2026 |
-| **Features** | 73 | Documented in FEATURES.md |
+| **Version** | 1.20.0 | Released January 11, 2026 |
+| **Features** | 74 | Documented in FEATURES.md |
 | **Database Tables** | 152 | PostgreSQL with RLS |
 | **Resources** | 3,012 | 10 categories, 21 enhanced fields, 100% screenshot coverage |
 | **Prompts** | 800+ | 18 categories, Claude hints, community submissions |
@@ -40,6 +40,7 @@ Claude Insider has achieved exceptional maturity with **73 production features**
 
 | Version | Date | Features |
 |---------|------|----------|
+| **v1.20.0** | Jan 11 | **Interactive Prompt Builder** (4 modes: Quick/Guided/Chat/Playground, smart variable detection, Monaco editor, analytics) |
 | **v1.19.0** | Jan 9 | **Prompt Library Enhancement** (800+ prompts, 18 categories, Claude hints, versioning, community submissions, import pipeline) |
 | **v1.18.6** | Jan 8 | Resource relationships UI (1,800+ connections) |
 | **v1.18.1** | Jan 6 | Documentation Optimization (69.5% CLAUDE.md reduction) |

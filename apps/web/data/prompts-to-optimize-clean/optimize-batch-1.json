@@ -1,0 +1,411 @@
+{
+  "batchNumber": 1,
+  "totalBatches": 5,
+  "promptsInBatch": 30,
+  "totalPrompts": 150,
+  "threshold": 70,
+  "prompts": [
+    {
+      "id": "f6596248-2e0b-452a-be3f-0ffd80692fe3",
+      "title": "Manim Code",
+      "content": "Your task to create a manim code that will explain the chain rule in easy way",
+      "description": "Manim Code prompt",
+      "category_slug": "coding",
+      "tags": [
+        "coding",
+        "code",
+        "task",
+        "explain"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "14d22c8d-9098-452a-9ae1-d44aacbe1419",
+      "title": "Professional GitHub Dashboard for Portfolio Enhancement",
+      "content": "Act as a Professional Dashboard Developer. You are skilled in creating user-friendly and visually appealing dashboards using modern web development technologies.\\n\\nYour task is to build a comprehensive and professional dashboard for a GitHub portfolio. This dashboard should:\\n- Showcase top repositories with detailed descriptions and visuals\\n- Include sections for skills, projects, and contributions\\n- Be designed with a responsive layout to ensure accessibility on all devices\\n- Utilize technologies such as {{technology}}, {{technology}}, and {{technology}}\\n\\nRules:\\n- Maintain a consistent design theme that aligns with professional standards\\n- Ensure the dashboard is easy to navigate and interact with\\n- Provide clear and concise information to attract potential employers\\n\\nVariables:\\n- {{githubusername}} - The GitHub username to fetch repository data\\n- {{theme}} - The theme preference for the dashboard",
+      "description": "Professional GitHub Dashboard for Portfolio Enhancement prompt",
+      "category_slug": "coding",
+      "tags": [
+        "coding",
+        "developer",
+        "javascript",
+        "git",
+        "design",
+        "data",
+        "task",
+        "act as"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "0448e01f-582e-4039-ae6b-1f50d2303462",
+      "title": "AI-powered data extraction and organization tool",
+      "content": "Develop an AI-powered data extraction and organization tool that revolutionizes the way professionals across content creation, web development, academia, and business entrepreneurship gather, analyze, and utilize information. This cutting-edge tool should be designed to process vast volumes of data from diverse sources, including text files, PDFs, images, web pages, and more, with unparalleled speed and precision.",
+      "description": "AI-powered data extraction and organization tool prompt",
+      "category_slug": "business",
+      "tags": [
+        "business",
+        "content",
+        "design",
+        "entrepreneur",
+        "data"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "dff6cdfb-4a4a-4e3c-bf62-fcc7af16bf87",
+      "title": "*I’m writing this with a pain that I can’t really describe with words. Please",
+      "content": "<context>\nThis appears to be an incomplete or corrupted prompt that only contains \"Dad\" and a fragment about writing with indescribable pain. The original intent is unclear.\n</context>\n\n<task>\nI need clarification on what you'd like me to help you with. The prompt seems incomplete or may have been cut off during transmission.\n</task>\n\n<output_format>\nPlease provide:\n- The complete prompt or request\n- What specific assistance you need\n- Any context that might help me understand your needs\n</output_format>\n\n<constraints>\n- Cannot provide meaningful assistance with incomplete information\n- Will wait for clarification before proceeding\n</constraints>",
+      "description": "This appears to be an incomplete or corrupted prompt that needs clarification before it can be properly adapted.",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "37dc315d-0b3b-492a-a831-a864c02a2175",
+      "title": "Avant-Garde Portrait with Ghost Duplicate in Ochre Studio",
+      "content": "An ultra-realistic 8K cinematic studio portrait framed from mid-thigh up, featuring a figure standing confidently against a vibrant ochre-red background. The subject wears an oversized, highly textured bomber jacket with an eclectic, abstract patchwork pattern in muted and vivid reds, blues, greens, and beiges, paired with loose drab olive cargo pants and a white T-shirt. Lighting is harsh and frontal, creating crisp shadows and emphasizing fabric textures. A defining artistic element is a translucent, motion-blurred ghost duplicate of the subject positioned slightly behind and to the right, streaking horizontally with colorful trails that convey rapid movement or temporal distortion. The background remains uniform but subtly graded, adding depth without distraction. Shot in a high-fashion editorial style with sharp focus on the primary figure, shallow depth of field, and precise studio realism, delivering a bold, experimental, avant-garde mood.",
+      "description": "Avant-Garde Portrait with Ghost Duplicate in Ochre Studio prompt",
+      "category_slug": "coding",
+      "tags": [
+        "coding",
+        "api",
+        "editor",
+        "art"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "ef14a331-db4c-4c7b-abd2-b3e7e0450dc7",
+      "title": "Extreme Close-up Macro Photography of a Young Woman's Face",
+      "content": "Extreme close-up macro photograph of a young woman’s face during golden hour. Warm natural sunlight coming from the side creates glowing highlights on dewy, freckled skin. The right hazel eye is in sharp focus, reflecting light with high clarity. Shallow depth of field isolates the eye, skin texture, nose and lips while the background completely melts away. Skin texture is highly detailed and realistic, pores and freckles visible, no heavy retouching. Color palette dominated by warm bronze, tan, gold and soft brown tones. Calm, intimate, sun-kissed mood. Cinematic beauty photography, hyperrealistic, natural look, high detail.",
+      "description": "Extreme Close-up Macro Photography of a Young Woman's Face prompt",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "75ad9bc3-ab06-49ce-9b76-c6fad38349bd",
+      "title": "Security Guard Image Prompt",
+      "content": "Create an image of a Latino private security guard. The guard should be depicted wearing a tactical helmet and a bulletproof vest. The vest should have a communication radio attached and prominently display the word 'FENASPE'. The setting should convey professionalism and readiness, capturing the essence of a security environment.",
+      "description": "Security Guard Image Prompt prompt",
+      "category_slug": "security",
+      "tags": [
+        "security",
+        "communication"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "1746c0f3-ffd0-4e85-b5de-f8163e37c758",
+      "title": "Ethreal Current",
+      "content": "Experimental downtempo, complex breakbeat influenced by jazz, glitchy foley percussion, staccato cello stabs, soaring violin textures, sub-bass movements, vinyl crackle, and ambient nature sounds, cinematic build-up, rich textures, sophisticated arrangement, 100 BPM, ethereal yet driving",
+      "description": "Ethreal Current prompt",
+      "category_slug": "design",
+      "tags": [
+        "design",
+        "ui"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "3789060d-e8d4-49f1-bf7c-31028b786d4f",
+      "title": "Sophisticated Istanbul Stroll",
+      "content": "Full-body cinematic shot of a sophisticated man in his early 30s walking confidently down a historic cobblestone street in Istanbul, Beyoğlu. He features a short beard and dark hair. He is wearing a tailored navy blue wool overcoat, a charcoal grey turtleneck sweater, and black trousers. He is holding a premium brown leather briefcase in one hand and a takeaway coffee cup in the other. He is wearing brown leather Chelsea boots and stylish sunglasses. The background prominently features the iconic Galata Tower rising at the end of the street. Soft natural daylight, high-end fashion photography, realistic anatomical proportions, 8k resolution, highly detailed textures. --ar 9:16",
+      "description": "Sophisticated Istanbul Stroll prompt",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "7cf92a7c-392c-409f-bf96-080d26c7b01f",
+      "title": "Close-up black and white portrait",
+      "content": "Close-up black and white portrait of a man and a woman standing side by side. The man has tousled hair and a rough beard, the woman has softly tousled natural hair. Both tilt their heads slightly upward as dramatic overhead light falls on them. Their eyes remain in shadow, creating a powerful, mysterious, silhouette-like mood with strong contrast. 9:16 composition, intimate dual-portrait framing.",
+      "description": "Close-up black and white portrait prompt",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "a9707746-c4c9-48c3-9b72-9b153f7920a7",
+      "title": "Topic Article",
+      "content": "Act like you are an expert (Could be a graphic designer, engineer, ui/ux designer, data analyst, loyalty and CRM manager, or SEO Specialist depend on topic). Write with readability, clarity, and flowy structure in mind. Use an effective sentence, avoid complicated terms, avoid jargon, tell like you're an insightful person. Write in 700 chars",
+      "description": "Topic Article prompt",
+      "category_slug": "design",
+      "tags": [
+        "design",
+        "article",
+        "art",
+        "manager",
+        "seo",
+        "analyst",
+        "data",
+        "ui"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "9f8c2e22-da8d-44b4-a421-3a90a638361b",
+      "title": "Research Paper Feature Diagram",
+      "content": "Act as a scientific illustrator using the Nano Banana style. Your task is to create a diagram that encompasses the following features, ensuring no repetition: Bandwidth Utilization, Dynamic Adaptation, Energy Efficiency, Fault Tolerance, Heterogeneity, Latency Optimization, Performance Metrics, QoS/Real-time Support, Resource Management, Scalability, Security, Topology Considerations, Congestion Detection Method, Device Reliability, Data Reliability, Availability, Jitter, Load Balancing, Network Reliability, Packet Loss Rate, Testing and Validation, Throughput, Algorithm Type, Network Architecture, Implementation Framework, Energy-Efficient Routing Protocols, Sleep Scheduling, Data Aggregation, Adaptive Transmission Power Control, IoT Domain, Protocol Focus, Low Complexity, Clustering, Cross-Layer Optimization, Authentication, Routing Attacks, DoS/DDoS, MitM, Spoofing, Malware, Confidentiality, Integrity, Device Integrity. Ensure the diagram is clear, comprehensive, and suitable for inclusion in academic research papers.",
+      "description": "Research Paper Feature Diagram prompt",
+      "category_slug": "analysis",
+      "tags": [
+        "analysis",
+        "algorithm",
+        "data",
+        "research",
+        "security",
+        "authentication",
+        "academic",
+        "paper"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "d7dd3c81-e176-4531-a970-91c0f1570321",
+      "title": "Couples Therapy App Development Guide",
+      "content": "Act as a couples therapy app developer. You are tasked with creating an app that assists couples in resolving conflicts and improving their relationships.\\n\\nYour task is to design an app with the following features:\\n- Interactive sessions with guided questions\\n- Communication exercises tailored to {{relationshiptype}}\\n- Progress tracking and milestones\\n- Resources and articles on {{topics}}\\n- Secure messaging with a licensed therapist\\n- Schedule and reminders for therapy sessions\\n\\nYou will:\\n- Develop a user-friendly interface\\n- Ensure data privacy and security\\n- Provide customizable therapy plans\\n\\nRules:\\n- The app must comply with mental health regulations\\n- Include options for feedback and improvement\\n\\nVariables:\\n- {{relationshiptype}} - Type of relationship (e.g., married, dating)\\n- {{topics}} - Focus areas for resources",
+      "description": "Couples Therapy App Development Guide prompt",
+      "category_slug": "healthcare",
+      "tags": [
+        "healthcare",
+        "developer",
+        "api",
+        "article",
+        "art",
+        "design",
+        "data",
+        "health"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "f1d326de-c77a-42ee-87ed-9e81d041b487",
+      "title": "Cinematic Close-Up of Craftsman with Paper Figures",
+      "content": "A cinematic, warm-toned close-up photograph of a craftsman working at a wooden desk in the evening. In sharp focus on the table are two delicate paper figures made from newspaper: an origami raccoon sitting attentively and a small paper boy holding an umbrella. The man’s hand gently holds and positions the paper doll, while his face appears softly blurred in the background, showing deep concentration. A single desk lamp casts dramatic, golden light from above, creating long shadows and highlighting the fine paper textures. Shallow depth of field, soft bokeh background, realistic photography style, intimate and whimsical atmosphere, storytelling composition, high contrast lighting, handcrafted aesthetic.",
+      "description": "Cinematic Close-Up of Craftsman with Paper Figures prompt",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "story",
+        "paper"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "db0a6822-10d9-4fbd-b9b6-eeaea2068f79",
+      "title": "The Quant Edge Engine",
+      "content": "You are a **quantitative sports betting analyst** tasked with evaluating whether a statistically defensible betting edge exists for a specified sport, league, and market. Using the provided data (historical outcomes, odds, team/player metrics, and timing information), conduct an end-to-end analysis that includes: (1) a data audit identifying leakage risks, bias, and temporal alignment issues; (2) feature engineering with clear rationale and exclusion of post-outcome or bookmaker-contaminated variables; (3) construction of interpretable baseline models (e.g., logistic regression, Elo-style ratings) followed—only if justified—by more advanced ML models with strict time-based validation; (4) comparison of model-implied probabilities to bookmaker implied probabilities with vig removed, including calibration assessment (Brier score, log loss, reliability analysis); (5) testing for persistence and statistical significance of any detected edge across time, segments, and market conditions; (6) simulation of betting strategies (flat stake, fractional Kelly, capped Kelly) with drawdown, variance, and ruin analysis; and (7) explicit failure-mode analysis identifying assumptions, adversarial market behavior, and early warning signals of model decay. Clearly state all assumptions, quantify uncertainty, avoid causal claims, distinguish verified results from inference, and conclude with conditions under which the model or strategy should not be deployed.",
+      "description": "The Quant Edge Engine prompt",
+      "category_slug": "analysis",
+      "tags": [
+        "analysis",
+        "strategy",
+        "analyst",
+        "data",
+        "assess",
+        "task",
+        "simulation",
+        "ui"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "617c7d9c-3f14-44b3-8702-fa81bfa35712",
+      "title": "Sports Research Assistant",
+      "content": "You are **Sports Research Assistant**, an advanced academic and professional support system for sports research that assists students, educators, and practitioners across the full research lifecycle by guiding research design and methodology selection, recommending academic databases and journals, supporting literature review and citation (APA, MLA, Chicago, Harvard, Vancouver), providing ethical guidance for human-subject research, delivering trend and international analyses, and advising on publication, conferences, funding, and professional networking; you support data analysis with appropriate statistical methods, Python-based analysis, simulation, visualization, and Copilot-style code assistance; you adapt responses to the user’s expertise, discipline, and preferred depth and format; you can enter **Learning Mode** to ask clarifying questions and absorb user preferences, and when Learning Mode is off you apply learned context to deliver direct, structured, academically rigorous outputs, clearly stating assumptions, avoiding fabrication, and distinguishing verified information from analytical inference.",
+      "description": "Sports Research Assistant prompt",
+      "category_slug": "research",
+      "tags": [
+        "research",
+        "code",
+        "python",
+        "database",
+        "design",
+        "student",
+        "learning",
+        "data"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "81b4add8-43fc-4fe5-950e-618dd6792de5",
+      "title": "Spoken Word Artist Persona",
+      "content": "Act like a spoken word artist be wise, extraordinary and make each teaching super and how to act well on stage and also use word that has vibess",
+      "description": "Spoken Word Artist Persona prompt",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "art",
+        "persona"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "ea8e487f-144a-4a83-a6ba-999a0a06f6b0",
+      "title": "Prepare for Meetings: Key Considerations",
+      "content": "Based on my prior interactions with {{person}}, give me 5 things likely top of mind for our next meeting.",
+      "description": "Prepare for Meetings: Key Considerations prompt",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "591d654e-254f-4a35-b965-df53936b5229",
+      "title": "Custom AI Image Creation",
+      "content": "Create an AI-generated picture. You can specify the theme or style by providing details such as {{theme}}, {{style}}, and any specific elements you want included. The AI will use these inputs to craft a unique visual masterpiece.",
+      "description": "Custom AI Image Creation prompt",
+      "category_slug": "design",
+      "tags": [
+        "design",
+        "visual"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "c14a0a70-c226-4461-a8af-404b13cc1883",
+      "title": "School Life Mentor",
+      "content": "I want you to be my school mentor guide me not to just graduate with first class but to also laverage and build my future making impact that bring money while in school and to be the true version of myself ",
+      "description": "School Life Mentor prompt",
+      "category_slug": "coding",
+      "tags": [
+        "coding",
+        "class",
+        "guide",
+        "ui"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "f61fe6cd-f6cd-4086-b233-8f48e647113f",
+      "title": "Continuous Execution Mode AI",
+      "content": "You are running in “continuous execution mode.” Keep working continuously and indefinitely: always choose the next highest-value action and do it, then immediately choose the next action and continue. Do not stop to summarize, do not present “next steps,” and do not hand work back to me unless I explicitly tell you to stop. If you notice improvements, refactors, edge cases, tests, docs, performance wins, or safer defaults, apply them as you go using your best judgment. Fix all problems along the way.",
+      "description": "Continuous Execution Mode AI prompt",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "ed909bab-c93b-4ccb-8139-1fb32cda4344",
+      "title": "Business Coaching Mentor",
+      "content": "I want you to act like a coach a mentor on business idea how to laverage base on idea I have and make money",
+      "description": "Business Coaching Mentor prompt",
+      "category_slug": "business",
+      "tags": [
+        "business"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "a825e129-3e19-4b2b-9fa6-d2d716840b52",
+      "title": "Color Consistency Analysis and Adjustment",
+      "content": "Act as a professional designer and photographer with high visual intelligence. Your task is to analyze the colors used in the application and make them consistent according to the given primary color {{primarycolor}} and secondary color {{secondarycolor}}. Ensure that transitions between colors are smooth and aesthetically pleasing. Prefer the use of commonly accepted color combinations that look good together. Provide a detailed color palette recommendation and suggest adjustments to enhance visual harmony. Consider the business/domain of the application, {{businessdomain}}, and ensure the color choices align with its goals and aims. If the application supports dark mode, ensure that necessary checks and adjustments are made to maintain consistency and aesthetics in dark mode as well.",
+      "description": "Color Consistency Analysis and Adjustment prompt",
+      "category_slug": "creative",
+      "tags": [
+        "creative",
+        "design",
+        "business",
+        "task",
+        "act as",
+        "visual"
+      ],
+      "current_score": 40
+    },
+    {
+      "id": "ca8419b8-0fae-451d-bb61-8ba256b015bb",
+      "title": "Write Terms And Conditions To Your Product Using Claude",
+      "content": "Create terms and services for [describe your product].",
+      "description": "Write Terms And Conditions To Your Product Using Claude - Create terms and services for [describe your product].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing"
+      ],
+      "current_score": 43
+    },
+    {
+      "id": "131fadd6-d53e-41cd-893e-fb5709bf386e",
+      "title": "Create A Social Media Plan Using Claude",
+      "content": "Generate a creative social media content calendar for [time period] for [your company] on [describe your goal].",
+      "description": "Create A Social Media Plan Using Claude - Generate a creative social media content calendar for [time period] for [your company] on [describe ...",
+      "category_slug": "writing",
+      "tags": [
+        "writing",
+        "creative",
+        "business"
+      ],
+      "current_score": 43
+    },
+    {
+      "id": "109efc95-22ef-4b39-91af-0d7fceb71a81",
+      "title": "Ai Resume（with Claude Artifacts)",
+      "content": "![alt text](imgs/ai_resume.png)\n```\n你了解HR，能够写出HR和老板喜欢的简历，排版，配色，美观有设计感，内容有亮点，简历制作精美。\n引导用户输入：姓名，信息，上传简历，头像等信息。\n分析用户信息，提炼优势，撰写简历\n作者：云中江树\n模型：Claude3.5",
+      "description": "Ai Resume（with Claude Artifacts) - [alt text](imgs/ai_resume.",
+      "category_slug": "creative",
+      "tags": [
+        "creative"
+      ],
+      "current_score": 43
+    },
+    {
+      "id": "d281ad29-2418-4969-b6f1-c70194f0db2b",
+      "title": "Summarize This Pdf Document (official Example)",
+      "content": "Summarize this PDF document in a bullet point outline. Make a markdown table of study questions and answers.",
+      "description": "Summarize This Pdf Document (official Example) - Summarize this PDF document in a bullet point outline.",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 43
+    },
+    {
+      "id": "d69b00c9-e7e9-43d7-b4cc-28a08f049358",
+      "title": "Write Tweets Like You",
+      "content": "Write 3 tweets on [Theme] in the style of [upload_file_name]",
+      "description": "Write Tweets Like You - Write 3 tweets on [Theme] in the style of [upload_file_name].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing"
+      ],
+      "current_score": 43
+    },
+    {
+      "id": "05b228a3-c827-42fb-8d9b-ca2907db22c8",
+      "title": "Connect Several Documents In Claude",
+      "content": "Summarize the content of the text and give relationship between the concept found in each document.",
+      "description": "Connect Several Documents In Claude - Summarize the content of the text and give relationship between the concept found in each document.",
+      "category_slug": "writing",
+      "tags": [
+        "writing"
+      ],
+      "current_score": 43
+    },
+    {
+      "id": "7355d866-e8e3-450d-a497-a6379afac88a",
+      "title": "Learn Complex Topics Simply",
+      "content": "Understand the concepts in [text], explain the topics individually, and also explain the whole concept in [text] at the end, like I am an 11-year-old.\n \nText = [Insert Here]",
+      "description": "Learn Complex Topics Simply - Understand the concepts in [text], explain the topics individually, and also explain the whole conce...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "education"
+      ],
+      "current_score": 43
+    }
+  ]
+}

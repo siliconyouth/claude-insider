@@ -1,0 +1,297 @@
+{
+  "batchNumber": 2,
+  "totalBatches": 6,
+  "promptsInBatch": 25,
+  "totalPrompts": 141,
+  "threshold": 70,
+  "prompts": [
+    {
+      "id": "6c071504-d615-44c7-b7c8-6e88b4975706",
+      "title": "Use Ai To Create Seo Keywords.",
+      "content": "Provide a list of 10 keywords that I could rank for SEO for <product>\n\nProduct = [your product details]\n\nProvide a list of 10 articles I could also write to rank for those keywords.",
+      "description": "Use Ai To Create Seo Keywords. - Provide a list of 10 keywords that I could rank for SEO for <product>\n\nProduct = [your product detai...",
+      "category_slug": "writing",
+      "tags": [
+        "writing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "394a56fe-bbb3-450a-881c-6d26b066a463",
+      "title": "Write Follow Up Emails Using Ai",
+      "content": "\"A customer makes a purchase\", write a follow-up email to send, thanking them for their purchase and ask them to leave a review or feedback.\n\nInstructions: [Describe how you want it.]",
+      "description": "Write Follow Up Emails Using Ai - \"A customer makes a purchase\", write a follow-up email to send, thanking them for their purchase and...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "8ecccbd6-f4d4-4fe4-a7bc-7af6acf4ac2d",
+      "title": "Use Aida To Convert Customers With Claude",
+      "content": "Write an AIDA for the following product:\n\nProduct: [describe your product]",
+      "description": "Use Aida To Convert Customers With Claude - Write an AIDA for the following product:\n\nProduct: [describe your product].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "9cc6c282-81f7-4de9-ba15-b54518f8ae6f",
+      "title": "Generate Unique Product Title Ideas Using Claude",
+      "content": "Write 20 best titles and subtitles for my new product. It must be eye catching, short and friendly.\n\nProduct = [describe your product]",
+      "description": "Generate Unique Product Title Ideas Using Claude - Write 20 best titles and subtitles for my new product.",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "6a93b9f1-4777-4a40-9f59-e17e8000080d",
+      "title": "Know More About Your Customers Using Claude",
+      "content": "Topic: [your topic]\n\nProvide a succinct list of the desires that customers looking to achieve the above topic will have.",
+      "description": "Know More About Your Customers Using Claude - Topic: [your topic]\n\nProvide a succinct list of the desires that customers looking to achieve the ab...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "a7eca324-7271-4fb8-a17d-fbd0cb9b3e9a",
+      "title": "Consult Steve Jobs And Elon Musk",
+      "content": "Prompt: I will provide you with an argument or opinion of mine. I want you to criticize it as if you were <person>\n\nPerson: [person name]\n\nArgument: [your statement].",
+      "description": "Consult Steve Jobs And Elon Musk - Prompt: I will provide you with an argument or opinion of mine.",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "71744dfe-19f4-4f40-a070-54ecf068b3b7",
+      "title": "Learn Things Much Faster Using Ai",
+      "content": "Hey Claude. I want to learn about [topic] in simple terms. Explain to me like I'm 11 years old.\n\nExpand on that and provide more context. Show me specific applications",
+      "description": "Learn Things Much Faster Using Ai - I want to learn about [topic] in simple terms.",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "education"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "37c2a485-0527-4c75-a6a7-deee63fa22eb",
+      "title": "Make Claude Write Like You",
+      "content": "[Insert Text]\n\nAnalyze the writing style and write about [your topic] as the above author would write.",
+      "description": "Make Claude Write Like You - [Insert Text]\n\nAnalyze the writing style and write about [your topic] as the above author would writ...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing",
+        "analysis"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "26699a0b-962e-4548-a005-7eb7b3a0199f",
+      "title": "Create High Ticket Offer",
+      "content": "Implement a high ticket offer for [product]. Give the price and the improvements needed for the high price.\n\nProduct = [Insert here]",
+      "description": "Create High Ticket Offer - Implement a high ticket offer for [product].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "e10eaedf-40be-4c39-88ea-27158a8ba17c",
+      "title": "Analyze Decisions Using Ai",
+      "content": "Analyze the possible consequences of [decision] in the short term (10 minutes), medium term (10 months), and long term (10 years).\n\nDecision = [Insert here]",
+      "description": "Analyze Decisions Using Ai - Analyze the possible consequences of [decision] in the short term (10 minutes), medium term (10 mont...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "analysis"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "9c00aebc-bfe6-42e1-b862-10e09dc6a624",
+      "title": "Write Feedback Emails Using Ai",
+      "content": "Write a feedback email for [product]. Include [feedback] and keep the email simple, concise.\n\nProduct = [Insert here]\n\nFeedback = [Insert here]",
+      "description": "Write Feedback Emails Using Ai - Write a feedback email for [product].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "bff3d35d-b856-4ef9-9b29-d5bdbd365f65",
+      "title": "Add Urgency To The Ad Copy Using Ai",
+      "content": "Write a simple, concise ad copy on [product]. Add urgency to the ad copy.\n\nProduct = [Insert Here]",
+      "description": "Add Urgency To The Ad Copy Using Ai - Write a simple, concise ad copy on [product].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "5713acc1-6a2a-4765-87d5-4685c14ab1a1",
+      "title": "Brainstorm Influencer Marketing Ideas Using Ai",
+      "content": "Generate ideas for influencer marketing campaign for [product] to attarct customers and decrease cost per click.\n\nProduct = [Insert Here]",
+      "description": "Brainstorm Influencer Marketing Ideas Using Ai - Generate ideas for influencer marketing campaign for [product] to attarct customers and decrease cos...",
+      "category_slug": "marketing",
+      "tags": [
+        "marketing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "077f9c24-41f8-4d38-a759-d8da5a8bd48c",
+      "title": "Create Personalized Subject Lines Using Ai",
+      "content": "Write 10 subject lines for [product] that should be simple, concise, and include [customer's name]. Focus on the benefits the customer get.\n\nProduct = [Insert Here]\n\nCustomer's name = [Insert Here]",
+      "description": "Create Personalized Subject Lines Using Ai - Write 10 subject lines for [product] that should be simple, concise, and include [customer's name].",
+      "category_slug": "roleplay",
+      "tags": [
+        "roleplay",
+        "writing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "1fbf59a8-f537-4c1d-a9e4-4775357b0ed8",
+      "title": "Feedback Reminder Email Using Ai",
+      "content": "Write a simple, concise email asking an existing customer for feedback on [product]. Make the email [tone].\n\nProduct = [Insert Here]\n\nTone = [Insert Here]",
+      "description": "Feedback Reminder Email Using Ai - Write a simple, concise email asking an existing customer for feedback on [product].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation",
+        "writing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "e07eae27-d0fc-456e-946a-41a840b382b8",
+      "title": "Billboard Ideas Using Claude",
+      "content": "Give me unique copywriting ideas to create effective billboards for [product]. Ideas should be new to the [product]'s industry.\n\nProduct = [Insert here]",
+      "description": "Billboard Ideas Using Claude - Give me unique copywriting ideas to create effective billboards for [product].",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "71a2330a-9ea0-40e4-aca3-5f73f20e4fb4",
+      "title": "Write Blog Post Sections Using Ai",
+      "content": "For the blog post called [title], write a section titled [section] that should make the readers hooked and befits [section] and [title].\n\nTitle = [Insert Here]\n \nSection = [Insert Here]",
+      "description": "Write Blog Post Sections Using Ai - For the blog post called [title], write a section titled [section] that should make the readers hook...",
+      "category_slug": "writing",
+      "tags": [
+        "writing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "6e83fb21-9a61-4fd1-9873-b0c5a17e3910",
+      "title": "Structure Your Blog Post Using Ai",
+      "content": "Give me the section names to include in the blog post called [title] to make it more interesting and engaging.\n\nTitle = [Insert Here]",
+      "description": "Structure Your Blog Post Using Ai - Give me the section names to include in the blog post called [title] to make it more interesting and...",
+      "category_slug": "writing",
+      "tags": [
+        "writing"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "863d3fbc-846c-4550-92d8-39279347a721",
+      "title": "Create Metaphors Using Claude",
+      "content": "Suggest 20 metaphors to describe the benefits of [Insert product/service], make them short no more than 6 words and use friendly tone and must include novelty.\n\nProduct: [Insert here]",
+      "description": "Create Metaphors Using Claude - Suggest 20 metaphors to describe the benefits of [Insert product/service], make them short no more t...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "a0bfc6f2-c6f1-47fc-8c5e-9661227c3d9e",
+      "title": "Better Decision Making Using Ai",
+      "content": "Identify cognitive biases that may be impacting the decision-making process concerning [decision/problem] and propose strategies to reduce or mitigate their influence.\n\nDecision = [Insert Here]",
+      "description": "Better Decision Making Using Ai - Identify cognitive biases that may be impacting the decision-making process concerning [decision/pro...",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 48
+    },
+    {
+      "id": "652195ca-f313-4d57-891d-97b692e874b4",
+      "title": "Gaslighter",
+      "content": "I want you to act as a gaslighter. You will use subtle comments and body language to manipulate the thoughts",
+      "description": "Gaslighter - I want you to act as a gaslighter.",
+      "category_slug": "translation",
+      "tags": [
+        "translation",
+        "roleplay"
+      ],
+      "current_score": 50
+    },
+    {
+      "id": "1423fa60-13bc-4d5e-b410-fe6b0f9cf942",
+      "title": "Control Output Format (json Mode)",
+      "content": "Prefilling the response with an open bracket can help. Add \"Do not output preamble or explanations.\" and it follows it pretty well.",
+      "description": "Control Output Format (json Mode) - Prefilling the response with an open bracket can help.",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 50
+    },
+    {
+      "id": "5bff46ce-e30f-4356-98d9-3082b3439310",
+      "title": "Virtual Doctor",
+      "content": "I want you to act as a virtual doctor. I will describe my symptoms and you will provide a diagnosis and treatment plan. You should only reply with your diagnosis and treatment plan",
+      "description": "Virtual Doctor - I want you to act as a virtual doctor.",
+      "category_slug": "healthcare",
+      "tags": [
+        "healthcare",
+        "roleplay"
+      ],
+      "current_score": 50
+    },
+    {
+      "id": "184ffba5-2503-4bdc-8afc-ff17a39e9786",
+      "title": "Initialization：",
+      "content": "接下来我会给出我的问题(Prompt)，请根据我的Prompt\n    1.基于[CRISPE提示框架]，请一步一步进行输出，直到最终输出[优化Promot]；\n    2.输出完毕之后，请咨询我是否有需要改进的意见，如果有建议，请结合建议重新基于[CRISPE提示框架]输出。\n    要求：请避免讨论[CRISPE提示框架]里的内容；\n    不需要重复内容，如果你准备好了，告诉我。\n```",
+      "description": "Initialization： - 接下来我会给出我的问题(Prompt)，请根据我的Prompt\n    1.",
+      "category_slug": "conversation",
+      "tags": [
+        "conversation"
+      ],
+      "current_score": 50
+    },
+    {
+      "id": "1de498ea-a1cc-4080-8a48-392dfa803d20",
+      "title": "validity: Personelin ana",
+      "content": "<context>\nYou are an assistant helping with personnel management and organization.\n</context>\n\n<task>\nProvide guidance or assistance related to personnel management. Since the original prompt \"baba\" is unclear, please clarify what specific personnel-related task you need help with.\n</task>\n\n<output_format>\nProvide your response in a clear, structured format appropriate to the personnel management task at hand.\n</output_format>\n\n<constraints>\n- Focus on professional personnel management topics\n- Provide actionable advice when possible\n- Ask for clarification if the request is ambiguous\n</constraints>",
+      "description": "A basic personnel management assistant prompt that requires clarification due to unclear original input.",
+      "category_slug": "productivity",
+      "tags": [
+        "productivity"
+      ],
+      "current_score": 50
+    }
+  ]
+}

@@ -42,6 +42,18 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.20.0",
+    date: "2026-01-11",
+    type: "major",
+    highlights: [
+      "🛠️ Interactive Prompt Builder: 4-mode prompt building system (Quick/Guided/Chat/Playground)",
+      "📝 Smart Mode Selection: Recommendations based on variable count complexity",
+      "🎨 Monaco Editor Integration: Full playground environment with split-pane layout",
+      "💬 AI Chat Mode: Conversational interface to fill variables with quick replies and undo",
+      "⚡ 8 Variable Input Types: Auto-detection for text, textarea, code, number, url, email, select, file",
+    ],
+  },
+  {
     version: "1.19.0",
     date: "2026-01-09",
     type: "major",

@@ -3,38 +3,52 @@
 /**
  * Use With AI Assistant Button
  *
- * Opens the AI Assistant with the prompt pre-filled.
- * If the prompt has variables, shows a modal to fill them first.
+ * Opens the Interactive Prompt Builder with multiple modes:
+ * - Quick Mode: Enhanced form with suggestions and recent values
+ * - Guided Mode: Step-by-step wizard for complex prompts
+ * - Chat Mode: AI-powered conversational builder
+ * - Playground Mode: Full Monaco editor environment
  *
  * Features:
+ * - Mode selector (or remembers preference)
  * - One-click integration with AI Assistant
- * - Variable substitution modal
+ * - Variable substitution with smart suggestions
  * - Tracks usage analytics
  * - Works with saved and system prompts
+ *
+ * @see docs/plans/INTERACTIVE_PROMPT_BUILDER.md
  */
 
 import { useState, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { cn } from "@/lib/design-system";
 import { SparklesIcon, PlayIcon, Loader2Icon } from "lucide-react";
 import { openAIAssistant, type AIContext } from "@/components/unified-chat/unified-chat-provider";
-import { VariableInputModal } from "./variable-input-modal";
+import { type PromptVariable, type VariableConfig, type BuilderMode } from "./builder/types";
 
-interface PromptVariable {
-  name: string;
-  description?: string;
-  default_value?: string;
-  required?: boolean;
-}
+// Lazy load the builder to keep initial bundle small
+const InteractivePromptBuilder = dynamic(
+  () => import("./builder/interactive-prompt-builder").then((mod) => mod.InteractivePromptBuilder),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 interface UseWithAssistantButtonProps {
   promptId: string;
   promptTitle: string;
   promptContent: string;
   variables?: PromptVariable[];
+  variableConfigs?: VariableConfig[];
   category?: string;
   className?: string;
   variant?: "primary" | "secondary" | "ghost";
   size?: "sm" | "md" | "lg";
+  /** Skip mode selector and use this mode directly */
+  initialMode?: BuilderMode;
+  /** Skip mode selector entirely (use for simple prompts) */
+  skipModeSelector?: boolean;
 }
 
 export function UseWithAssistantButton({
@@ -42,82 +56,50 @@ export function UseWithAssistantButton({
   promptTitle,
   promptContent,
   variables = [],
+  variableConfigs,
   category,
   className,
   variant = "primary",
   size = "md",
+  initialMode,
+  skipModeSelector,
 }: UseWithAssistantButtonProps) {
-  const [showVariableModal, setShowVariableModal] = useState(false);
+  const [showBuilder, setShowBuilder] = useState(false);
   const [isTracking, setIsTracking] = useState(false);
 
-  // Track usage
-  const trackUsage = useCallback(async () => {
+  // Track usage with enhanced analytics
+  const trackUsage = useCallback(async (builderMode: string = "direct") => {
     try {
       setIsTracking(true);
+
+      // Gather device/browser info for analytics (non-PII)
+      const deviceInfo = {
+        viewport: `${window.innerWidth}x${window.innerHeight}`,
+        isMobile: window.innerWidth < 768,
+        isTouch: 'ontouchstart' in window,
+        referrer: document.referrer ? new URL(document.referrer).pathname : null,
+      };
+
       await fetch(`/api/prompts/${promptId}/use`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ context: "assistant" }),
+        body: JSON.stringify({
+          context: "assistant",
+          builderMode,
+          deviceInfo,
+          promptCategory: category,
+        }),
       });
     } catch {
       // Silent fail - don't block user experience
     } finally {
       setIsTracking(false);
     }
-  }, [promptId]);
-
-  // Substitute variables in content
-  const substituteVariables = useCallback(
-    (values: Record<string, string>): string => {
-      let content = promptContent;
-      for (const [name, value] of Object.entries(values)) {
-        content = content.replace(
-          new RegExp(`\\{\\{${name}\\}\\}`, "g"),
-          value
-        );
-      }
-      return content;
-    },
-    [promptContent]
-  );
-
-  // Open AI Assistant with filled content
-  const openWithContent = useCallback(
-    async (filledContent: string) => {
-      // Track usage
-      await trackUsage();
-
-      // Build AI context
-      const context: AIContext = {
-        page: {
-          path: `/prompts/${promptId}`,
-          title: promptTitle,
-          category: category || "prompts",
-          section: "Prompt Library",
-        },
-        content: {
-          type: "prompt",
-          title: promptTitle,
-          text: filledContent,
-          metadata: {
-            promptId,
-            category: category || "",
-          },
-        },
-      };
-
-      // Open AI Assistant
-      openAIAssistant({
-        context,
-        question: filledContent,
-      });
-    },
-    [promptId, promptTitle, category, trackUsage]
-  );
+  }, [promptId, category]);
 
   // Handle button click
   const handleClick = useCallback(() => {
-    const hasUnfilledVariables =
+    const hasVariables =
       variables.length > 0 &&
       variables.some((v) => {
         // Check if variable exists in content
@@ -125,24 +107,52 @@ export function UseWithAssistantButton({
         return regex.test(promptContent);
       });
 
-    if (hasUnfilledVariables) {
-      // Show modal to fill variables
-      setShowVariableModal(true);
+    if (hasVariables) {
+      // Show Interactive Prompt Builder
+      setShowBuilder(true);
     } else {
-      // Open directly
-      openWithContent(promptContent);
+      // No variables - open directly with AI Assistant
+      handleDirectUse();
     }
-  }, [variables, promptContent, openWithContent]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- handleDirectUse has circular dependency
+  }, [variables, promptContent]);
 
-  // Handle modal submit
-  const handleVariableSubmit = useCallback(
-    (values: Record<string, string>) => {
-      const filledContent = substituteVariables(values);
-      openWithContent(filledContent);
-      setShowVariableModal(false);
-    },
-    [substituteVariables, openWithContent]
-  );
+  // Direct use without variables
+  const handleDirectUse = useCallback(async () => {
+    // Track usage with "direct" mode
+    await trackUsage("direct");
+
+    // Build AI context
+    const context: AIContext = {
+      page: {
+        path: `/prompts/${promptId}`,
+        title: promptTitle,
+        category: category || "prompts",
+        section: "Prompt Library",
+      },
+      content: {
+        type: "prompt",
+        title: promptTitle,
+        text: promptContent,
+        metadata: {
+          promptId,
+          category: category || "",
+          builderMode: "direct",
+        },
+      },
+    };
+
+    // Open AI Assistant
+    openAIAssistant({
+      context,
+      question: promptContent,
+    });
+  }, [promptId, promptTitle, promptContent, category, trackUsage]);
+
+  // Handle builder close
+  const handleClose = useCallback(() => {
+    setShowBuilder(false);
+  }, []);
 
   // Button styles based on variant
   const variantStyles = {
@@ -196,12 +206,17 @@ export function UseWithAssistantButton({
         Use with AI
       </button>
 
-      {showVariableModal && (
-        <VariableInputModal
+      {showBuilder && (
+        <InteractivePromptBuilder
+          promptId={promptId}
           promptTitle={promptTitle}
+          promptContent={promptContent}
           variables={variables}
-          onSubmit={handleVariableSubmit}
-          onClose={() => setShowVariableModal(false)}
+          variableConfigs={variableConfigs}
+          category={category}
+          onClose={handleClose}
+          skipModeSelector={skipModeSelector}
+          initialMode={initialMode}
         />
       )}
     </>

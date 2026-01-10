@@ -33,6 +33,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 25. [Unit Testing Patterns](#unit-testing-patterns-v1180) - Vitest setup, mocking, test structure (v1.18.0)
 26. [ISR Caching Patterns](#isr-caching-patterns-v1184) - Database-first architecture, cache invalidation (v1.18.4)
 27. [Cache Size Patterns](#cache-size-patterns-mandatory---v1185) - 2MB limit, lean schema, chunked caching (MANDATORY - v1.18.5)
+28. [Interactive Prompt Builder Patterns](#interactive-prompt-builder-patterns-v1200) - 4-mode builder, variable auto-detection, AI chat (v1.20.0)
 
 ---
 
@@ -4140,3 +4141,691 @@ Add cache size check to CI pipeline:
     "
 ```
 
+
+---
+
+## Interactive Prompt Builder Patterns (v1.20.0)
+
+A comprehensive 4-mode prompt building system with intelligent variable handling, AI assistance, and professional editing capabilities.
+
+### Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    InteractivePromptBuilder                          │
+│                    (Orchestrator Component)                          │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌─────────────┐  ┌──────────────┐  ┌─────────────┐  ┌────────────┐ │
+│  │ Quick Mode  │  │ Guided Mode  │  │ Chat Mode   │  │ Playground │ │
+│  │ (0-2 vars)  │  │ (3+ vars)    │  │ (AI assist) │  │ (Monaco)   │ │
+│  └──────┬──────┘  └──────┬───────┘  └──────┬──────┘  └─────┬──────┘ │
+│         │                │                  │               │        │
+│         └────────────────┴──────────────────┴───────────────┘        │
+│                              ↓                                       │
+│                    BuilderValues (unified state)                     │
+│                              ↓                                       │
+│                    onComplete(finalContent)                          │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Mode Selection Logic
+
+```tsx
+// components/prompts/builder/mode-selector.tsx
+export function getModeRecommendation(variables: VariableConfig[]): BuilderMode {
+  const varCount = variables.length;
+  
+  if (varCount === 0) {
+    // No variables: Quick mode or Playground for editing
+    return 'quick';
+  } else if (varCount <= 2) {
+    // Simple prompts: Quick mode works well
+    return 'quick';
+  } else if (varCount <= 5) {
+    // Moderate complexity: Guided wizard helps users
+    return 'guided';
+  } else {
+    // Complex prompts: Guided mode essential
+    return 'guided';
+  }
+}
+
+// Usage in ModeSelector component
+<ModeSelector
+  variables={prompt.variables}
+  recommendedMode={getModeRecommendation(prompt.variables)}
+  onSelect={(mode) => setSelectedMode(mode)}
+/>
+```
+
+### Variable Auto-Detection
+
+```tsx
+// lib/prompts/variable-detection.ts
+export interface VariableConfig {
+  name: string;
+  type: VariableInputType;
+  label: string;
+  placeholder?: string;
+  required: boolean;
+  validation?: ValidationRule[];
+  options?: SelectOption[];  // For select type
+}
+
+export type VariableInputType = 
+  | 'text'      // Short single-line input
+  | 'textarea'  // Multi-line text
+  | 'code'      // Monaco editor with syntax highlighting
+  | 'number'    // Numeric input with validation
+  | 'url'       // URL with validation
+  | 'email'     // Email with validation
+  | 'select'    // Dropdown selection
+  | 'file';     // File path input
+
+// Auto-detect variable type from name patterns
+export function detectVariableType(name: string): VariableInputType {
+  const lowered = name.toLowerCase();
+  
+  // Code-related keywords
+  if (/code|snippet|script|function|class|component/.test(lowered)) {
+    return 'code';
+  }
+  
+  // Long-form content
+  if (/description|content|text|body|message|paragraph/.test(lowered)) {
+    return 'textarea';
+  }
+  
+  // Numeric values
+  if (/number|count|amount|quantity|age|year|price/.test(lowered)) {
+    return 'number';
+  }
+  
+  // URLs
+  if (/url|link|website|href|endpoint/.test(lowered)) {
+    return 'url';
+  }
+  
+  // Email
+  if (/email|mail/.test(lowered)) {
+    return 'email';
+  }
+  
+  // File paths
+  if (/file|path|directory|folder/.test(lowered)) {
+    return 'file';
+  }
+  
+  // Default to text
+  return 'text';
+}
+```
+
+### Quick Mode Pattern
+
+```tsx
+// components/prompts/builder/quick-mode.tsx
+interface QuickModeProps {
+  variables: VariableConfig[];
+  values: BuilderValues;
+  onChange: (values: BuilderValues) => void;
+  onSubmit: () => void;
+}
+
+export function QuickMode({ variables, values, onChange, onSubmit }: QuickModeProps) {
+  return (
+    <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-6">
+      {/* Variable inputs */}
+      {variables.map((variable) => (
+        <VariableInput
+          key={variable.name}
+          config={variable}
+          value={values[variable.name] || ''}
+          onChange={(val) => onChange({ ...values, [variable.name]: val })}
+        />
+      ))}
+      
+      {/* Live preview */}
+      <div className="rounded-xl border border-gray-200 dark:border-[#262626] p-4">
+        <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+          Preview
+        </h4>
+        <PromptPreview 
+          template={prompt.content}
+          values={values}
+          className="prose dark:prose-invert max-w-none"
+        />
+      </div>
+      
+      {/* Submit button */}
+      <Button type="submit" className="w-full">
+        Use This Prompt
+      </Button>
+    </form>
+  );
+}
+```
+
+### Guided Wizard Pattern
+
+```tsx
+// components/prompts/builder/guided-wizard.tsx
+interface GuidedWizardProps {
+  variables: VariableConfig[];
+  onComplete: (values: BuilderValues) => void;
+}
+
+export function GuidedWizard({ variables, onComplete }: GuidedWizardProps) {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [values, setValues] = useState<BuilderValues>({});
+  
+  const currentVariable = variables[currentStep];
+  const isLastStep = currentStep === variables.length - 1;
+  const progress = ((currentStep + 1) / variables.length) * 100;
+  
+  const handleNext = () => {
+    if (isLastStep) {
+      onComplete(values);
+    } else {
+      setCurrentStep((s) => s + 1);
+    }
+  };
+  
+  const handleBack = () => {
+    setCurrentStep((s) => Math.max(0, s - 1));
+  };
+  
+  return (
+    <div className="space-y-6">
+      {/* Progress bar */}
+      <div className="relative h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <motion.div
+          className="absolute inset-y-0 left-0 bg-gradient-to-r from-violet-600 to-blue-600"
+          initial={{ width: 0 }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+      
+      {/* Step indicator */}
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        Step {currentStep + 1} of {variables.length}
+      </p>
+      
+      {/* Current variable input */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentVariable.name}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.2 }}
+        >
+          <label className="block text-lg font-medium mb-2">
+            {currentVariable.label}
+          </label>
+          <VariableInput
+            config={currentVariable}
+            value={values[currentVariable.name] || ''}
+            onChange={(val) => setValues({ ...values, [currentVariable.name]: val })}
+            autoFocus
+          />
+        </motion.div>
+      </AnimatePresence>
+      
+      {/* Navigation */}
+      <div className="flex gap-3">
+        <Button
+          variant="outline"
+          onClick={handleBack}
+          disabled={currentStep === 0}
+          className="flex-1"
+        >
+          Back
+        </Button>
+        <Button onClick={handleNext} className="flex-1">
+          {isLastStep ? 'Complete' : 'Next'}
+        </Button>
+      </div>
+    </div>
+  );
+}
+```
+
+### Chat Builder Pattern (AI-Assisted)
+
+```tsx
+// components/prompts/builder/chat-builder.tsx
+interface ChatBuilderProps {
+  prompt: Prompt;
+  variables: VariableConfig[];
+  onComplete: (values: BuilderValues) => void;
+}
+
+export function ChatBuilder({ prompt, variables, onComplete }: ChatBuilderProps) {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [values, setValues] = useState<BuilderValues>({});
+  const [currentVarIndex, setCurrentVarIndex] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false);
+  
+  // Initialize with AI greeting
+  useEffect(() => {
+    const currentVar = variables[0];
+    setMessages([{
+      id: crypto.randomUUID(),
+      role: 'assistant',
+      content: `Let's fill out this prompt together! First, I need to know: **${currentVar.label}**`,
+      timestamp: new Date(),
+    }]);
+  }, []);
+  
+  const handleUserMessage = async (content: string) => {
+    // Add user message
+    setMessages((prev) => [...prev, {
+      id: crypto.randomUUID(),
+      role: 'user',
+      content,
+      timestamp: new Date(),
+    }]);
+    
+    setIsProcessing(true);
+    
+    // Store value for current variable
+    const currentVar = variables[currentVarIndex];
+    const newValues = { ...values, [currentVar.name]: content };
+    setValues(newValues);
+    
+    // Check if we have all values
+    const nextIndex = currentVarIndex + 1;
+    
+    if (nextIndex >= variables.length) {
+      // All variables filled - ask for confirmation
+      setMessages((prev) => [...prev, {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        content: `Great! Here's your completed prompt:\n\n${substituteVariables(prompt.content, newValues)}\n\nWould you like to use this prompt?`,
+        timestamp: new Date(),
+      }]);
+      setIsProcessing(false);
+      return;
+    }
+    
+    // Ask for next variable
+    const nextVar = variables[nextIndex];
+    setCurrentVarIndex(nextIndex);
+    
+    setMessages((prev) => [...prev, {
+      id: crypto.randomUUID(),
+      role: 'assistant',
+      content: `Got it! Now, what about **${nextVar.label}**?`,
+      timestamp: new Date(),
+    }]);
+    
+    setIsProcessing(false);
+  };
+  
+  // Quick reply suggestions
+  const quickReplies = useMemo(() => {
+    const currentVar = variables[currentVarIndex];
+    if (!currentVar) return [];
+    
+    // Generate contextual suggestions based on variable type
+    switch (currentVar.type) {
+      case 'select':
+        return currentVar.options?.map((opt) => opt.label) || [];
+      default:
+        return currentVar.suggestions || [];
+    }
+  }, [currentVarIndex, variables]);
+  
+  return (
+    <div className="flex flex-col h-[500px]">
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto space-y-4 p-4">
+        {messages.map((msg) => (
+          <ChatMessage key={msg.id} message={msg} />
+        ))}
+        {isProcessing && <TypingIndicator />}
+      </div>
+      
+      {/* Quick replies */}
+      {quickReplies.length > 0 && (
+        <div className="flex gap-2 px-4 pb-2 overflow-x-auto">
+          {quickReplies.map((reply) => (
+            <Button
+              key={reply}
+              variant="outline"
+              size="sm"
+              onClick={() => handleUserMessage(reply)}
+            >
+              {reply}
+            </Button>
+          ))}
+        </div>
+      )}
+      
+      {/* Input */}
+      <ChatInput
+        onSend={handleUserMessage}
+        disabled={isProcessing}
+        placeholder="Type your answer..."
+      />
+    </div>
+  );
+}
+```
+
+### Playground Mode Pattern (Monaco Editor)
+
+```tsx
+// components/prompts/builder/playground.tsx
+interface PlaygroundProps {
+  prompt: Prompt;
+  variables: VariableConfig[];
+  onComplete: (content: string) => void;
+}
+
+export function Playground({ prompt, variables, onComplete }: PlaygroundProps) {
+  const [content, setContent] = useState(prompt.content);
+  const [values, setValues] = useState<BuilderValues>({});
+  const [showPreview, setShowPreview] = useState(true);
+  
+  // Substitute variables in real-time
+  const previewContent = useMemo(() => {
+    return substituteVariables(content, values);
+  }, [content, values]);
+  
+  return (
+    <div className="flex h-[600px] gap-4">
+      {/* Editor panel */}
+      <div className="flex-1 flex flex-col">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="font-medium">Editor</h3>
+          <div className="flex gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setContent(prompt.content)}
+            >
+              Reset
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowPreview(!showPreview)}
+            >
+              {showPreview ? 'Hide' : 'Show'} Preview
+            </Button>
+          </div>
+        </div>
+        
+        <div className="flex-1 border rounded-xl overflow-hidden">
+          <MonacoEditor
+            value={content}
+            onChange={(val) => setContent(val || '')}
+            language="markdown"
+            theme="vs-dark"
+            options={{
+              minimap: { enabled: false },
+              wordWrap: 'on',
+              lineNumbers: 'on',
+              fontSize: 14,
+            }}
+          />
+        </div>
+      </div>
+      
+      {/* Variable sidebar */}
+      <div className="w-80 flex flex-col">
+        <h3 className="font-medium mb-2">Variables</h3>
+        <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+          {variables.map((variable) => (
+            <div key={variable.name}>
+              <label className="block text-sm font-medium mb-1">
+                {variable.label}
+              </label>
+              <VariableInput
+                config={variable}
+                value={values[variable.name] || ''}
+                onChange={(val) => setValues({ ...values, [variable.name]: val })}
+                compact
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Preview panel (collapsible) */}
+      {showPreview && (
+        <div className="w-96 flex flex-col">
+          <h3 className="font-medium mb-2">Preview</h3>
+          <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-[#0a0a0a] rounded-xl p-4">
+            <PromptPreview content={previewContent} />
+          </div>
+        </div>
+      )}
+      
+      {/* Actions */}
+      <div className="absolute bottom-4 right-4">
+        <Button onClick={() => onComplete(previewContent)}>
+          Use Prompt
+        </Button>
+      </div>
+    </div>
+  );
+}
+```
+
+### Variable Substitution Utility
+
+```tsx
+// lib/prompts/variable-substitution.ts
+export function substituteVariables(
+  template: string,
+  values: BuilderValues
+): string {
+  // Match {{variable_name}} pattern
+  return template.replace(/\{\{(\w+)\}\}/g, (match, varName) => {
+    const value = values[varName];
+    if (value === undefined || value === '') {
+      return match; // Keep placeholder if no value
+    }
+    return String(value);
+  });
+}
+
+// Extract variable names from template
+export function extractVariables(template: string): string[] {
+  const matches = template.matchAll(/\{\{(\w+)\}\}/g);
+  return [...new Set([...matches].map((m) => m[1]))];
+}
+
+// Validate all required variables are filled
+export function validateVariables(
+  variables: VariableConfig[],
+  values: BuilderValues
+): ValidationResult {
+  const errors: Record<string, string> = {};
+  
+  for (const variable of variables) {
+    const value = values[variable.name];
+    
+    if (variable.required && (!value || String(value).trim() === '')) {
+      errors[variable.name] = `${variable.label} is required`;
+      continue;
+    }
+    
+    // Type-specific validation
+    if (value && variable.type === 'email' && !isValidEmail(String(value))) {
+      errors[variable.name] = 'Please enter a valid email address';
+    }
+    
+    if (value && variable.type === 'url' && !isValidUrl(String(value))) {
+      errors[variable.name] = 'Please enter a valid URL';
+    }
+  }
+  
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+  };
+}
+```
+
+### User Preferences Persistence
+
+```tsx
+// hooks/use-builder-preferences.ts
+interface BuilderPreferences {
+  defaultMode: BuilderMode;
+  showPreview: boolean;
+  editorTheme: 'vs-dark' | 'vs-light';
+  fontSize: number;
+}
+
+const STORAGE_KEY = 'prompt-builder-preferences';
+const DEFAULT_PREFERENCES: BuilderPreferences = {
+  defaultMode: 'quick',
+  showPreview: true,
+  editorTheme: 'vs-dark',
+  fontSize: 14,
+};
+
+export function useBuilderPreferences() {
+  const [preferences, setPreferences] = useState<BuilderPreferences>(() => {
+    if (typeof window === 'undefined') return DEFAULT_PREFERENCES;
+    
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? { ...DEFAULT_PREFERENCES, ...JSON.parse(stored) } : DEFAULT_PREFERENCES;
+    } catch {
+      return DEFAULT_PREFERENCES;
+    }
+  });
+  
+  const updatePreference = useCallback(<K extends keyof BuilderPreferences>(
+    key: K,
+    value: BuilderPreferences[K]
+  ) => {
+    setPreferences((prev) => {
+      const updated = { ...prev, [key]: value };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+  
+  return { preferences, updatePreference };
+}
+```
+
+### Analytics Integration
+
+```tsx
+// lib/prompts/analytics.ts
+interface BuilderAnalytics {
+  promptId: string;
+  mode: BuilderMode;
+  variableCount: number;
+  completionTime: number;
+  deviceType: 'mobile' | 'tablet' | 'desktop';
+  category: string;
+}
+
+export async function trackBuilderUsage(analytics: BuilderAnalytics) {
+  try {
+    await fetch('/api/prompts/analytics', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...analytics,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+  } catch (error) {
+    // Silent fail for analytics
+    console.warn('Analytics tracking failed:', error);
+  }
+}
+
+// Usage in InteractivePromptBuilder
+const handleComplete = (values: BuilderValues) => {
+  const endTime = Date.now();
+  
+  trackBuilderUsage({
+    promptId: prompt.id,
+    mode: selectedMode,
+    variableCount: variables.length,
+    completionTime: endTime - startTime,
+    deviceType: getDeviceType(),
+    category: prompt.category.slug,
+  });
+  
+  onComplete(substituteVariables(prompt.content, values));
+};
+```
+
+### Lazy Loading Heavy Modes
+
+```tsx
+// components/prompts/builder/interactive-prompt-builder.tsx
+import dynamic from 'next/dynamic';
+
+// Lazy load heavy modes
+const ChatBuilder = dynamic(
+  () => import('./chat-builder').then((mod) => mod.ChatBuilder),
+  { loading: () => <BuilderSkeleton />, ssr: false }
+);
+
+const Playground = dynamic(
+  () => import('./playground').then((mod) => mod.Playground),
+  { loading: () => <BuilderSkeleton />, ssr: false }
+);
+
+// Quick and Guided modes are lighter, can be imported directly
+import { QuickMode } from './quick-mode';
+import { GuidedWizard } from './guided-wizard';
+```
+
+### Type System
+
+```typescript
+// components/prompts/builder/types.ts
+
+export type BuilderMode = 'quick' | 'guided' | 'chat' | 'playground';
+
+export interface VariableConfig {
+  name: string;
+  type: VariableInputType;
+  label: string;
+  description?: string;
+  placeholder?: string;
+  required: boolean;
+  defaultValue?: string;
+  validation?: ValidationRule[];
+  options?: SelectOption[];
+  suggestions?: string[];
+}
+
+export type VariableInputType = 
+  | 'text' | 'textarea' | 'code' | 'number' 
+  | 'url' | 'email' | 'select' | 'file';
+
+export interface BuilderValues {
+  [variableName: string]: string | number | boolean;
+}
+
+export interface BuilderSession {
+  promptId: string;
+  mode: BuilderMode;
+  values: BuilderValues;
+  startedAt: Date;
+  lastUpdated: Date;
+}
+
+export interface ValidationRule {
+  type: 'required' | 'minLength' | 'maxLength' | 'pattern' | 'custom';
+  value?: string | number | RegExp;
+  message: string;
+}
+```
