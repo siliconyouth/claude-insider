@@ -111,40 +111,65 @@ export function MessagesTab() {
   }, [pendingVerificationId]);
 
   // Handle selectedUserId - start or find conversation with user
+  // FIX: Reset processedUserIdRef when selectedUserId is cleared to allow re-messaging same user
   useEffect(() => {
-    if (!selectedUserId || !currentUserId || isStartingConversation) return;
-    if (selectedUserId === currentUserId) return; // Can't message yourself
+    // When selectedUserId is cleared, reset the processed ref to allow future attempts
+    if (!selectedUserId) {
+      processedUserIdRef.current = null;
+      return;
+    }
+
+    if (!currentUserId || isStartingConversation) return;
+    if (selectedUserId === currentUserId) {
+      // Can't message yourself - clear state
+      selectConversation(null);
+      return;
+    }
     if (processedUserIdRef.current === selectedUserId) return; // Already processed
 
     const handleStartConversation = async () => {
       setIsStartingConversation(true);
       processedUserIdRef.current = selectedUserId;
 
-      // First check if we already have a conversation with this user
-      // DEFENSIVE: Use Array.isArray() to prevent "Cannot read property 'some' of undefined" error
-      const existingConversation = conversations.find((conv) =>
-        conv.type === "direct" &&
-        Array.isArray(conv.participants) &&
-        conv.participants.some((p) => p.userId === selectedUserId)
-      );
+      try {
+        // First check if we already have a conversation with this user
+        // DEFENSIVE: Use Array.isArray() to prevent "Cannot read property 'some' of undefined" error
+        const existingConversation = conversations.find((conv) =>
+          conv.type === "direct" &&
+          Array.isArray(conv.participants) &&
+          conv.participants.some((p) => p.userId === selectedUserId)
+        );
 
-      if (existingConversation) {
-        // Already have a conversation, just select it
-        // Note: selectConversation() already clears selectedUserId to null
-        selectConversation(existingConversation.id);
-      } else {
-        // Need to create a new conversation
-        const result = await startConversation(selectedUserId);
-        if (result.success && result.conversationId) {
-          // Refresh conversations using the chat hook (uses ChatEngine when available)
-          await refreshConversations();
-          // Select the new conversation
+        if (existingConversation) {
+          // Already have a conversation, just select it
           // Note: selectConversation() already clears selectedUserId to null
-          selectConversation(result.conversationId);
+          selectConversation(existingConversation.id);
+        } else {
+          // Need to create a new conversation
+          const result = await startConversation(selectedUserId);
+          if (result.success && result.conversationId) {
+            // Refresh conversations using the chat hook (uses ChatEngine when available)
+            await refreshConversations();
+            // Select the new conversation
+            // Note: selectConversation() already clears selectedUserId to null
+            selectConversation(result.conversationId);
+          } else {
+            // FIX: Handle failure - clear state so user can retry
+            console.error("Failed to start conversation:", result.error);
+            // Clear processedUserIdRef to allow retry
+            processedUserIdRef.current = null;
+            // Clear selectedUserId via selectConversation(null)
+            selectConversation(null);
+          }
         }
+      } catch (error) {
+        // FIX: Handle unexpected errors
+        console.error("Error starting conversation:", error);
+        processedUserIdRef.current = null;
+        selectConversation(null);
+      } finally {
+        setIsStartingConversation(false);
       }
-
-      setIsStartingConversation(false);
     };
 
     handleStartConversation();
