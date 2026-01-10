@@ -12,7 +12,7 @@
  * - View prompt details
  */
 
-import { useState, useEffect, useCallback, Suspense } from "react";
+import { useState, useEffect, useCallback, Suspense, useRef, useTransition } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -72,13 +72,18 @@ type SortOption = "popular" | "recent" | "top-rated" | "most-used";
 function PromptsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
   // State
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(false); // For subsequent fetches (no skeleton)
   const [error, setError] = useState<string | null>(null);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
+
+  // Track if initial load is complete to avoid flickering on filter changes
+  const hasInitiallyLoaded = useRef(false);
 
   // Filters from URL
   const [search, setSearch] = useState(searchParams.get("search") || "");
@@ -98,9 +103,14 @@ function PromptsContent() {
       .catch(() => setIsAuthenticated(false));
   }, []);
 
-  // Fetch prompts
+  // Fetch prompts - separated loading states for initial vs subsequent fetches
   const fetchPrompts = useCallback(async () => {
-    setIsLoading(true);
+    // Only show full loading skeleton on initial load
+    if (!hasInitiallyLoaded.current) {
+      setIsLoading(true);
+    } else {
+      setIsFetching(true); // Subtle indicator without skeleton flash
+    }
     setError(null);
 
     try {
@@ -123,10 +133,12 @@ function PromptsContent() {
       setPrompts(data.prompts);
       setCategories(data.categories);
       setPagination(data.pagination);
+      hasInitiallyLoaded.current = true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setIsLoading(false);
+      setIsFetching(false);
     }
   }, [page, sort, search, category, filter]);
 
@@ -134,7 +146,7 @@ function PromptsContent() {
     fetchPrompts();
   }, [fetchPrompts]);
 
-  // Update URL when filters change
+  // Update URL when filters change - use startTransition to prevent Suspense flash
   useEffect(() => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -144,8 +156,12 @@ function PromptsContent() {
     if (page > 1) params.set("page", String(page));
 
     const query = params.toString();
-    router.replace(`/prompts${query ? `?${query}` : ""}`, { scroll: false });
-  }, [search, category, sort, filter, page, router]);
+    // Wrap in startTransition to prevent Suspense fallback from showing
+    startTransition(() => {
+      router.replace(`/prompts${query ? `?${query}` : ""}`, { scroll: false });
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- router is stable, exclude to prevent loops
+  }, [search, category, sort, filter, page]);
 
   // Handle search submit
   const handleSearch = (e: React.FormEvent) => {
@@ -376,14 +392,19 @@ function PromptsContent() {
 
               {/* Results Header */}
               {pagination && (
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                  {pagination.total} {pagination.total === 1 ? "prompt" : "prompts"} found
-                  {search && ` for "${search}"`}
-                  {category && ` in ${categories.find(c => c.slug === category)?.name || category}`}
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 flex items-center gap-2">
+                  {(isFetching || isPending) && (
+                    <span className="w-3 h-3 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
+                  )}
+                  <span>
+                    {pagination.total} {pagination.total === 1 ? "prompt" : "prompts"} found
+                    {search && ` for "${search}"`}
+                    {category && ` in ${categories.find(c => c.slug === category)?.name || category}`}
+                  </span>
                 </p>
               )}
 
-              {/* Loading State */}
+              {/* Loading State - only show skeleton on initial load */}
               {isLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {[...Array(6)].map((_, i) => (
@@ -427,8 +448,11 @@ function PromptsContent() {
                 </div>
               ) : (
                 <>
-                  {/* Prompts Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* Prompts Grid - subtle opacity during fetch to prevent flicker */}
+                  <div className={cn(
+                    "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-opacity duration-150",
+                    (isFetching || isPending) && "opacity-60"
+                  )}>
                     {prompts.map((prompt) => (
                       <PromptCard
                         key={prompt.id}
