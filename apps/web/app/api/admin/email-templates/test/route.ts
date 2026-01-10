@@ -21,7 +21,18 @@ import {
   EMAIL_TEMPLATE_SLUGS,
 } from "@/lib/email-templates";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy-initialize Resend client to avoid throwing at module load time in CI/tests
+let _resend: Resend | null = null;
+function getResendClient(): Resend {
+  if (!_resend) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error("RESEND_API_KEY environment variable is not set");
+    }
+    _resend = new Resend(apiKey);
+  }
+  return _resend;
+}
 const FROM_EMAIL = process.env.EMAIL_FROM || "Claude Insider <noreply@claudeinsider.com>";
 
 // Validate slug is a valid template slug
@@ -88,7 +99,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Send test email
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: recipientEmail,
       subject: `[TEST] ${template.subject}`,

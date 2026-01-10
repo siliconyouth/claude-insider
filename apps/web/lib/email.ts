@@ -13,8 +13,18 @@
 import { Resend } from "resend";
 import { tryCmsTemplate, EMAIL_TEMPLATE_SLUGS } from "./email-templates";
 
-// Initialize Resend client
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy-initialize Resend client to avoid throwing at module load time in CI/tests
+let _resend: Resend | null = null;
+function getResendClient(): Resend {
+  if (!_resend) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error("RESEND_API_KEY environment variable is not set");
+    }
+    _resend = new Resend(apiKey);
+  }
+  return _resend;
+}
 
 // Default sender configuration
  
@@ -38,7 +48,7 @@ interface SendEmailParams {
  */
 export async function sendEmail(params: SendEmailParams): Promise<EmailResult> {
   try {
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: params.to,
       subject: params.subject,
@@ -96,7 +106,7 @@ export async function sendBulkEmail(params: BulkEmailParams): Promise<BulkEmailR
       }));
 
       try {
-        const { data, error } = await resend.batch.send(emails);
+        const { data, error } = await getResendClient().batch.send(emails);
 
         if (error) {
           console.error("[Email] Batch send error:", error);
@@ -144,7 +154,7 @@ export async function sendVerificationEmail(
       })
     );
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: email,
       subject: template.subject,
@@ -187,7 +197,7 @@ export async function sendPasswordResetEmail(
       })
     );
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: email,
       subject: template.subject,
@@ -228,7 +238,7 @@ export async function sendWelcomeEmail(
       })
     );
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: email,
       subject: template.subject,
@@ -434,7 +444,7 @@ export async function sendVerificationEmailWithCode(
       })
     );
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: email,
       subject: template.subject,
@@ -551,7 +561,7 @@ export async function sendNotificationEmail(params: NotificationEmailParams): Pr
   try {
     const subject = getNotificationSubject(params.type, params.actorName);
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: params.email,
       subject,
@@ -742,7 +752,7 @@ export async function sendDigestEmail(params: DigestEmailParams): Promise<EmailR
     const frequencyLabel = params.frequency.charAt(0).toUpperCase() + params.frequency.slice(1);
     const subject = `Your ${frequencyLabel} ${APP_NAME} Digest - ${params.period}`;
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: params.email,
       subject,
@@ -957,7 +967,7 @@ export async function sendQueueDigestEmail(
       return { success: true }; // Don't send if queue is empty
     }
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: params.email,
       subject: `[${APP_NAME}] ${params.pendingCount} items awaiting review`,
@@ -1080,7 +1090,7 @@ export async function sendDiscoveryCompleteEmail(
   try {
     const status = params.errors > 0 ? "completed with errors" : "completed successfully";
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: params.email,
       subject: `[${APP_NAME}] Discovery ${status} - ${params.totalQueued} new items`,
@@ -1210,7 +1220,7 @@ export async function sendHighPriorityAlertEmail(
   }
 ): Promise<EmailResult> {
   try {
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: params.email,
       subject: `[${APP_NAME}] 🔔 High Priority: ${params.resourceTitle}`,
@@ -1327,7 +1337,7 @@ export async function sendFeedbackAdminEmail(
     const typeLabel = params.feedbackType === "bug" ? "🐛 Bug Report" : params.feedbackType === "feature" ? "✨ Feature Request" : "💬 Feedback";
     const subject = `[${APP_NAME}] ${typeLabel}: ${params.title}`;
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: adminEmail,
       subject,
@@ -1356,7 +1366,7 @@ export async function sendFeedbackConfirmationEmail(
     const typeLabel = params.feedbackType === "bug" ? "Bug Report" : params.feedbackType === "feature" ? "Feature Request" : "Feedback";
     const subject = `[${APP_NAME}] Your ${typeLabel} Was Received`;
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: params.submitter.email,
       subject,
@@ -1590,7 +1600,7 @@ export async function sendImportCompleteEmail(
   try {
     const status = params.errors > 0 ? "completed with errors" : "completed";
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: params.email,
       subject: `[${APP_NAME}] Import ${status} - ${params.imported} items imported`,
@@ -1641,7 +1651,7 @@ export async function sendDonationReceiptEmail(
       ? `Thank you for your first donation to ${APP_NAME}! 💜`
       : `Thank you for supporting ${APP_NAME}! 💜 - ${formattedAmount}`;
 
-    const { error } = await resend.emails.send({
+    const { error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: params.email,
       subject,
