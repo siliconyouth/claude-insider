@@ -147,6 +147,7 @@ function PromptsContent() {
   }, [fetchPrompts]);
 
   // Update URL when filters change - use startTransition to prevent Suspense flash
+  // CRITICAL: Compare with current URL to prevent infinite loop
   useEffect(() => {
     const params = new URLSearchParams();
     if (search) params.set("search", search);
@@ -155,13 +156,21 @@ function PromptsContent() {
     if (filter) params.set("filter", filter);
     if (page > 1) params.set("page", String(page));
 
-    const query = params.toString();
-    // Wrap in startTransition to prevent Suspense fallback from showing
-    startTransition(() => {
-      router.replace(`/prompts${query ? `?${query}` : ""}`, { scroll: false });
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- router is stable, exclude to prevent loops
-  }, [search, category, sort, filter, page]);
+    const newQuery = params.toString();
+    const newPath = `/prompts${newQuery ? `?${newQuery}` : ""}`;
+
+    // Get current URL query string (without the path)
+    const currentQuery = searchParams.toString();
+    const currentPath = `/prompts${currentQuery ? `?${currentQuery}` : ""}`;
+
+    // Only update if URL actually changed - prevents infinite loop
+    if (newPath !== currentPath) {
+      startTransition(() => {
+        router.replace(newPath, { scroll: false });
+      });
+    }
+  // searchParams included to ensure we always compare against current URL
+  }, [search, category, sort, filter, page, searchParams]);
 
   // Handle search submit
   const handleSearch = (e: React.FormEvent) => {
