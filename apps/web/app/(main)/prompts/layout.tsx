@@ -35,6 +35,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Prompt Library - Claude Insider',
     description: 'Curated prompt templates for Claude AI.',
+    images: ['https://www.claudeinsider.com/api/og?title=Prompt%20Library&description=800%2B%20Claude-optimized%20prompts%20across%2018%20categories&type=default'],
   },
   alternates: {
     canonical: 'https://www.claudeinsider.com/prompts',

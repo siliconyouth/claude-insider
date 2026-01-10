@@ -62,6 +62,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
       images: [`${BASE_URL}/og/resources.png`],
     },
+    {
+      url: `${BASE_URL}/prompts`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.9,
+      images: [`${BASE_URL}/api/og?title=Prompt%20Library&description=800%2B%20Claude-optimized%20prompts%20across%2018%20categories`],
+    },
   ];
 
   // ============================================

@@ -117,7 +117,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ...(resource.ai_overview && { aiEnhanced: "true" }),
   });
   const dynamicOgImage = `https://www.claudeinsider.com/api/og/resource?${ogImageParams.toString()}`;
-  const ogImage = resource.og_image_url || dynamicOgImage;
+  // Prefer primary screenshot for OG image, then fall back to og_image_url or dynamic generation
+  const ogImage = resource.primary_screenshot_url || resource.og_image_url || dynamicOgImage;
 
   return {
     title,
