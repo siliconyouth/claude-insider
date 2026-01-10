@@ -408,13 +408,13 @@ export function ProfileHoverCard({
 
           {/* Stats row - Twitter style: "42 Following  128 Followers" */}
           <div className="mt-3 flex items-center gap-4 text-[14px]">
-            {user.stats?.following !== undefined && (
+            {user.username && user.stats?.following !== undefined && (
               <Link href={`/users/${user.username}/following`} className="hover:underline">
                 <span className="font-bold text-gray-900 dark:text-[#e7e9ea]">{formatNumber(user.stats.following)}</span>
                 <span className="text-gray-500 dark:text-[#71767b]"> Following</span>
               </Link>
             )}
-            {user.stats?.followers !== undefined && (
+            {user.username && user.stats?.followers !== undefined && (
               <Link href={`/users/${user.username}/followers`} className="hover:underline">
                 <span className="font-bold text-gray-900 dark:text-[#e7e9ea]">{formatNumber(user.stats.followers)}</span>
                 <span className="text-gray-500 dark:text-[#71767b]"> Followers</span>
