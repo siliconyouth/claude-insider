@@ -8,10 +8,7 @@ import { SoundToggle } from "@/components/sound-toggle";
 import { MonochromeLogo } from "@/components/monochrome-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { openAIAssistant } from "@/components/unified-chat";
-// Import build info from JSON (bundled at build time, doesn't invalidate Turbo cache)
-import buildInfo from "@/data/build-info.json";
-
-const APP_VERSION = buildInfo.version;
+import { useVersionPopupControl, APP_VERSION } from "@/components/version-update-popup";
 
 // Type definitions for footer links
 interface FooterLink {
@@ -117,6 +114,7 @@ export function Footer() {
   const t = useTranslations("footer");
   const currentYear = new Date().getFullYear();
   const buildId = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "dev";
+  const { openVersionPopup } = useVersionPopupControl();
 
   const linkClass = cn(
     "text-sm text-gray-600 dark:text-gray-400",
@@ -331,9 +329,13 @@ export function Footer() {
                 Vladimir Dukelic
               </a>
               <span className="hidden sm:inline text-gray-300 dark:text-gray-700">·</span>
-              <span className="hidden sm:inline font-mono text-gray-500 dark:text-gray-500">
+              <button
+                onClick={openVersionPopup}
+                className="hidden sm:inline font-mono text-gray-500 dark:text-gray-500 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors cursor-pointer"
+                title="View version changelog"
+              >
                 v{APP_VERSION}-{buildId}
-              </span>
+              </button>
             </div>
 
             {/* Utilities */}

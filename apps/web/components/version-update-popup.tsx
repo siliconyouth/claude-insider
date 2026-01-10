@@ -3,18 +3,34 @@
 /**
  * Version Update Popup
  *
- * Shows a popup when a new version is detected, displaying
- * changelog highlights. Only shows once per version.
+ * Shows a popup when triggered by clicking the version in the footer.
+ * Displays changelog highlights for the current version.
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext, useContext, useCallback, type ReactNode } from "react";
 import { cn } from "@/lib/design-system";
 // Import build info from JSON (bundled at build time)
 import buildInfo from "@/data/build-info.json";
 
 // Current app version - from build info
-const APP_VERSION = buildInfo.version;
+export const APP_VERSION = buildInfo.version;
 const STORAGE_KEY = "claude-insider-last-seen-version";
+
+// Context for controlling version popup from anywhere (e.g., footer)
+interface VersionPopupContextValue {
+  openVersionPopup: () => void;
+}
+
+const VersionPopupContext = createContext<VersionPopupContextValue | null>(null);
+
+export function useVersionPopupControl() {
+  const context = useContext(VersionPopupContext);
+  if (!context) {
+    // Return no-op if not within provider (graceful degradation)
+    return { openVersionPopup: () => {} };
+  }
+  return context;
+}
 
 interface ChangelogEntry {
   version: string;
@@ -638,51 +654,58 @@ const CHANGELOG: ChangelogEntry[] = [
   },
 ];
 
-export function VersionUpdatePopup() {
+/**
+ * Provider that wraps the app and provides version popup control
+ */
+export function VersionPopupProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [changelog, setChangelog] = useState<ChangelogEntry | null>(null);
 
-  const checkVersion = () => {
-    try {
-      const lastSeenVersion = localStorage.getItem(STORAGE_KEY);
-
-      // If never seen or version is different, show popup
-      if (!lastSeenVersion || lastSeenVersion !== APP_VERSION) {
-        // Find changelog for current version
-        const currentChangelog = CHANGELOG.find((c) => c.version === APP_VERSION);
-
-        if (currentChangelog) {
-          setChangelog(currentChangelog);
-          setIsOpen(true);
-        }
-      }
-    } catch {
-      // localStorage not available
+  const openVersionPopup = useCallback(() => {
+    // Find changelog for current version
+    const currentChangelog = CHANGELOG.find((c) => c.version === APP_VERSION);
+    if (currentChangelog) {
+      setChangelog(currentChangelog);
+      setIsOpen(true);
     }
-  };
-
-  // Check on mount if we should show the popup
-  useEffect(() => {
-    checkVersion();
   }, []);
 
-  const handleDismiss = () => {
+  const handleDismiss = useCallback(() => {
     try {
       localStorage.setItem(STORAGE_KEY, APP_VERSION);
     } catch {
       // localStorage not available
     }
     setIsOpen(false);
-  };
+  }, []);
 
-  if (!isOpen || !changelog) return null;
+  return (
+    <VersionPopupContext.Provider value={{ openVersionPopup }}>
+      {children}
+      {isOpen && changelog && (
+        <VersionUpdatePopupContent changelog={changelog} onDismiss={handleDismiss} />
+      )}
+    </VersionPopupContext.Provider>
+  );
+}
+
+/**
+ * The actual popup UI (internal component)
+ */
+function VersionUpdatePopupContent({
+  changelog,
+  onDismiss,
+}: {
+  changelog: ChangelogEntry;
+  onDismiss: () => void;
+}) {
 
   return (
     <>
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 animate-fade-in"
-        onClick={handleDismiss}
+        onClick={onDismiss}
       />
 
       {/* Modal */}
@@ -732,7 +755,7 @@ export function VersionUpdatePopup() {
                   </p>
                 </div>
                 <button
-                  onClick={handleDismiss}
+                  onClick={onDismiss}
                   className={cn(
                     "p-2 rounded-lg text-gray-400 hover:text-gray-600",
                     "dark:text-gray-500 dark:hover:text-gray-300",
@@ -785,12 +808,12 @@ export function VersionUpdatePopup() {
                   "border border-gray-200 dark:border-[#262626]",
                   "hover:border-blue-500/50 transition-all duration-200"
                 )}
-                onClick={handleDismiss}
+                onClick={onDismiss}
               >
                 View Full Changelog
               </a>
               <button
-                onClick={handleDismiss}
+                onClick={onDismiss}
                 className={cn(
                   "flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold text-white",
                   "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
@@ -812,6 +835,8 @@ export function VersionUpdatePopup() {
  * Hook to manually trigger version popup (useful for testing)
  */
 export function useVersionPopup() {
+  const { openVersionPopup } = useVersionPopupControl();
+
   const clearVersionHistory = () => {
     try {
       localStorage.removeItem(STORAGE_KEY);
@@ -821,5 +846,5 @@ export function useVersionPopup() {
     }
   };
 
-  return { clearVersionHistory };
+  return { clearVersionHistory, openVersionPopup };
 }

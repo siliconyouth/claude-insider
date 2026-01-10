@@ -18,7 +18,7 @@ import { LazyChatWrapper } from "@/components/unified-chat/lazy-chat-wrapper";
 import { AskAIProvider } from "@/components/ask-ai";
 import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 import { LazyRealtimeProvider } from "@/components/providers/lazy-realtime-provider";
-import { VersionUpdatePopup } from "@/components/version-update-popup";
+import { VersionPopupProvider } from "@/components/version-update-popup";
 import { LazyFingerprintProvider } from "@/components/providers/lazy-fingerprint-provider";
 import { LazyE2EEProvider } from "@/components/providers/lazy-e2ee-provider";
 import { LazyPresenceProvider } from "@/components/providers/lazy-presence-provider";
@@ -570,6 +570,7 @@ export default async function MainLayout({
                 <PrefetchProvider>
                   <AchievementNotificationProvider>
                   <DonorBadgeProvider>
+                  <VersionPopupProvider>
                     <SkipLink />
                     <ServiceWorkerRegister />
                     {children}
@@ -579,13 +580,13 @@ export default async function MainLayout({
                     <AuthModalWrapper />
                     <OnboardingModalWrapper />
                     <FeedbackButton />
-                    <VersionUpdatePopup />
                     <NotificationPopup />
                     <InstallPrompt />
                     <PushNotificationPrompt />
                     <MobileBottomNav />
                     <Analytics />
                     <SpeedInsights />
+                  </VersionPopupProvider>
                   </DonorBadgeProvider>
                   </AchievementNotificationProvider>
                 </PrefetchProvider>
