@@ -1,10 +1,10 @@
 "use client";
 
 /**
- * Security Step (MANDATORY)
+ * Security Step (Skippable)
  *
- * Required security setup during onboarding.
- * Users MUST set up at least one 2FA method:
+ * Optional security setup during onboarding.
+ * Users CAN set up a 2FA method for extra protection:
  * - Passkey (Face ID/Touch ID)
  * - Authenticator App (TOTP)
  * - Email 2FA (codes via email) - Simplest fallback option
@@ -13,6 +13,7 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 import { useWizard } from "../wizard-context";
+import { WizardNavigation } from "../wizard-navigation";
 import { StepWrapper, StepInfoBox } from "../shared/step-wrapper";
 import { isWebAuthnSupported, isPlatformAuthenticatorAvailable } from "@/lib/webauthn-client";
 import { startRegistration } from "@simplewebauthn/browser";
@@ -62,21 +63,24 @@ export function SecurityStep() {
     setSelectedOption(option);
   };
 
-  const handleContinue = async () => {
+  const handleContinue = async (): Promise<boolean> => {
+    // Start the setup process - return false to prevent WizardNavigation from advancing
+    // The step will advance after setup completes successfully
     switch (selectedOption) {
       case "passkey":
         setSetupState("passkey-setup");
-        await setupPasskey();
+        setupPasskey(); // Don't await - let it run async
         break;
       case "2fa":
         setSetupState("2fa-setup");
-        await setup2FA();
+        setup2FA(); // Don't await - let it run async
         break;
       case "email":
         setSetupState("email-setup");
-        await setupEmail2FA();
+        setupEmail2FA(); // Don't await - let it run async
         break;
     }
+    return false; // Prevent navigation - we'll handle it manually after setup
   };
 
   const setupPasskey = async () => {
@@ -199,19 +203,18 @@ export function SecurityStep() {
     nextStep();
   };
 
-  // Choose security options (MANDATORY - no skip button)
+  // Choose security options (skippable)
   if (setupState === "choose") {
     return (
       <StepWrapper
         title="Secure Your Account"
-        description="Choose at least one security method to protect your account"
+        description="Add extra protection to your account"
       >
-        <div className="space-y-4">
-          {/* Required notice */}
-          <StepInfoBox variant="warning">
-            <p className="text-sm">
-              <strong>Security is required.</strong> Choose your preferred method below.
-              You can always add more security methods later in settings.
+        <div className="space-y-3">
+          {/* Optional notice - more compact on mobile */}
+          <StepInfoBox variant="info">
+            <p className="text-xs sm:text-sm">
+              <strong>Optional.</strong> Choose a security method or skip to set up later.
             </p>
           </StepInfoBox>
 
@@ -219,37 +222,37 @@ export function SecurityStep() {
           <button
             onClick={() => handleOptionSelect("email")}
             className={cn(
-              "w-full p-4 rounded-xl text-left transition-all duration-200",
+              "w-full p-3 sm:p-4 rounded-xl text-left transition-all duration-200",
               "border-2",
               selectedOption === "email"
                 ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
                 : "border-gray-200 dark:border-[#262626] hover:border-blue-300 dark:hover:border-blue-700"
             )}
           >
-            <div className="flex items-start gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className={cn(
-                "w-10 h-10 rounded-lg flex items-center justify-center",
+                "w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-lg flex items-center justify-center",
                 "bg-gradient-to-br from-blue-500 to-cyan-500 text-white"
               )}>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold text-gray-900 dark:text-white">
-                    Email Verification
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                  <span className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
+                    Email 2FA
                   </span>
-                  <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">
-                    Recommended
+                  <span className="px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">
+                    Easy
                   </span>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-                  Get login codes sent to your email - simplest option
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">
+                  Get codes via email
                 </p>
               </div>
               <div className={cn(
-                "w-5 h-5 rounded-full border-2 flex items-center justify-center",
+                "w-5 h-5 shrink-0 rounded-full border-2 flex items-center justify-center",
                 selectedOption === "email"
                   ? "border-blue-500 bg-blue-500"
                   : "border-gray-300 dark:border-gray-600"
@@ -268,32 +271,32 @@ export function SecurityStep() {
             <button
               onClick={() => handleOptionSelect("passkey")}
               className={cn(
-                "w-full p-4 rounded-xl text-left transition-all duration-200",
+                "w-full p-3 sm:p-4 rounded-xl text-left transition-all duration-200",
                 "border-2",
                 selectedOption === "passkey"
                   ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
                   : "border-gray-200 dark:border-[#262626] hover:border-blue-300 dark:hover:border-blue-700"
               )}
             >
-              <div className="flex items-start gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <div className={cn(
-                  "w-10 h-10 rounded-lg flex items-center justify-center",
+                  "w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-lg flex items-center justify-center",
                   "bg-gradient-to-br from-violet-500 to-blue-500 text-white"
                 )}>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
                   </svg>
                 </div>
-                <div className="flex-1">
-                  <div className="font-semibold text-gray-900 dark:text-white">
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
                     {hasPlatformAuth ? "Face ID / Touch ID" : "Passkey"}
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-                    Sign in instantly with biometrics - most secure
+                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">
+                    Biometrics - most secure
                   </p>
                 </div>
                 <div className={cn(
-                  "w-5 h-5 rounded-full border-2 flex items-center justify-center",
+                  "w-5 h-5 shrink-0 rounded-full border-2 flex items-center justify-center",
                   selectedOption === "passkey"
                     ? "border-blue-500 bg-blue-500"
                     : "border-gray-300 dark:border-gray-600"
@@ -312,32 +315,32 @@ export function SecurityStep() {
           <button
             onClick={() => handleOptionSelect("2fa")}
             className={cn(
-              "w-full p-4 rounded-xl text-left transition-all duration-200",
+              "w-full p-3 sm:p-4 rounded-xl text-left transition-all duration-200",
               "border-2",
               selectedOption === "2fa"
                 ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
                 : "border-gray-200 dark:border-[#262626] hover:border-blue-300 dark:hover:border-blue-700"
             )}
           >
-            <div className="flex items-start gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className={cn(
-                "w-10 h-10 rounded-lg flex items-center justify-center",
+                "w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-lg flex items-center justify-center",
                 "bg-gradient-to-br from-emerald-500 to-teal-500 text-white"
               )}>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                 </svg>
               </div>
-              <div className="flex-1">
-                <div className="font-semibold text-gray-900 dark:text-white">
+              <div className="flex-1 min-w-0">
+                <div className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
                   Authenticator App
                 </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-                  Use Google Authenticator, Authy, or similar apps
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">
+                  Google Authenticator, Authy
                 </p>
               </div>
               <div className={cn(
-                "w-5 h-5 rounded-full border-2 flex items-center justify-center",
+                "w-5 h-5 shrink-0 rounded-full border-2 flex items-center justify-center",
                 selectedOption === "2fa"
                   ? "border-blue-500 bg-blue-500"
                   : "border-gray-300 dark:border-gray-600"
@@ -351,33 +354,14 @@ export function SecurityStep() {
             </div>
           </button>
 
-          {/* Continue Button - NO SKIP OPTION */}
-          <div className="pt-4">
-            <button
-              onClick={handleContinue}
-              disabled={isProcessing}
-              className={cn(
-                "w-full px-4 py-3 rounded-lg text-sm font-semibold",
-                "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-                "text-white",
-                "hover:opacity-90 transition-opacity",
-                "disabled:opacity-50 disabled:cursor-not-allowed"
-              )}
-            >
-              {isProcessing ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                  Setting up...
-                </span>
-              ) : (
-                `Set Up ${selectedOption === "email" ? "Email 2FA" : selectedOption === "passkey" ? "Passkey" : "Authenticator"}`
-              )}
-            </button>
-          </div>
         </div>
+
+        {/* Navigation with skip option */}
+        <WizardNavigation
+          onNext={handleContinue}
+          showSkip
+          nextLabel={`Set Up ${selectedOption === "email" ? "Email 2FA" : selectedOption === "passkey" ? "Passkey" : "Authenticator"}`}
+        />
       </StepWrapper>
     );
   }
@@ -427,28 +411,28 @@ export function SecurityStep() {
   // 2FA setup state
   if (setupState === "2fa-setup") {
     return (
-      <StepWrapper title="Set up Authenticator App">
-        <div className="space-y-4">
+      <StepWrapper title="Set up Authenticator">
+        <div className="space-y-3">
           {qrCodeUrl && (
             <div className="flex flex-col items-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={qrCodeUrl}
                 alt="2FA QR Code"
-                className="w-40 h-40 rounded-lg bg-white p-2"
+                className="w-32 h-32 sm:w-40 sm:h-40 rounded-lg bg-white p-1.5 sm:p-2"
               />
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                Scan with your authenticator app
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
+                Scan with authenticator app
               </p>
             </div>
           )}
 
           {secret && (
             <div className="text-center">
-              <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-                Or enter this code manually:
+              <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-1">
+                Or enter manually:
               </p>
-              <code className="text-sm font-mono bg-gray-100 dark:bg-[#1a1a1a] px-3 py-1 rounded select-all">
+              <code className="text-xs sm:text-sm font-mono bg-gray-100 dark:bg-[#1a1a1a] px-2 py-0.5 rounded select-all break-all">
                 {secret}
               </code>
             </div>
@@ -460,7 +444,7 @@ export function SecurityStep() {
             onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
             placeholder="Enter 6-digit code"
             className={cn(
-              "w-full px-4 py-3 rounded-lg text-center text-xl font-mono tracking-widest",
+              "w-full px-4 py-2.5 rounded-lg text-center text-lg sm:text-xl font-mono tracking-widest",
               "bg-gray-50 dark:bg-[#0a0a0a]",
               "border border-gray-200 dark:border-[#262626]",
               "text-gray-900 dark:text-white",
