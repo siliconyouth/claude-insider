@@ -14,7 +14,7 @@
  * Includes search with filters for role and donor status.
  */
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { Header } from "@/components/header";
@@ -672,8 +672,8 @@ export default function UsersDirectoryPage() {
     fetchExpandedList(listType, 1);
   };
 
-  // Handle follow change (optimistic update)
-  const handleFollowChange = (userId: string, isFollowing: boolean) => {
+  // Handle follow change (optimistic update) - memoized to prevent re-render cascades
+  const handleFollowChange = useCallback((userId: string, isFollowing: boolean) => {
     const updateUsers = (users: DirectoryUser[]) =>
       users.map((u) => (u.id === userId ? { ...u, isFollowing } : u));
 
@@ -690,7 +690,26 @@ export default function UsersDirectoryPage() {
     }));
 
     setExpandedUsers((prev) => updateUsers(prev));
-  };
+  }, []);
+
+  // Memoized callbacks for VirtualizedUserGrid to prevent re-render loops
+  const userKeyExtractor = useCallback((user: DirectoryUser) => user.id, []);
+
+  // Memoized empty state component
+  const emptyStateElement = useMemo(() => (
+    <div className="flex items-center justify-center h-full">
+      <p className="text-gray-500 dark:text-gray-400">No users found</p>
+    </div>
+  ), []);
+
+  // Memoized render function for expanded modal - depends on expandedList for showDonation
+  const renderExpandedUser = useCallback((user: DirectoryUser) => (
+    <UserCard
+      user={user}
+      showDonation={expandedList === "donors"}
+      onFollowChange={handleFollowChange}
+    />
+  ), [expandedList, handleFollowChange]);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-[#0a0a0a]">
@@ -1028,22 +1047,12 @@ export default function UsersDirectoryPage() {
             <div className="p-4">
               <VirtualizedUserGrid
                 items={expandedUsers}
-                keyExtractor={(user) => user.id}
-                renderItem={(user) => (
-                  <UserCard
-                    user={user}
-                    showDonation={expandedList === "donors"}
-                    onFollowChange={handleFollowChange}
-                  />
-                )}
+                keyExtractor={userKeyExtractor}
+                renderItem={renderExpandedUser}
                 height="calc(80vh - 180px)"
                 columns={2}
                 isLoading={expandedLoading && expandedUsers.length === 0}
-                emptyState={
-                  <div className="flex items-center justify-center h-full">
-                    <p className="text-gray-500 dark:text-gray-400">No users found</p>
-                  </div>
-                }
+                emptyState={emptyStateElement}
               />
 
               {/* Load more */}
