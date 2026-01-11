@@ -79,24 +79,21 @@ export function ModeSelector({
     return () => clearTimeout(timer);
   }, []);
 
-  // Load preferences
+  // Load preferences (for display only - never auto-selects)
   useEffect(() => {
     try {
       const stored = localStorage.getItem(PREFERENCES_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         setPreferences(parsed);
-
-        // If user has a remembered preference, auto-select
         if (parsed.rememberMode && parsed.defaultMode) {
           setHasSavedPreference(true);
-          onSelectMode(parsed.defaultMode);
         }
       }
     } catch {
       // Ignore localStorage errors
     }
-  }, [onSelectMode]);
+  }, []);
 
   // Clear saved preference
   const handleClearPreference = useCallback(() => {
