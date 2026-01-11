@@ -22,7 +22,7 @@
  * - Arrow keys: Navigate between modes
  */
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { cn } from "@/lib/design-system";
 import {
   XIcon,
@@ -100,7 +100,7 @@ export function ModeSelector({
   const recommendedMode: BuilderMode =
     variableCount <= 2 ? "quick" : variableCount <= 4 ? "guided" : "chat";
 
-  const modes: ModeOption[] = [
+  const modes: ModeOption[] = useMemo(() => [
     {
       mode: "quick",
       icon: <ZapIcon className="w-8 h-8" />,
@@ -139,7 +139,7 @@ export function ModeSelector({
       bestFor: "Power users, forking, advanced editing",
       shortcut: "4",
     },
-  ];
+  ], [recommendedMode]);
 
   const handleSelect = useCallback(
     (mode: BuilderMode) => {
@@ -187,15 +187,17 @@ export function ModeSelector({
           e.preventDefault();
           handleSelect("playground");
           break;
-        case "Enter":
+        case "Enter": {
           e.preventDefault();
-          if (focusedIndex >= 0 && focusedIndex < modes.length) {
-            handleSelect(modes[focusedIndex].mode);
+          const focusedMode = modes[focusedIndex];
+          if (focusedIndex >= 0 && focusedMode) {
+            handleSelect(focusedMode.mode);
           } else {
             // Select recommended mode
             handleSelect(recommendedMode);
           }
           break;
+        }
         case "ArrowRight":
         case "ArrowDown":
           e.preventDefault();

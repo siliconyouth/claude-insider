@@ -5,6 +5,7 @@ import { HeroBackground } from "@/components/hero-background";
 import { DeviceShowcase } from "@/components/device-mockups";
 import { LazyVoiceAssistantDemo } from "@/components/lazy-voice-assistant-demo";
 import { OpenAssistantButton } from "@/components/open-assistant-button";
+import { LazyPromptLibrarySection } from "@/components/home/lazy-prompt-library-section";
 import { LazyResourcesSection } from "@/components/home/lazy-resources-section";
 import { LazyMCPPlaygroundSection } from "@/components/home/lazy-mcp-playground-section";
 import { LazyCategoriesSection } from "@/components/home/lazy-categories-section";
@@ -145,6 +146,9 @@ export default async function HomePage() {
             </svg>
           </div>
         </div>
+
+        {/* Prompt Library Section - lazy loaded */}
+        <LazyPromptLibrarySection />
 
         {/* Resources Section - lazy loaded for better LCP */}
         <LazyResourcesSection data={resourcesData} />

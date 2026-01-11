@@ -36,7 +36,10 @@ function extractVariablesFromContent(content: string): PromptVariable[] {
   let result;
 
   while ((result = varRegex.exec(content)) !== null) {
-    foundNames.add(result[1]);
+    const varName = result[1];
+    if (varName) {
+      foundNames.add(varName);
+    }
   }
 
   return Array.from(foundNames).map((name) => ({
