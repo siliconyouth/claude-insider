@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.20.0 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.21.0 notification to all opted-in users...\n");
 
-  const version = "1.20.0";
-  const title = "Claude Insider v1.20.0 - Interactive Prompt Builder";
+  const version = "1.21.0";
+  const title = "Claude Insider v1.21.0 - Interactive Prompt Builder Enhancements";
   const message =
-    "🛠️ Interactive Prompt Builder with 4 building modes (Quick/Guided/Chat/Playground) • 📝 Smart Mode Selection recommends based on variable complexity • 🎨 Monaco Editor Integration for playground environment • 💬 AI Chat Mode fills variables through conversation • ⚡ 8 Variable Input Types with auto-detection";
+    "✏️ Edit Prompt Page: Full editing for user-created prompts • 🏠 Homepage Showcase: Animated demo section with keyboard shortcuts • 🔧 Chat Mode Fix: Resolved stale closure bug • 🎨 Mode Selector Polish: Entrance animations, reset preferences";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
