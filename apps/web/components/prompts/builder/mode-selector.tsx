@@ -64,9 +64,10 @@ export function ModeSelector({
   onSelectMode,
   onClose,
 }: ModeSelectorProps) {
-  // Default to ON for better UX - most users want their choice remembered
-  const [rememberChoice, setRememberChoice] = useState(true);
+  // Default to OFF - user must explicitly opt-in to remember choice
+  const [rememberChoice, setRememberChoice] = useState(false);
   const [preferences, setPreferences] = useState<Partial<BuilderPreferences>>({});
+  const [hasSavedPreference, setHasSavedPreference] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const [isVisible, setIsVisible] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -88,6 +89,7 @@ export function ModeSelector({
 
         // If user has a remembered preference, auto-select
         if (parsed.rememberMode && parsed.defaultMode) {
+          setHasSavedPreference(true);
           onSelectMode(parsed.defaultMode);
         }
       }
@@ -95,6 +97,18 @@ export function ModeSelector({
       // Ignore localStorage errors
     }
   }, [onSelectMode]);
+
+  // Clear saved preference
+  const handleClearPreference = useCallback(() => {
+    try {
+      localStorage.removeItem(PREFERENCES_KEY);
+      setPreferences({});
+      setHasSavedPreference(false);
+      setRememberChoice(false);
+    } catch {
+      // Ignore localStorage errors
+    }
+  }, []);
 
   // Determine recommended mode based on variable count
   const recommendedMode: BuilderMode =
@@ -382,22 +396,36 @@ export function ModeSelector({
 
         {/* Footer */}
         <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 dark:border-[#262626] bg-gray-50/80 dark:bg-[#0a0a0a]">
-          <label className="flex items-center gap-2.5 cursor-pointer group">
-            <input
-              type="checkbox"
-              checked={rememberChoice}
-              onChange={(e) => setRememberChoice(e.target.checked)}
-              className={cn(
-                "w-4 h-4 rounded",
-                "border-gray-300 dark:border-gray-600",
-                "text-blue-600 focus:ring-blue-500",
-                "cursor-pointer"
-              )}
-            />
-            <span className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors">
-              Remember my choice
-            </span>
-          </label>
+          <div className="flex items-center gap-4">
+            <label className="flex items-center gap-2.5 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={rememberChoice}
+                onChange={(e) => setRememberChoice(e.target.checked)}
+                className={cn(
+                  "w-4 h-4 rounded",
+                  "border-gray-300 dark:border-gray-600",
+                  "text-blue-600 focus:ring-blue-500",
+                  "cursor-pointer"
+                )}
+              />
+              <span className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors">
+                Remember my choice
+              </span>
+            </label>
+            {hasSavedPreference && (
+              <button
+                onClick={handleClearPreference}
+                className={cn(
+                  "text-xs text-blue-600 dark:text-cyan-400",
+                  "hover:underline",
+                  "transition-colors"
+                )}
+              >
+                Reset saved
+              </button>
+            )}
+          </div>
 
           <div className="flex items-center gap-3">
             <span className="text-xs text-gray-400 dark:text-gray-600 hidden sm:block">
