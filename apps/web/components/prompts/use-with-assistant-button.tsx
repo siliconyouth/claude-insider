@@ -19,12 +19,42 @@
  * @see docs/plans/INTERACTIVE_PROMPT_BUILDER.md
  */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { cn } from "@/lib/design-system";
 import { SparklesIcon, PlayIcon, Loader2Icon } from "lucide-react";
 import { openAIAssistant, type AIContext } from "@/components/unified-chat/unified-chat-provider";
 import { type PromptVariable, type VariableConfig, type BuilderMode } from "./builder/types";
+
+/**
+ * Auto-detect {{variable}} patterns from prompt content
+ * Extracts variable names and creates PromptVariable objects
+ */
+function extractVariablesFromContent(content: string): PromptVariable[] {
+  const varRegex = /\{\{([a-zA-Z_][a-zA-Z0-9_]*)\}\}/g;
+  const foundNames = new Set<string>();
+  let result;
+
+  while ((result = varRegex.exec(content)) !== null) {
+    foundNames.add(result[1]);
+  }
+
+  return Array.from(foundNames).map((name) => ({
+    name,
+    description: formatVariableName(name),
+    required: true,
+  }));
+}
+
+/**
+ * Convert snake_case or camelCase to human-readable name
+ */
+function formatVariableName(name: string): string {
+  return name
+    .replace(/_/g, " ")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 // Lazy load the builder to keep initial bundle small
 const InteractivePromptBuilder = dynamic(
@@ -67,6 +97,16 @@ export function UseWithAssistantButton({
   const [showBuilder, setShowBuilder] = useState(false);
   const [isTracking, setIsTracking] = useState(false);
 
+  // Auto-detect variables from content if none provided
+  // This ensures the builder shows even when DB variables are empty
+  const effectiveVariables = useMemo(() => {
+    if (variables.length > 0) {
+      return variables;
+    }
+    // Auto-detect {{variable}} patterns from prompt content
+    return extractVariablesFromContent(promptContent);
+  }, [variables, promptContent]);
+
   // Track usage with enhanced analytics
   const trackUsage = useCallback(async (builderMode: string = "direct") => {
     try {
@@ -99,23 +139,18 @@ export function UseWithAssistantButton({
 
   // Handle button click
   const handleClick = useCallback(() => {
-    const hasVariables =
-      variables.length > 0 &&
-      variables.some((v) => {
-        // Check if variable exists in content
-        const regex = new RegExp(`\\{\\{${v.name}\\}\\}`, "g");
-        return regex.test(promptContent);
-      });
+    // Use effectiveVariables which includes auto-detected ones
+    const hasVariables = effectiveVariables.length > 0;
 
     if (hasVariables) {
-      // Show Interactive Prompt Builder
+      // Show Interactive Prompt Builder with mode selector
       setShowBuilder(true);
     } else {
       // No variables - open directly with AI Assistant
       handleDirectUse();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps -- handleDirectUse has circular dependency
-  }, [variables, promptContent]);
+  }, [effectiveVariables]);
 
   // Direct use without variables
   const handleDirectUse = useCallback(async () => {
@@ -211,7 +246,7 @@ export function UseWithAssistantButton({
           promptId={promptId}
           promptTitle={promptTitle}
           promptContent={promptContent}
-          variables={variables}
+          variables={effectiveVariables}
           variableConfigs={variableConfigs}
           category={category}
           onClose={handleClose}
