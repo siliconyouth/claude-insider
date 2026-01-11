@@ -242,30 +242,13 @@ export function ChatBuilder({
     return `${ack}\n\nThat's everything I needed!`;
   };
 
-  const showSummary = useCallback(() => {
-    setIsLoading(true);
-
-    setTimeout(() => {
-      const summaryMessage: ChatMessage = {
-        id: generateId(),
-        role: "assistant",
-        content: buildSummaryMessage(),
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, summaryMessage]);
-      setIsComplete(true);
-      setIsLoading(false);
-    }, 500);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const buildSummaryMessage = (): string => {
+  // Build summary message from provided values (avoids stale closure)
+  const buildSummaryMessageFromValues = useCallback((currentValues: BuilderValues): string => {
     let summary = "🎉 Your prompt is ready!\n\n**Summary:**\n";
 
     for (const config of variableConfigs) {
       const label = config.label || formatVariableName(config.variableName);
-      const value = values[config.variableName];
+      const value = currentValues[config.variableName];
       const displayValue = value
         ? value.length > 50
           ? value.substring(0, 50) + "..."
@@ -276,7 +259,32 @@ export function ChatBuilder({
 
     summary += "\nClick **Use with AI** to start your conversation, or go back to make changes.";
     return summary;
-  };
+  }, [variableConfigs]);
+
+  const showSummary = useCallback(() => {
+    setIsLoading(true);
+
+    setTimeout(() => {
+      // Build summary using current values state via setState callback
+      // to avoid stale closure issues
+      setValues((currentValues) => {
+        const summary = buildSummaryMessageFromValues(currentValues);
+
+        const summaryMessage: ChatMessage = {
+          id: generateId(),
+          role: "assistant",
+          content: summary,
+          timestamp: new Date(),
+        };
+
+        setMessages((prev) => [...prev, summaryMessage]);
+        setIsComplete(true);
+        setIsLoading(false);
+
+        return currentValues; // Don't modify values, just read them
+      });
+    }, 500);
+  }, [buildSummaryMessageFromValues]);
 
   const handleOptionClick = useCallback(
     (option: ChatOption) => {
