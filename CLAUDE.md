@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.20.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.21.0**.
 
 | Link | URL |
 |------|-----|
@@ -107,7 +107,7 @@ Root Directory: `apps/web` | Domain redirects: `claudeinsider.com`, `claude-insi
 
 ## Feature Requirements Summary
 
-**74 implemented features** across 7 categories. **Full details:** [FEATURES.md](FEATURES.md)
+**75 implemented features** across 7 categories. **Full details:** [FEATURES.md](FEATURES.md)
 
 | Category | Highlights |
 |----------|------------|

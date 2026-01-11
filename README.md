@@ -9,9 +9,9 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.20.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.21.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-00cc66?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md#performance-optimization-mandatory)
-[![Features](https://img.shields.io/badge/74-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
+[![Features](https://img.shields.io/badge/75-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
 [![Prompts](https://img.shields.io/badge/800+-prompts-a855f7?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/prompts)
 [![Resources](https://img.shields.io/badge/3,012-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
 [![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
@@ -123,7 +123,7 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 
 ---
 
-## 74 Platform Features
+## 75 Platform Features
 
 <details>
 <summary><b>Content & Documentation</b></summary>

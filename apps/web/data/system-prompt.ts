@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2026-01-11 for v1.20.0 (Interactive Prompt Builder)
+ * Updated: 2026-01-11 for v1.21.0 (Interactive Prompt Builder Enhancement)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.20.0",
+  version: "1.21.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.20.0 - updated 2026-01-11)
+// TECH STACK KNOWLEDGE (v1.21.0 - updated 2026-01-11)
 // =============================================================================
 
 export const TECH_STACK = {

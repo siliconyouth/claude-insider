@@ -42,6 +42,18 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.21.0",
+    date: "2026-01-11",
+    type: "minor",
+    highlights: [
+      "✏️ Edit Prompt Page: Full editing capability for user-created prompts at /prompts/[slug]/edit",
+      "🏠 Homepage Showcase: Animated Interactive Prompt Builder demo section",
+      "⌨️ Keyboard Shortcuts: Mode selector supports 1-4 keys, arrow navigation, Enter confirm",
+      "🔧 Chat Mode Fix: Resolved stale closure bug where summary showed '(not provided)'",
+      "🎨 Mode Selector Polish: Entrance animations, reset preferences, default off for remember",
+    ],
+  },
+  {
     version: "1.20.0",
     date: "2026-01-11",
     type: "major",

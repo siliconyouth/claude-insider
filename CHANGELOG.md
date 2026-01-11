@@ -9,6 +9,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.21.0] - 2026-01-11
+### 🛠️ Interactive Prompt Builder Enhancement
+Polished prompt building experience with edit capability, homepage showcase, and improved mode selector UX.
+
+#### New Features
+
+| Feature | Description |
+|---------|-------------|
+| **Edit Prompt Page** | `/prompts/[slug]/edit` - full editing capability for user-created prompts with permission checks |
+| **Homepage Showcase** | Animated Interactive Prompt Builder demo section on homepage |
+| **Keyboard Shortcuts** | Mode selector supports 1-4 keys for direct selection, arrow navigation, Enter for confirm |
+| **Reset Preferences** | "Reset saved" button to clear localStorage preferences |
+
+#### Bug Fixes
+
+| Fix | Description |
+|-----|-------------|
+| **Chat Mode Summary** | Fixed stale closure bug where summary showed "(not provided)" for all variables |
+| **Mode Selector** | Changed "Remember my choice" default to OFF, selector always shown |
+| **Variable Detection** | Auto-detect `{{variables}}` from prompt content on edit |
+| **Re-render Loop** | Prevented infinite re-render loop on Prompts Library page |
+
+#### Components Updated
+
+| Component | Changes |
+|-----------|---------|
+| `ModeSelector` | Entrance animations, keyboard navigation, reset preferences |
+| `ChatBuilder` | Fixed stale closure with `setValues` callback pattern |
+| `PromptLibrarySection` | Homepage animated showcase demo |
+| Edit Page | New `/prompts/[slug]/edit/page.tsx` with full form |
+
+---
+
 ## [1.20.0] - 2026-01-11
 ### 🛠️ Interactive Prompt Builder
 Revolutionary 4-mode prompt building experience with AI-powered conversation, step-by-step wizard, and full Monaco editor playground.
