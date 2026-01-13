@@ -64,14 +64,6 @@ export function InteractivePromptBuilder({
   const [selectedMode, setSelectedMode] = useState<BuilderMode | null>(initialMode || null);
   const [showModeSelector, setShowModeSelector] = useState(!skipModeSelector && !initialMode);
 
-  // DEBUG: Log initial state
-  console.log("[InteractivePromptBuilder] Mounting with:", {
-    skipModeSelector,
-    initialMode,
-    showModeSelector: !skipModeSelector && !initialMode,
-    selectedMode: initialMode || null,
-    variableCount: variables.length,
-  });
   const [isTracking, setIsTracking] = useState(false);
 
   // ============================================================================
@@ -105,10 +97,47 @@ export function InteractivePromptBuilder({
     }
   }, [promptId, isTracking]);
 
-  const handleModeSelect = useCallback((mode: BuilderMode) => {
+  const handleModeSelect = useCallback(async (mode: BuilderMode) => {
+    // Handle "direct" mode - immediately send to AI Assistant
+    if (mode === "direct") {
+      // Track usage
+      await trackUsage("direct");
+
+      // Build AI context
+      const context: AIContext = {
+        page: {
+          path: `/prompts/${promptId}`,
+          title: promptTitle,
+          category: category || "prompts",
+          section: "Prompt Library",
+        },
+        content: {
+          type: "prompt",
+          title: promptTitle,
+          text: promptContent,
+          metadata: {
+            promptId,
+            category: category || "",
+            builderMode: "direct",
+          },
+        },
+      };
+
+      // Open AI Assistant and auto-send
+      openAIAssistant({
+        context,
+        question: promptContent,
+        autoSend: true,
+      });
+
+      // Close builder
+      onClose();
+      return;
+    }
+
     setSelectedMode(mode);
     setShowModeSelector(false);
-  }, []);
+  }, [promptId, promptTitle, promptContent, category, trackUsage, onClose]);
 
   const handleModeChange = useCallback((mode: BuilderMode) => {
     setSelectedMode(mode);
@@ -158,15 +187,8 @@ export function InteractivePromptBuilder({
   // Render
   // ============================================================================
 
-  // DEBUG: Log render state
-  console.log("[InteractivePromptBuilder] Render:", {
-    showModeSelector,
-    selectedMode,
-  });
-
   // Show mode selector
   if (showModeSelector) {
-    console.log("[InteractivePromptBuilder] Rendering ModeSelector");
     return (
       <ModeSelector
         promptTitle={promptTitle}

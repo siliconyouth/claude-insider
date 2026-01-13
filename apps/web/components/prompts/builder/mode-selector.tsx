@@ -32,6 +32,7 @@ import {
   LayoutGridIcon,
   ChevronRightIcon,
   SparklesIcon,
+  SendIcon,
 } from "lucide-react";
 import { type BuilderMode, type BuilderPreferences } from "./types";
 
@@ -64,9 +65,6 @@ export function ModeSelector({
   onSelectMode,
   onClose,
 }: ModeSelectorProps) {
-  // DEBUG: Log mount
-  console.log("[ModeSelector] Mounting with:", { promptTitle, variableCount });
-
   // Default to OFF - user must explicitly opt-in to remember choice
   const [rememberChoice, setRememberChoice] = useState(false);
   const [preferences, setPreferences] = useState<Partial<BuilderPreferences>>({});
@@ -77,7 +75,6 @@ export function ModeSelector({
 
   // Trigger entrance animation
   useEffect(() => {
-    console.log("[ModeSelector] Setting isVisible to true after 10ms");
     // Small delay to ensure CSS transition triggers
     const timer = setTimeout(() => setIsVisible(true), 10);
     return () => clearTimeout(timer);
@@ -112,49 +109,66 @@ export function ModeSelector({
   }, []);
 
   // Determine recommended mode based on variable count
+  // For 0 variables: recommend "direct" (just send it)
+  // For 1-2 variables: recommend "quick" (simple form)
+  // For 3-4 variables: recommend "guided" (step-by-step)
+  // For 5+ variables: recommend "chat" (AI-assisted)
   const recommendedMode: BuilderMode =
-    variableCount <= 2 ? "quick" : variableCount <= 4 ? "guided" : "chat";
+    variableCount === 0 ? "direct" : variableCount <= 2 ? "quick" : variableCount <= 4 ? "guided" : "chat";
 
   const modes: ModeOption[] = useMemo(() => [
+    // Show "Use Directly" as first option for 0-variable prompts
+    ...(variableCount === 0 ? [{
+      mode: "direct" as BuilderMode,
+      icon: <SendIcon className="w-8 h-8" />,
+      title: "Use Directly",
+      description: "Send this prompt to AI Assistant immediately without modifications",
+      bestFor: "Ready-to-use prompts, quick execution",
+      isRecommended: true,
+      badge: "Recommended",
+      shortcut: "1",
+    }] : []),
     {
-      mode: "quick",
+      mode: "quick" as BuilderMode,
       icon: <ZapIcon className="w-8 h-8" />,
       title: "Quick Mode",
-      description: "Fill in the blanks with smart suggestions and live preview",
-      bestFor: "Simple prompts, repeat use",
+      description: variableCount === 0
+        ? "Preview and optionally customize before sending"
+        : "Fill in the blanks with smart suggestions and live preview",
+      bestFor: variableCount === 0 ? "Preview before sending" : "Simple prompts, repeat use",
       isRecommended: recommendedMode === "quick",
       badge: recommendedMode === "quick" ? "Recommended" : undefined,
-      shortcut: "1",
+      shortcut: variableCount === 0 ? "2" : "1",
     },
     {
-      mode: "guided",
+      mode: "guided" as BuilderMode,
       icon: <WandIcon className="w-8 h-8" />,
       title: "Guided Mode",
       description: "Step-by-step wizard that walks you through each variable",
       bestFor: "Complex prompts, first time users",
       isRecommended: recommendedMode === "guided",
       badge: recommendedMode === "guided" ? "Recommended" : undefined,
-      shortcut: "2",
+      shortcut: variableCount === 0 ? "3" : "2",
     },
     {
-      mode: "chat",
+      mode: "chat" as BuilderMode,
       icon: <MessageSquareIcon className="w-8 h-8" />,
       title: "Chat Mode",
       description: "AI assistant helps you build the perfect prompt conversationally",
       bestFor: "Exploration, customization, complex needs",
       isRecommended: recommendedMode === "chat",
       badge: recommendedMode === "chat" ? "Recommended" : "AI Powered",
-      shortcut: "3",
+      shortcut: variableCount === 0 ? "4" : "3",
     },
     {
-      mode: "playground",
+      mode: "playground" as BuilderMode,
       icon: <LayoutGridIcon className="w-8 h-8" />,
       title: "Playground",
       description: "Full editor with variable sidebar, preview, and version history",
-      bestFor: "Power users, forking, advanced editing",
-      shortcut: "4",
+      bestFor: "Power users, forking, adding variables",
+      shortcut: variableCount === 0 ? "5" : "4",
     },
-  ], [recommendedMode]);
+  ], [recommendedMode, variableCount]);
 
   const handleSelect = useCallback(
     (mode: BuilderMode) => {
@@ -173,7 +187,7 @@ export function ModeSelector({
     [rememberChoice, preferences, onSelectMode]
   );
 
-  // Keyboard navigation
+  // Keyboard navigation - uses dynamic shortcuts based on mode order
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't handle if user is typing in an input
@@ -187,21 +201,18 @@ export function ModeSelector({
           onClose();
           break;
         case "1":
-          e.preventDefault();
-          handleSelect("quick");
-          break;
         case "2":
-          e.preventDefault();
-          handleSelect("guided");
-          break;
         case "3":
-          e.preventDefault();
-          handleSelect("chat");
-          break;
         case "4":
+        case "5": {
           e.preventDefault();
-          handleSelect("playground");
+          // Find mode with matching shortcut
+          const modeForKey = modes.find(m => m.shortcut === e.key);
+          if (modeForKey) {
+            handleSelect(modeForKey.mode);
+          }
           break;
+        }
         case "Enter": {
           e.preventDefault();
           const focusedMode = modes[focusedIndex];
@@ -430,7 +441,7 @@ export function ModeSelector({
 
           <div className="flex items-center gap-3">
             <span className="text-xs text-gray-400 dark:text-gray-600 hidden sm:block">
-              Press <kbd className="px-1.5 py-0.5 mx-0.5 rounded bg-gray-200 dark:bg-gray-800 font-mono text-[10px]">1-4</kbd> to select • <kbd className="px-1.5 py-0.5 mx-0.5 rounded bg-gray-200 dark:bg-gray-800 font-mono text-[10px]">Esc</kbd> to close
+              Press <kbd className="px-1.5 py-0.5 mx-0.5 rounded bg-gray-200 dark:bg-gray-800 font-mono text-[10px]">1-{modes.length}</kbd> to select • <kbd className="px-1.5 py-0.5 mx-0.5 rounded bg-gray-200 dark:bg-gray-800 font-mono text-[10px]">Esc</kbd> to close
             </span>
             <button
               onClick={onClose}

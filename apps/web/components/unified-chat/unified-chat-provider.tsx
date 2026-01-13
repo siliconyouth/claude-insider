@@ -41,6 +41,7 @@ export interface OpenOptions {
   // AI options
   context?: AIContext;
   question?: string;
+  autoSend?: boolean; // If true, automatically send the question without user clicking send
 
   // Messages options
   conversationId?: string;
@@ -56,6 +57,7 @@ export interface UnifiedChatState {
   // AI Assistant state
   aiContext: AIContext | null;
   aiQuestion: string;
+  aiAutoSend: boolean; // If true, automatically send the question
 
   // Messages state
   selectedConversationId: string | null;
@@ -67,7 +69,7 @@ export interface UnifiedChatState {
 interface UnifiedChatContextType extends UnifiedChatState {
   // Opening methods
   openUnifiedChat: (mode: "ai" | "messages", options?: OpenOptions) => void;
-  openAIAssistant: (options?: { context?: AIContext; question?: string }) => void;
+  openAIAssistant: (options?: { context?: AIContext; question?: string; autoSend?: boolean }) => void;
   openMessages: (options?: { conversationId?: string; userId?: string }) => void;
 
   // Navigation
@@ -79,6 +81,7 @@ interface UnifiedChatContextType extends UnifiedChatState {
   setAIContext: (context: AIContext | null) => void;
   setAIQuestion: (question: string) => void;
   clearAIContext: () => void;
+  clearAIAutoSend: () => void;
 
   // Messages-specific
   selectConversation: (conversationId: string | null) => void;
@@ -99,13 +102,13 @@ const UnifiedChatContext = createContext<UnifiedChatContextType | null>(null);
 
 // Global functions for external access (e.g., openAssistant())
 let globalOpenUnifiedChat: ((mode: "ai" | "messages", options?: OpenOptions) => void) | null = null;
-let globalOpenAIAssistant: ((options?: { context?: AIContext; question?: string }) => void) | null = null;
+let globalOpenAIAssistant: ((options?: { context?: AIContext; question?: string; autoSend?: boolean }) => void) | null = null;
 let globalOpenMessages: ((options?: { conversationId?: string; userId?: string; messageId?: string }) => void) | null = null;
 
 // Pending calls queue - for when functions are called before provider mounts
 type PendingCall =
   | { type: "chat"; mode: "ai" | "messages"; options?: OpenOptions }
-  | { type: "ai"; options?: { context?: AIContext; question?: string } }
+  | { type: "ai"; options?: { context?: AIContext; question?: string; autoSend?: boolean } }
   | { type: "messages"; options?: { conversationId?: string; userId?: string; messageId?: string } };
 
 let pendingCalls: PendingCall[] = [];
@@ -149,7 +152,7 @@ export function openUnifiedChat(mode: "ai" | "messages", options?: OpenOptions) 
   }
 }
 
-export function openAIAssistant(options?: { context?: AIContext; question?: string }) {
+export function openAIAssistant(options?: { context?: AIContext; question?: string; autoSend?: boolean }) {
   if (globalOpenAIAssistant) {
     globalOpenAIAssistant(options);
   } else if (!providerReady) {
@@ -191,6 +194,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
   // AI state
   const [aiContext, setAIContext] = useState<AIContext | null>(null);
   const [aiQuestion, setAIQuestion] = useState("");
+  const [aiAutoSend, setAIAutoSend] = useState(false);
 
   // Messages state
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
@@ -219,11 +223,12 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const openAIAssistantFn = useCallback((options?: { context?: AIContext; question?: string }) => {
+  const openAIAssistantFn = useCallback((options?: { context?: AIContext; question?: string; autoSend?: boolean }) => {
     setActiveTab("ai");
     setIsOpen(true);
     if (options?.context) setAIContext(options.context);
     if (options?.question) setAIQuestion(options.question);
+    if (options?.autoSend) setAIAutoSend(true);
   }, []);
 
   const openMessagesFn = useCallback((options?: { conversationId?: string; userId?: string; messageId?: string }) => {
@@ -310,6 +315,11 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
   const clearAIContext = useCallback(() => {
     setAIContext(null);
     setAIQuestion("");
+    setAIAutoSend(false);
+  }, []);
+
+  const clearAIAutoSend = useCallback(() => {
+    setAIAutoSend(false);
   }, []);
 
   // ============================================================================
@@ -345,6 +355,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     activeTab,
     aiContext,
     aiQuestion,
+    aiAutoSend,
     selectedConversationId,
     selectedUserId,
     targetMessageId,
@@ -361,6 +372,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     setAIContext,
     setAIQuestion,
     clearAIContext,
+    clearAIAutoSend,
     selectConversation,
     startConversationWithUser,
     clearTargetMessage,

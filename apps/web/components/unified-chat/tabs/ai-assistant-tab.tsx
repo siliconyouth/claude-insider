@@ -137,7 +137,7 @@ const VOICES: Voice[] = [
 // ============================================================================
 
 export function AIAssistantTab() {
-  const { aiContext, aiQuestion, clearAIContext } = useUnifiedChat();
+  const { aiContext, aiQuestion, aiAutoSend, clearAIContext, clearAIAutoSend } = useUnifiedChat();
   const { announce } = useAnnouncer();
   const pathname = usePathname();
 
@@ -299,14 +299,14 @@ export function AIAssistantTab() {
     };
   }, []);
 
-  // Handle AI context from Ask AI
+  // Handle AI context from Ask AI - pre-fill input
   useEffect(() => {
-    if (aiQuestion && aiContext) {
-      // Pre-fill input with question
+    if (aiQuestion && aiContext && !aiAutoSend) {
+      // Pre-fill input with question (only if not auto-sending)
       setInput(aiQuestion);
       inputRef.current?.focus();
     }
-  }, [aiContext, aiQuestion]);
+  }, [aiContext, aiQuestion, aiAutoSend]);
 
   // ============================================================================
   // TTS - Phase 3: Queue-based streaming with caching
@@ -1096,6 +1096,20 @@ export function AIAssistantTab() {
     sendMessage(recommendation);
     track("assistant_recommendation_clicked", { recommendation: recommendation.substring(0, 50) });
   }, [sendMessage]);
+
+  /**
+   * Auto-send effect - automatically sends the message when aiAutoSend is true
+   * This is used when prompts from the library should be executed immediately
+   * without requiring the user to click send
+   */
+  useEffect(() => {
+    if (aiAutoSend && aiQuestion && !isLoading) {
+      // Clear the auto-send flag first to prevent re-triggering
+      clearAIAutoSend();
+      // Send the message
+      sendMessage(aiQuestion);
+    }
+  }, [aiAutoSend, aiQuestion, isLoading, clearAIAutoSend, sendMessage]);
 
   /**
    * Render actions (Listen/Copy buttons) for assistant messages in virtualized list

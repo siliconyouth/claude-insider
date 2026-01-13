@@ -787,7 +787,22 @@ export function EnhancedVariableModal({
               style={{ maxHeight: "calc(90vh - 180px)" }}
               onClick={(e) => e.stopPropagation()}
             >
-              {visibleConfigs.map((config, index) => renderInput(config, index))}
+              {visibleConfigs.length > 0 ? (
+                visibleConfigs.map((config, index) => renderInput(config, index))
+              ) : (
+                <div className="text-center py-8">
+                  <div className="p-4 rounded-full bg-gradient-to-br from-violet-500/10 to-blue-500/10 w-fit mx-auto mb-4">
+                    <SparklesIcon className="w-8 h-8 text-violet-500" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    Ready to Use
+                  </h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
+                    This prompt has no variables to fill in. Review the preview and click
+                    &quot;Use with AI&quot; to send it directly.
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Footer */}

@@ -88,7 +88,7 @@ export interface PromptVariable {
 // Builder Session State
 // ============================================================================
 
-export type BuilderMode = "quick" | "guided" | "chat" | "playground";
+export type BuilderMode = "quick" | "guided" | "chat" | "playground" | "direct";
 
 export interface BuilderValues {
   [variableName: string]: string;

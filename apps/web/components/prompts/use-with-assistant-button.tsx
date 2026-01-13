@@ -22,8 +22,7 @@
 import { useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { cn } from "@/lib/design-system";
-import { SparklesIcon, PlayIcon, Loader2Icon } from "lucide-react";
-import { openAIAssistant, type AIContext } from "@/components/unified-chat/unified-chat-provider";
+import { SparklesIcon, PlayIcon } from "lucide-react";
 import { type PromptVariable, type VariableConfig, type BuilderMode } from "./builder/types";
 
 /**
@@ -61,21 +60,14 @@ function formatVariableName(name: string): string {
 
 // Lazy load the builder to keep initial bundle small
 const InteractivePromptBuilder = dynamic(
-  () => import("./builder/interactive-prompt-builder").then((mod) => {
-    console.log("[UseWithAssistantButton] InteractivePromptBuilder loaded successfully");
-    return mod.InteractivePromptBuilder;
-  }).catch((err) => {
-    console.error("[UseWithAssistantButton] Failed to load InteractivePromptBuilder:", err);
-    throw err;
-  }),
+  () => import("./builder/interactive-prompt-builder").then((mod) => mod.InteractivePromptBuilder),
   {
     ssr: false,
-    loading: () => {
-      console.log("[UseWithAssistantButton] Loading InteractivePromptBuilder...");
-      return <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    loading: () => (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
         <div className="text-white">Loading builder...</div>
-      </div>;
-    },
+      </div>
+    ),
   }
 );
 
@@ -109,7 +101,6 @@ export function UseWithAssistantButton({
   skipModeSelector,
 }: UseWithAssistantButtonProps) {
   const [showBuilder, setShowBuilder] = useState(false);
-  const [isTracking, setIsTracking] = useState(false);
 
   // Auto-detect variables from content if none provided
   // This ensures the builder shows even when DB variables are empty
@@ -121,92 +112,13 @@ export function UseWithAssistantButton({
     return extractVariablesFromContent(promptContent);
   }, [variables, promptContent]);
 
-  // Track usage with enhanced analytics
-  const trackUsage = useCallback(async (builderMode: string = "direct") => {
-    try {
-      setIsTracking(true);
-
-      // Gather device/browser info for analytics (non-PII)
-      const deviceInfo = {
-        viewport: `${window.innerWidth}x${window.innerHeight}`,
-        isMobile: window.innerWidth < 768,
-        isTouch: 'ontouchstart' in window,
-        referrer: document.referrer ? new URL(document.referrer).pathname : null,
-      };
-
-      await fetch(`/api/prompts/${promptId}/use`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          context: "assistant",
-          builderMode,
-          deviceInfo,
-          promptCategory: category,
-        }),
-      });
-    } catch {
-      // Silent fail - don't block user experience
-    } finally {
-      setIsTracking(false);
-    }
-  }, [promptId, category]);
-
-  // Handle button click
+  // Handle button click - always show mode selector
   const handleClick = useCallback(() => {
-    // Use effectiveVariables which includes auto-detected ones
-    const hasVariables = effectiveVariables.length > 0;
-
-    // DEBUG: Log click event
-    console.log("[UseWithAssistantButton] Click:", {
-      hasVariables,
-      effectiveVariablesCount: effectiveVariables.length,
-      skipModeSelector,
-      initialMode,
-    });
-
-    if (hasVariables) {
-      // Show Interactive Prompt Builder with mode selector
-      console.log("[UseWithAssistantButton] Setting showBuilder to true");
-      setShowBuilder(true);
-    } else {
-      // No variables - open directly with AI Assistant
-      console.log("[UseWithAssistantButton] No variables, using directly");
-      handleDirectUse();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- handleDirectUse has circular dependency
-  }, [effectiveVariables, skipModeSelector, initialMode]);
-
-  // Direct use without variables
-  const handleDirectUse = useCallback(async () => {
-    // Track usage with "direct" mode
-    await trackUsage("direct");
-
-    // Build AI context
-    const context: AIContext = {
-      page: {
-        path: `/prompts/${promptId}`,
-        title: promptTitle,
-        category: category || "prompts",
-        section: "Prompt Library",
-      },
-      content: {
-        type: "prompt",
-        title: promptTitle,
-        text: promptContent,
-        metadata: {
-          promptId,
-          category: category || "",
-          builderMode: "direct",
-        },
-      },
-    };
-
-    // Open AI Assistant
-    openAIAssistant({
-      context,
-      question: promptContent,
-    });
-  }, [promptId, promptTitle, promptContent, category, trackUsage]);
+    // Always show the Interactive Prompt Builder with mode selector
+    // This allows users to choose Playground mode to add variables,
+    // or Quick/Chat mode for immediate use
+    setShowBuilder(true);
+  }, []);
 
   // Handle builder close
   const handleClose = useCallback(() => {
@@ -244,7 +156,6 @@ export function UseWithAssistantButton({
     <>
       <button
         onClick={handleClick}
-        disabled={isTracking}
         className={cn(
           "inline-flex items-center justify-center rounded-lg font-medium",
           "transition-all duration-200",
@@ -255,9 +166,7 @@ export function UseWithAssistantButton({
           className
         )}
       >
-        {isTracking ? (
-          <Loader2Icon className="w-4 h-4 animate-spin" />
-        ) : variant === "primary" ? (
+        {variant === "primary" ? (
           <SparklesIcon className="w-4 h-4" />
         ) : (
           <PlayIcon className="w-4 h-4" />
