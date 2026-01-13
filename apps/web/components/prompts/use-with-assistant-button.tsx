@@ -61,10 +61,21 @@ function formatVariableName(name: string): string {
 
 // Lazy load the builder to keep initial bundle small
 const InteractivePromptBuilder = dynamic(
-  () => import("./builder/interactive-prompt-builder").then((mod) => mod.InteractivePromptBuilder),
+  () => import("./builder/interactive-prompt-builder").then((mod) => {
+    console.log("[UseWithAssistantButton] InteractivePromptBuilder loaded successfully");
+    return mod.InteractivePromptBuilder;
+  }).catch((err) => {
+    console.error("[UseWithAssistantButton] Failed to load InteractivePromptBuilder:", err);
+    throw err;
+  }),
   {
     ssr: false,
-    loading: () => null,
+    loading: () => {
+      console.log("[UseWithAssistantButton] Loading InteractivePromptBuilder...");
+      return <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        <div className="text-white">Loading builder...</div>
+      </div>;
+    },
   }
 );
 
@@ -145,15 +156,25 @@ export function UseWithAssistantButton({
     // Use effectiveVariables which includes auto-detected ones
     const hasVariables = effectiveVariables.length > 0;
 
+    // DEBUG: Log click event
+    console.log("[UseWithAssistantButton] Click:", {
+      hasVariables,
+      effectiveVariablesCount: effectiveVariables.length,
+      skipModeSelector,
+      initialMode,
+    });
+
     if (hasVariables) {
       // Show Interactive Prompt Builder with mode selector
+      console.log("[UseWithAssistantButton] Setting showBuilder to true");
       setShowBuilder(true);
     } else {
       // No variables - open directly with AI Assistant
+      console.log("[UseWithAssistantButton] No variables, using directly");
       handleDirectUse();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps -- handleDirectUse has circular dependency
-  }, [effectiveVariables]);
+  }, [effectiveVariables, skipModeSelector, initialMode]);
 
   // Direct use without variables
   const handleDirectUse = useCallback(async () => {

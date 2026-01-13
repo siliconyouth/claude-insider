@@ -63,6 +63,15 @@ export function InteractivePromptBuilder({
 
   const [selectedMode, setSelectedMode] = useState<BuilderMode | null>(initialMode || null);
   const [showModeSelector, setShowModeSelector] = useState(!skipModeSelector && !initialMode);
+
+  // DEBUG: Log initial state
+  console.log("[InteractivePromptBuilder] Mounting with:", {
+    skipModeSelector,
+    initialMode,
+    showModeSelector: !skipModeSelector && !initialMode,
+    selectedMode: initialMode || null,
+    variableCount: variables.length,
+  });
   const [isTracking, setIsTracking] = useState(false);
 
   // ============================================================================
@@ -149,8 +158,15 @@ export function InteractivePromptBuilder({
   // Render
   // ============================================================================
 
+  // DEBUG: Log render state
+  console.log("[InteractivePromptBuilder] Render:", {
+    showModeSelector,
+    selectedMode,
+  });
+
   // Show mode selector
   if (showModeSelector) {
+    console.log("[InteractivePromptBuilder] Rendering ModeSelector");
     return (
       <ModeSelector
         promptTitle={promptTitle}

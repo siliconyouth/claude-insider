@@ -64,6 +64,9 @@ export function ModeSelector({
   onSelectMode,
   onClose,
 }: ModeSelectorProps) {
+  // DEBUG: Log mount
+  console.log("[ModeSelector] Mounting with:", { promptTitle, variableCount });
+
   // Default to OFF - user must explicitly opt-in to remember choice
   const [rememberChoice, setRememberChoice] = useState(false);
   const [preferences, setPreferences] = useState<Partial<BuilderPreferences>>({});
@@ -74,6 +77,7 @@ export function ModeSelector({
 
   // Trigger entrance animation
   useEffect(() => {
+    console.log("[ModeSelector] Setting isVisible to true after 10ms");
     // Small delay to ensure CSS transition triggers
     const timer = setTimeout(() => setIsVisible(true), 10);
     return () => clearTimeout(timer);
