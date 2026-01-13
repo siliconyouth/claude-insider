@@ -11,7 +11,7 @@
  * @see docs/plans/INTERACTIVE_PROMPT_BUILDER.md
  */
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { openAIAssistant, type AIContext } from "@/components/unified-chat/unified-chat-provider";
 import { type BuilderMode, type BuilderValues, type PromptVariable, type VariableConfig } from "./types";
@@ -33,11 +33,6 @@ const Playground = dynamic(() => import("./playground"), {
   ssr: false,
   loading: () => null,
 });
-
-// ============================================================================
-// Local Storage
-// ============================================================================
-const PREFERENCES_KEY = "prompt-builder-preferences";
 
 interface InteractivePromptBuilderProps {
   promptId: string;
@@ -74,23 +69,11 @@ export function InteractivePromptBuilder({
   // Effects
   // ============================================================================
 
-  // Check for saved preference
-  useEffect(() => {
-    if (!skipModeSelector && !initialMode) {
-      try {
-        const stored = localStorage.getItem(PREFERENCES_KEY);
-        if (stored) {
-          const prefs = JSON.parse(stored);
-          if (prefs.rememberMode && prefs.defaultMode) {
-            setSelectedMode(prefs.defaultMode);
-            setShowModeSelector(false);
-          }
-        }
-      } catch {
-        // Ignore localStorage errors
-      }
-    }
-  }, [skipModeSelector, initialMode]);
+  // NOTE: We intentionally do NOT auto-skip the mode selector based on saved
+  // preferences. The mode selector should always be shown so users can choose
+  // their mode each time. The saved preference is used by mode-selector.tsx
+  // to pre-highlight the saved mode, but never to auto-skip.
+  // See commit dabe787 for context on this design decision.
 
   // ============================================================================
   // Handlers
